@@ -27,6 +27,15 @@ in
       options = "--delete-older-than 14d";
     };
 
+    nix.optimise = {
+      automatic = true;
+      dates = [ "weekly" ];
+    };
+
+    services.journald.extraConfig = ''
+      SystemMaxUse=500M
+    '';
+
     time.timeZone = "America/Chicago";
 
     i18n.defaultLocale = "en_US.UTF-8";
