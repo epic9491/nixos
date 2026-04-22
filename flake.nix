@@ -173,6 +173,14 @@
             ./home/zsh.nix
           ];
         };
+
+        zeus = mkServer {
+          deviceModule = ./devices/server/zeus/default.nix;
+          hmImports = [
+            ./home/server.nix
+            ./home/zsh.nix
+          ];
+        };
       };
     };
 }
