@@ -45,6 +45,17 @@
 
   server.baseline.enable = true;
 
+  fileSystems."/mnt/data" = {
+    device = "/dev/disk/by-uuid/78385fc9-6578-4560-b235-c28bcddc0c46";
+    fsType = "ext4";
+    options = [
+      "nosuid"
+      "nodev"
+      "noatime"
+      "nofail"
+    ];
+  };
+
   workstation = {
     ssh.enable = true;
     nixvim.enable = true;
