@@ -12,6 +12,7 @@
     ./hardware-configuration.nix
     ./disko.nix
     ../../../modules/nixvim.nix
+    ./services.nix
   ];
 
   age.identityPaths = [ "/home/gumbo/.ssh/id_ed25519" ];
@@ -37,6 +38,10 @@
     efiInstallAsRemovable = true;
     device = "nodev";
   };
+
+  hardware.graphics.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.open = false;  
 
   networking.hostName = "zeus";
 
