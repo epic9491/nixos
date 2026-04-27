@@ -62,5 +62,6 @@
     lm_sensors
     qbittorrent
     calibre
+    vesktop
   ];
 }
