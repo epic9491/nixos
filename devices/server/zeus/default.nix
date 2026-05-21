@@ -13,6 +13,7 @@
     ./disko.nix
     ../../../modules/nixvim.nix
     ./services.nix
+    ../../../modules/virtualization.nix
   ];
 
   age.identityPaths = [ "/home/gumbo/.ssh/id_ed25519" ];
