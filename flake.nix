@@ -181,6 +181,13 @@
             ./home/zsh.nix
           ];
         };
+        secret-mgmt = mkServer {
+          deviceModule = ./devices/server/vms/secret-mgmt/default.nix;
+          hmImports = [
+            ./home/server.nix
+            ./home/zsh.nix
+          ];
+        };
       };
     };
 }
