@@ -65,5 +65,6 @@
   workstation = {
     ssh.enable = true;
     nixvim.enable = true;
+    virtualization.enable = true;
   };
 }
