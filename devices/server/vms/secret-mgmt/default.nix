@@ -9,7 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../../modules/nixvim.nix
+    ../../../../modules/nixvim.nix
   ];
 
   age.identityPaths = [ "/home/gumbo/.ssh/agenix-master" ];
