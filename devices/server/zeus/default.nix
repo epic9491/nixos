@@ -13,6 +13,7 @@
     ./disko.nix
     ../../../modules/nixvim.nix
     ./services.nix
+    ./kubes.nix
     ../../../modules/virtualization.nix
   ];
 
