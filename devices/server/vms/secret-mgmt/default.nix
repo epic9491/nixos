@@ -22,9 +22,6 @@
       "wheel"
       "docker"
       "networkmanager"
-      "sound"
-      "video"
-      "audio"
     ];
   };
 
