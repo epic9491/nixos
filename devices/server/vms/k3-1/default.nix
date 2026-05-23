@@ -10,6 +10,7 @@
   imports = [
     ./hardware-configuration.nix
     ./kubes.nix
+    ./disko.nix
   ];
 
   age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
@@ -22,17 +23,12 @@
       "wheel"
       "docker"
       "networkmanager"
-      "sound"
-      "video"
-      "audio"
     ];
   };
 
   boot.loader.grub = {
     enable = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-    device = "nodev";
+    device = "/dev/vda";
   };
 
   networking.hostName = "k3-1";

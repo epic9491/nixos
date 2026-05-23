@@ -1,5 +1,5 @@
 locals {
-  k3-1_ipv4 = "0.0.0.0"
+  k3-1_ipv4 = "192.168.0.131"
 }
 
 module "deploy_k3-1" {
