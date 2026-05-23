@@ -28,9 +28,10 @@
   boot.loader.grub = {
     enable = true;
     efiSupport = true;
-    efiInstallAsRemovable = true;
+    efiInstallAsRemovable = false;
     device = "nodev";
   };
+  boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "secret-mgmt";
 
