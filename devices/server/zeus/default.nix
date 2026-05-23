@@ -69,5 +69,4 @@
     virtualization.enable = true;
   };
 
-  virtualisation.libvirtd.allowedBridges = [ "virbr0" "br0" ];
 }

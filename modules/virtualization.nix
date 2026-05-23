@@ -17,6 +17,7 @@ in
     virtualisation = {
       libvirtd = {
         enable = true;
+        allowedBridges = [ "virbr0" "br0" ];
         qemu.swtpm.enable = true;
       };
       spiceUSBRedirection.enable = true;
