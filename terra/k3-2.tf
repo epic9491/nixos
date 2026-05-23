@@ -1,5 +1,5 @@
 locals {
-  k3-2_ipv4 = "0.0.0.0"
+  k3-2_ipv4 = "192.168.0.65"
 }
 
 module "deploy_k3-2" {
@@ -8,8 +8,9 @@ module "deploy_k3-2" {
   nixos_partitioner_attr = "/home/gumbo/nixos#nixosConfigurations.k3-2.config.system.build.diskoScript"
   target_host            = local.k3-2_ipv4
   instance_id            = local.k3-2_ipv4
-  debug_logging          = true
-  build_on_remote        = false
-  stop_after_disko       = true
-  install_ssh_key        = file("/home/gumbo/.ssh/temp")
+  debug_logging              = true
+  build_on_remote            = false
+  nixos_generate_config_path = "/home/gumbo/nixos/devices/server/vms/k3-2/hardware-configuration.nix"
+  install_ssh_key            = file("/home/gumbo/.ssh/temp")
+  deployment_ssh_key         = file("/home/gumbo/.ssh/temp")
 }

@@ -195,6 +195,13 @@
             ./home/zsh.nix
           ];
         };
+        k3-2 = mkServer {
+          deviceModule = ./devices/server/vms/k3-2/default.nix;
+          hmImports = [
+            ./home/server.nix
+            ./home/zsh.nix
+          ];
+        };
       };
     };
 }
