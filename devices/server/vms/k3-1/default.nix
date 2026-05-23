@@ -8,6 +8,7 @@
 }:
 {
   imports = [
+    "${modulesPath}/profiles/qemu-guest.nix"
     ./hardware-configuration.nix
     ./kubes.nix
     ./disko.nix
@@ -26,10 +27,7 @@
     ];
   };
 
-  boot.loader.grub = {
-    enable = true;
-    device = "/dev/vda";
-  };
+  boot.loader.grub.enable = true;
 
   networking.hostName = "k3-1";
 
