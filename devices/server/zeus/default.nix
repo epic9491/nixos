@@ -11,9 +11,9 @@
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
-    ../../../modules/nixvim.nix
     ./services.nix
     ./kubes.nix
+    ../../../modules/nixvim.nix
     ../../../modules/virtualization.nix
   ];
 
