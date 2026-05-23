@@ -16,7 +16,7 @@
     ../../../modules/virtualization.nix
   ];
 
-  age.identityPaths = [ "/home/gumbo/.ssh/id_ed25519" ];
+  age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
 
   users.users.gumbo = {
     isNormalUser = true;
