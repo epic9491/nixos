@@ -32,6 +32,8 @@
       "video"
       "audio"
       "borg"
+      "libvirt"
+      "kvm"
     ];
   };
 
