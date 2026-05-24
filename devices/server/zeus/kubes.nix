@@ -8,9 +8,19 @@
 {
   services.k3s = {
     enable = true;
-    tokenFile = "/secrets/k3s-token";
+    tokenFile = "/run/secrets/k3s-token";
     role = "server";
     clusterInit = true;
+    nodeTaint = [ "CriticalAddonsOnly=true:NoExecute" ];
+    autoDeployCharts = {
+      kubernetes-dashboard = {
+        enable = true;
+        repo = "https://kubernetes.github.io/dashboard/";
+        name = "kubernetes-dashboard";
+        targetNamespace = "kubernetes-dashboard";
+        createNamespace = true;
+      };
+    };
   };
   networking.firewall.allowedUDPPorts = [ 8472 ]; # Flannel
   networking.firewall.allowedTCPPorts = [
@@ -19,7 +29,7 @@
   ];
   age.secrets."k3s-token.age" = {
     file = ../../../secrets/k3s-token.age;
-    path = "/secrets/k3s-token";
+    path = "/run/secrets/k3s-token";
     owner = "root";
     group = "root";
     mode = "0400";
