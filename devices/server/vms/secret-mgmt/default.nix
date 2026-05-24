@@ -9,7 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../../../modules/nixvim.nix
+    ./disko.nix
   ];
 
   age.identityPaths = [ "/home/gumbo/.ssh/agenix-master" ];
@@ -28,18 +28,18 @@
   boot.loader.grub = {
     enable = true;
     efiSupport = true;
-    efiInstallAsRemovable = false;
+    efiInstallAsRemovable = true;
     device = "nodev";
   };
-  boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "secret-mgmt";
 
   server.baseline.enable = true;
 
+  boot.initrd.kernelModules = [ "virtio_pci" "virtio_scsi" "sd_mod" ];
+
   workstation = {
     ssh.enable = true;
-    nixvim.enable = true;
   };
 }
 
