@@ -71,6 +71,7 @@ in
       jq
       screen
       eza
+      vim
     ];
 
     services = {
