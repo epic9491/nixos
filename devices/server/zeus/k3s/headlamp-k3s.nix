@@ -1,37 +1,22 @@
-{
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 {
   services.k3s = {
-    enable = true;
-    tokenFile = "/run/secrets/k3s-token";
-    role = "server";
-    clusterInit = true;
-    nodeTaint = [ "CriticalAddonsOnly=true:NoExecute" ];
-    extraFlags = toString [
-      "--write-kubeconfig-mode=644"
-    ];
-    autoDeployCharts = {
-      headlamp = {
-        enable = true;
-        name = "headlamp";
-        repo = "https://kubernetes-sigs.github.io/headlamp/";
-        version = "0.42.0";
-        hash = "sha256-EBS8lsdpYABkXSm7cDNthj2VGysTBoMiDbGXNDi3bEA=";
-        targetNamespace = "kube-system";
-        createNamespace = true;
-        values = {
-          service = {
-            type = "NodePort";
-            nodePort = 30000;
-          };
+    autoDeployCharts.headlamp = {
+      enable = true;
+      name = "headlamp";
+      repo = "https://kubernetes-sigs.github.io/headlamp/";
+      version = "0.42.0";
+      hash = "sha256-EBS8lsdpYABkXSm7cDNthj2VGysTBoMiDbGXNDi3bEA=";
+      targetNamespace = "kube-system";
+      createNamespace = true;
+      values = {
+        service = {
+          type = "NodePort";
+          nodePort = 30000;
         };
       };
     };
+
     manifests = {
       headlamp-user-sa.content = {
         apiVersion = "v1";
@@ -68,17 +53,6 @@
       };
     };
   };
-  networking.firewall.allowedUDPPorts = [ 8472 ]; # Flannel
-  networking.firewall.allowedTCPPorts = [
-    6443  # k3s API server
-    10250 # kubelet
-    30000 # headlamp
-  ];
-  age.secrets."k3s-token.age" = {
-    file = ../../../secrets/k3s-token.age;
-    path = "/run/secrets/k3s-token";
-    owner = "root";
-    group = "root";
-    mode = "0400";
-  };
+
+  networking.firewall.allowedTCPPorts = [ 30000 ];
 }

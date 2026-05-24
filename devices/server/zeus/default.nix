@@ -12,7 +12,9 @@
     ./hardware-configuration.nix
     ./disko.nix
     ./services.nix
-    ./kubes.nix
+    ./k3s/kubes.nix
+    ./k3s/uptime-k3s.nix
+    ./k3s/headlamp-k3s.nix
     ./networking.nix
     ../../../modules/nixvim.nix
     ../../../modules/virtualization.nix

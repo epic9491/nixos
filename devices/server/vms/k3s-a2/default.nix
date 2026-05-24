@@ -29,7 +29,7 @@
 
   boot.loader.grub.enable = true;
 
-  networking.hostName = "k3-2";
+  networking.hostName = "k3s-a2";
 
   server.baseline.enable = true;
 
