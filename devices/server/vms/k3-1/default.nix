@@ -12,6 +12,7 @@
     ./hardware-configuration.nix
     ./kubes.nix
     ./disko.nix
+    ../../../../modules/k3s-agent.nix
   ];
 
   age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
