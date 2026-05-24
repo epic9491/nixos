@@ -1,16 +1,16 @@
 locals {
-  k3-2_ipv4 = "192.168.0.65"
+  k3s-a2_ipv4 = "192.168.0.244"
 }
 
-module "deploy_k3-2" {
+module "deploy_k3s-a2" {
   source                 = "github.com/nix-community/nixos-anywhere//terraform/all-in-one"
-  nixos_system_attr      = "/home/gumbo/nixos#nixosConfigurations.k3-2.config.system.build.toplevel"
-  nixos_partitioner_attr = "/home/gumbo/nixos#nixosConfigurations.k3-2.config.system.build.diskoScript"
-  target_host            = local.k3-2_ipv4
-  instance_id            = local.k3-2_ipv4
+  nixos_system_attr      = "/home/gumbo/nixos#nixosConfigurations.k3s-a2.config.system.build.toplevel"
+  nixos_partitioner_attr = "/home/gumbo/nixos#nixosConfigurations.k3s-a2.config.system.build.diskoScript"
+  target_host            = local.k3s-a2_ipv4
+  instance_id            = local.k3s-a2_ipv4
   debug_logging              = true
   build_on_remote            = false
-  nixos_generate_config_path = "/home/gumbo/nixos/devices/server/vms/k3-2/hardware-configuration.nix"
+  nixos_generate_config_path = "/home/gumbo/nixos/devices/server/vms/k3s-a2/hardware-configuration.nix"
   install_ssh_key            = file("/home/gumbo/.ssh/temp")
   deployment_ssh_key         = file("/home/gumbo/.ssh/temp")
 }
