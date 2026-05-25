@@ -14,4 +14,6 @@ in
   "k3s-ts-auth.age".publicKeys = k3s;
   "newt-auth.age".publicKeys = [ secret-mgmt k3s-s1 ];
   "influx-auth-s1.age".publicKeys = [ secret-mgmt k3s-s1 ];
+  "grafana-auth-s1.age".publicKeys = [ secret-mgmt k3s-s1 ];
+  "grafana-datasources-s1.age".publicKeys = [ secret-mgmt k3s-s1 ];
 }
