@@ -207,6 +207,13 @@
             ./home/zsh.nix
           ];
         };
+        k3s-a4 = mkServer {
+          deviceModule = ./devices/server/vms/k3s-a4/default.nix;
+          hmImports = [
+            ./home/server.nix
+            ./home/zsh.nix
+          ];
+        };
         k3s-s1 = mkServer {
           deviceModule = ./devices/server/vms/k3s-s1/default.nix;
           hmImports = [
