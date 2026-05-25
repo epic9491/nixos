@@ -14,6 +14,7 @@
     ./kubes.nix
     ./charts/headlamp.nix
     ./charts/uptime.nix
+    ./charts/newt.nix
   ];
 
   age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
