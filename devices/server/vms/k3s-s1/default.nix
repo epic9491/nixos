@@ -12,6 +12,7 @@
     ./hardware-configuration.nix
     ./disko.nix
     ./kubes.nix
+    ./charts/headlamp.nix
   ];
 
   age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
