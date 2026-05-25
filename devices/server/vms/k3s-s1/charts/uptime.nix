@@ -15,7 +15,7 @@
       };
       volume = {
         enabled = true;
-        size = "1Gi";
+        size = "2Gi";
         storageClassName = "local-path";
       };
     };
