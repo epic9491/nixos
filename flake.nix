@@ -165,7 +165,6 @@
             ./home/zsh.nix
           ];
         };
-
         v-gaia-main = mkServer {
           deviceModule = ./devices/server/v-gaia-main/default.nix;
           hmImports = [
@@ -173,7 +172,6 @@
             ./home/zsh.nix
           ];
         };
-
         zeus = mkServer {
           deviceModule = ./devices/server/zeus/default.nix;
           hmImports = [
@@ -197,6 +195,13 @@
         };
         k3s-a2 = mkServer {
           deviceModule = ./devices/server/vms/k3s-a2/default.nix;
+          hmImports = [
+            ./home/server.nix
+            ./home/zsh.nix
+          ];
+        };
+        k3s-a3 = mkServer {
+          deviceModule = ./devices/server/vms/k3s-a3/default.nix;
           hmImports = [
             ./home/server.nix
             ./home/zsh.nix

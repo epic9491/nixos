@@ -2,6 +2,6 @@
 {
   cluster.k3sAgent = {
     enable = true;
-    serverAddr = "https://100.118.40.82:6443";
+    serverAddr = "https://100.69.1.10:6443";
   };
 }
