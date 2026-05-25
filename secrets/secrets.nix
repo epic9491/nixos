@@ -5,8 +5,8 @@ let
   k3s-a2 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMQRa7a94RT7Fs/jmToF0vfAtSJRJ8ZoAWuVoWsQjGbN gumbo@k3s-a2";
   k3s-a3 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICd1/b3nt1jYmBaAglIYb0DsAaKkj3ebxqDnB+5eBlgW gumbo@k3s-a3";
   k3s-a4 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAV6SDEW82ZvzRKRZlqd2hw9ticKDMEAdtVAbmMHup+z gumbo@k3s-a4";
-  all-systems = [ secret-mgmt k3s-s1 k3s-a1 k3s-a2 k3s-a3 ];
-  k3s = [ secret-mgmt k3s-s1 k3s-a1 k3s-a2 k3s-a3 ];
+  all-systems = [ secret-mgmt k3s-s1 k3s-a1 k3s-a2 k3s-a3 k3s-a4 ];
+  k3s = [ secret-mgmt k3s-s1 k3s-a1 k3s-a2 k3s-a3 k3s-a4 ];
 in
 {
   "test.age".publicKeys = all-systems;
