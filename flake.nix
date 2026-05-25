@@ -179,6 +179,14 @@
             ./home/zsh.nix
           ];
         };
+	seed = mkWorkstation {
+          deviceModule = ./devices/server/vms/seed/default.nix;
+          hmImports = [
+            ./home/common.nix
+            ./home/zsh.nix
+            ./home/kde.nix
+          ];
+        };
         secret-mgmt = mkServer {
           deviceModule = ./devices/server/vms/secret-mgmt/default.nix;
           hmImports = [
