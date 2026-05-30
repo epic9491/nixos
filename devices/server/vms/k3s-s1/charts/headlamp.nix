@@ -13,6 +13,7 @@
         service = {
           type = "NodePort";
           nodePort = 30000;
+          port = 4446;
         };
       };
     };
