@@ -72,6 +72,7 @@ in
       screen
       eza
       vim
+      python3
     ];
 
     services = {
