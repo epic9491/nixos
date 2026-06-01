@@ -27,7 +27,7 @@ Though I've learned a lot about NixOS since I started daily driving it in 2025, 
 
 ## Important things to note
 
-- My workstations run on the **unstable** branch, use the **latest kernel**, and **allow unfree software**. My servers run on the **stable** branch, use an **LTS kernel**, and also allow **unfree software**. Garbage collection removes all generations older than 7 days on both workstations and servers.
+- My workstations run on the **unstable** branch, use the **latest kernel**, and **allow unfree software**. My servers run on the **stable** branch, use an **LTS kernel**, and also allow **unfree software**. Garbage collection removes all generations older than 7 days on both workstations and servers, Nix store optimization is run on every rebuild.
 - `/modules/baseline.nix` is exactly what it sounds like. Services, kernel and boot parameters, and other core, shared settings are defined here. You should review this file. The baseline is enabled with: ```workstation.baseline.enable = true;```. Most modules are nested within the ```workstation``` option.
 - `/modules/packages.nix` handles all shared packages for workstations. It is broken up into options, being ```tools```, ```dev```, and ```apps```. I have nested the modules options into the ```baseline``` option as I still consider it a part of the baseline, but that file was getting too big and this makes more sense.
 - All builds use **zsh** by default. I have separate **zsh** and **bash** Home Manager files, you can switch the shell to say bash by modifying the shell file Home Manager imports under either machines entry in ```flake.nix```.
