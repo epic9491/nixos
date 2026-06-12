@@ -80,13 +80,6 @@ in
       qemuGuest.enable = true;
     };
 
-    virtualisation.docker = {
-      rootless = {
-        enable = true;
-        setSocketVariable = true;
-      };
-    };
-
-    system.stateVersion = "25.05";
+     system.stateVersion = "25.05";
   };
 }
