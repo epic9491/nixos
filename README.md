@@ -46,6 +46,8 @@ Though I've learned a lot about NixOS since I started daily driving it in 2025, 
 
 ```sudo nixos-rebuild boot --flake .#erebos``` (desktop/gaming build)
 
+Same goes for any other entry in the flake.
+
 ## Showcase
 
 <video src="https://codeberg.org/sensei/nixos/raw/branch/assets/recording_20260208_103359.mp4" controls width="100%"></video>
