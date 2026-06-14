@@ -17,6 +17,10 @@ in
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       ripgrep
+      stylua
+      shellcheck
+      shfmt
+      python3Packages.flake8
     ];
     environment.sessionVariables = {
       EDITOR = "nvim";
@@ -136,15 +140,6 @@ in
             ts_ls.enable = true;
             jsonls.enable = true;
           };
-        };
-        mason = {
-          enable = true;
-          ensureInstalled = [
-            "stylua"
-            "shellcheck"
-            "shfmt"
-            "flake8"
-          ];
         };
         telescope.enable = true;
       };
