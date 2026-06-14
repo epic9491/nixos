@@ -71,8 +71,13 @@ in
         nvim-autopairs.enable = true;
         bufferline.enable = true;
         lualine.enable = true;
-        mini.ai.enable = true;
-        mini.pairs.enable = true;
+        mini = {
+          enable = true;
+          modules = {
+            ai = {};
+            pairs = {};
+          };
+        };
         noice.enable = true;
         web-devicons.enable = true;
         treesitter = {
