@@ -1,7 +1,7 @@
 on: [push]
 jobs:
   discover:
-    runs-on: codeberg-tiny
+    runs-on: codeberg-tiny-lazy
     outputs:
       hosts: ${{ steps.list.outputs.hosts }}
     steps:
