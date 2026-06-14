@@ -1,0 +1,39 @@
+on: [push]
+jobs:
+  discover:
+    runs-on: codeberg-tiny
+    outputs:
+      hosts: ${{ steps.list.outputs.hosts }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install Nix
+        uses: https://github.com/cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: List nixosConfigurations
+        id: list
+        run: |
+          set -eu
+          hosts=$(nix eval --json '.#nixosConfigurations' --apply 'builtins.attrNames')
+          echo "hosts=$hosts" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: discover
+    runs-on: codeberg-tiny
+    strategy:
+      fail-fast: false
+      matrix:
+        host: ${{ fromJSON(needs.discover.outputs.hosts) }}
+    steps:
+      - uses: actions/checkout@v6
+      - name: Install Nix
+        uses: https://github.com/cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+      - name: Build ${{ matrix.host }}
+        run: |
+          nix build \
+            ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel" \
+            --print-build-logs
