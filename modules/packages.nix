@@ -50,10 +50,7 @@ let
   ];
 
   appsPackages = with pkgs; [
-    bitwarden-desktop
     yubioath-flutter
-    vscodium
-    signal-desktop
     (retroarch.withCores (cores: with cores; [ mgba ]))
     vlc
     libreoffice
@@ -62,7 +59,6 @@ let
     picard
     jellyfin-desktop
     gnome-calculator
-    element-desktop
   ];
 in
 {
