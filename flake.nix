@@ -151,35 +151,35 @@
         };
 
         # steamos build is still in testing, expect major changes and broken functionality
-        steamos = mkWorkstation {
-          deviceModule = ./devices/desktop/dionysus/default.nix;
-          hmImports = [
-            ./home/steam.nix
-          ];
-        };
+       # steamos = mkWorkstation {
+       #   deviceModule = ./devices/desktop/dionysus/default.nix;
+       #   hmImports = [
+       #     ./home/steam.nix
+       #   ];
+       # };
 
-        void = mkServer {
-          deviceModule = ./devices/server/void/default.nix;
-          hmImports = [
-            ./home/server.nix
-            ./home/zsh.nix
-          ];
-        };
-        v-gaia-main = mkServer {
-          deviceModule = ./devices/server/v-gaia-main/default.nix;
-          hmImports = [
-            ./home/server.nix
-            ./home/zsh.nix
-          ];
-        };
-        zeus = mkServer {
-          deviceModule = ./devices/server/zeus/default.nix;
-          hmImports = [
-            ./home/server.nix
-            ./home/zsh.nix
-          ];
-        };
-	seed = mkWorkstation {
+       # void = mkServer {
+       #   deviceModule = ./devices/server/void/default.nix;
+       #   hmImports = [
+       #     ./home/server.nix
+       #     ./home/zsh.nix
+       #   ];
+       # };
+       # v-gaia-main = mkServer {
+       #   deviceModule = ./devices/server/v-gaia-main/default.nix;
+       #   hmImports = [
+       #     ./home/server.nix
+       #     ./home/zsh.nix
+       #   ];
+       # };
+       # zeus = mkServer {
+       #   deviceModule = ./devices/server/zeus/default.nix;
+       #   hmImports = [
+       #     ./home/server.nix
+       #     ./home/zsh.nix
+       #   ];
+       # };
+	      seed = mkWorkstation {
           deviceModule = ./devices/server/vms/seed/default.nix;
           hmImports = [
             ./home/common.nix
