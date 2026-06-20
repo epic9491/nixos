@@ -24,6 +24,7 @@
       user = "gumbo";
     };
     defaultSession = "kodi";
+    lightdm.enable = true;
   };
 
   workstation = {
