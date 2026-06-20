@@ -44,11 +44,7 @@
   age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
 
   services.xserver.desktopManager.kodi.enable = true;
-  services.xserver.desktopManager.kodi.package = pkgs.kodi;
-
-  environment.systemPackages = with pkgs; [
-    moonlight-qt
-  ]  ++ (with kodiPackages; [
+  services.xserver.desktopManager.kodi.package = pkgs.kodi.withPackages (kp: with kp; [
     keymap
     netflix
     jellycon
@@ -59,4 +55,8 @@
     steam-library
     bluetooth-manager
   ]);
+
+  environment.systemPackages = with pkgs; [
+    moonlight-qt
+  ];
 }
