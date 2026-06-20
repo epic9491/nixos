@@ -9,7 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./backup.nix
+   # ./backup.nix
     ../../../modules/ssh.nix
     ../../../modules/baseline.nix
     ../../../modules/packages.nix
