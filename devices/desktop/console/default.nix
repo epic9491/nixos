@@ -29,6 +29,12 @@
     defaultSession = "kodi";
   };
 
+  services.logind.settings.Login = {
+    HandleLidSwitch = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
+    HandleLidSwitchDocked = "ignore";
+  };
+
   workstation = {
     baseline = {
       enable = true;

@@ -1,5 +1,5 @@
 locals {
-  console_ipv4 = "192.168.0.47"
+  console_ipv4 = "192.168.0.228"
 }
 module "deploy_console" {
   source                 = "github.com/nix-community/nixos-anywhere//terraform/all-in-one"
