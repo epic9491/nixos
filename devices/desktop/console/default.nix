@@ -18,13 +18,14 @@
 
   networking.hostName = "console";
 
+  services.xserver.displayManager.lightdm.enable = true;
+
   services.displayManager = {
     autoLogin = {
       enable = true;
       user = "gumbo";
     };
     defaultSession = "kodi";
-    lightdm.enable = true;
   };
 
   workstation = {
