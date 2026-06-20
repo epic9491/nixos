@@ -10,7 +10,7 @@
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
-    ./backup.nix
+    #./backup.nix
     ../../../modules/ssh.nix
     ../../../modules/baseline.nix
     ../../../modules/packages.nix
@@ -41,7 +41,7 @@
     ssh.enable = true;
   };
 
-  age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
+  #age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
 
   services.xserver.desktopManager.kodi.enable = true;
   services.xserver.desktopManager.kodi.package = pkgs.kodi.withPackages (kp: with kp; [
