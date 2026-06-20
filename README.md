@@ -37,7 +37,6 @@ Though I've learned a lot about NixOS since I started daily driving it in 2025, 
 - Display managers change depending on what environment you choose:
   - Desktop environments use their defaults (GNOME = GDM, KDE = SDDM, XFCE = LightDM)
   - Window managers use `tuigreet` with autologin
-- The **SteamOS** build is **not** a functional configuration. This was an experiment to create a SteamOS-like environment that boots directly into Gamescope, aiming for a more console-like experience with support for things like Netflix or YouTube as non-Steam games. It does boot into Gamescope with Steam in Big Picture mode (after a delay), but playing games or streaming them from another device does not work.
 - This repo is not 100 MB. Wallpapers used to live here and were removed. The blobs should also be removed from `.git`. ```du -hs``` reports **8.7 MB** at the time of writing.
 
 ## Current valid build commands (from root of repo)
@@ -45,6 +44,8 @@ Though I've learned a lot about NixOS since I started daily driving it in 2025, 
 ```sudo nixos-rebuild boot --flake .#prometheus``` (laptop build)
 
 ```sudo nixos-rebuild boot --flake .#erebos``` (desktop/gaming build)
+
+`sudo nixos-rebuild boot --flake .#console` (console-like build with kodi)
 
 Same goes for any other entry in the flake.
 

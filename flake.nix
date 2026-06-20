@@ -150,13 +150,14 @@
           ];
         };
 
-        # steamos build is still in testing, expect major changes and broken functionality
-       # steamos = mkWorkstation {
-       #   deviceModule = ./devices/desktop/dionysus/default.nix;
-       #   hmImports = [
-       #     ./home/steam.nix
-       #   ];
-       # };
+        console = mkWorkstation {
+          deviceModule = ./devices/desktop/console/default.nix;
+          hmImports = [
+            ./home/common.nix
+            ./home/zsh.nix
+            ./home/xfce.nix
+          ];
+        };
 
        # void = mkServer {
        #   deviceModule = ./devices/server/void/default.nix;
