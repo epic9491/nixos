@@ -63,6 +63,7 @@
           modules = [
             deviceModule
             home-managerU.nixosModules.home-manager
+            disko.nixosModules.disko
             flatpaks.nixosModules.default
             agenix.nixosModules.default
             {

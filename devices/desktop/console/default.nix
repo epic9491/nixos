@@ -9,6 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./disko.nix
    # ./backup.nix
     ../../../modules/ssh.nix
     ../../../modules/baseline.nix
@@ -17,8 +18,12 @@
 
   networking.hostName = "console";
 
-  services.getty = {
-    autologinUser = "gumbo";
+  services.displayManager = {
+    autoLogin = {
+      enable = true;
+      user = "gumbo";
+    };
+    defaultSession = "kodi";
   };
 
   workstation = {
