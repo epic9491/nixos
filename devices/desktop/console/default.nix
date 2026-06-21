@@ -31,6 +31,12 @@
     ];
   };
 
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    pulse.enable = true;
+  };
+
   services.displayManager = {
     autoLogin = {
       enable = true;
