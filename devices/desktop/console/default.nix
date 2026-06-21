@@ -21,6 +21,16 @@
   services.xserver.enable = true;
   services.xserver.displayManager.lightdm.enable = true;
 
+  boot.kernelParams = [ "video=eDP-1:d" ];
+
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vpl-gpu-rt
+    ]
+  }
+
   services.displayManager = {
     autoLogin = {
       enable = true;
@@ -64,12 +74,5 @@
 
   environment.systemPackages = with pkgs; [
     moonlight-qt
-    chromium
-    (pkgs.writeShellScriptBin "launch-steam-stream" ''
-      exec ${pkgs.moonlight-qt}/bin/moonlight stream Erebos "Steam" --resolution 1920x1080 --fps 60
-    '')
-    (pkgs.writeShellScriptBin "launch-appletv" ''
-      exec ${pkgs.chromium}/bin/chromium --kiosk --app=https://tv.apple.com
-    '')
   ];
 }
