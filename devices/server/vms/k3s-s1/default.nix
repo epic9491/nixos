@@ -43,8 +43,6 @@
   networking.hostName = "k3s-s1";
   networking.firewall.backend = "iptables";
 
-  # Physical host — disable the QEMU guest agent enabled by baseline.server
-
   server.baseline.enable = true;
 
   workstation = {
