@@ -156,7 +156,7 @@
           hmImports = [
             ./home/common.nix
             ./home/zsh.nix
-            ./home/xfce.nix
+            ./home/kde.nix
           ];
         };
 
