@@ -6,6 +6,8 @@ window-decoration = true
 mouse-hide-while-typing = true
 window-save-state = always
 adjust-cell-height = 10%
+window-height = 28
+window-width = 100
 #maximize = true
 
 ### keybinds ###
