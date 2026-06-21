@@ -40,11 +40,7 @@
     "starship.toml".source = ../config/starship/starship.main.toml;
     "eza/theme.yml".source = ../config/eza/eza.main.yml;
     "fuzzel/fuzzel.ini".source = ../config/fuzzel/tokyonight.fuzzel.ini;
-    "fastfetch/config.jsonc".source = ../config/fastfetch/main.fastfetch;
-    "fastfetch/violet.png".source = ../config/icons/violet.png;
-    "qt5ct/qt5ct.conf".source = ../config/qt5ct/qt5ct.conf;
-    "qt5ct/colors/noctalia.conf".source = ../config/qt5ct/colors/noctalia.conf;
-  };
+   };
 
   dconf.settings = {
     "org/virt-manager/virt-manager/connections" = {

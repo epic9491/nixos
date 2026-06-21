@@ -31,11 +31,6 @@
   xdg.configFile = {
     "ghostty/config".source = ../config/ghostty/tokyo-night.kde.ghostty;
   };
-  qt = {
-    enable = true;
-    platformTheme.name = "qtct";
-    style.name = "Fusion";
-  };
 
   home.pointerCursor = {
     name = "BreezeX-RosePine-Linux";
