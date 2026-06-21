@@ -65,5 +65,11 @@
   environment.systemPackages = with pkgs; [
     moonlight-qt
     chromium
+    (pkgs.writeShellScriptBin "launch-steam-stream" ''
+      exec ${pkgs.moonlight-qt}/bin/moonlight stream Erebos "Steam" --resolution 1920x1080 --fps 60
+    '')
+    (pkgs.writeShellScriptBin "launch-appletv" ''
+      exec ${pkgs.chromium}/bin/chromium --kiosk --app=https://tv.apple.com
+    '')
   ];
 }
