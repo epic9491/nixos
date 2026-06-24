@@ -22,7 +22,6 @@ let
     starship
     lazyssh
     nixfmt
-    blueman
     ffmpeg
     whois
     parted
