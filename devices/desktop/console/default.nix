@@ -19,9 +19,7 @@
 
   networking.hostName = "console";
 
-  boot.extraModprobeConfig = ''
-  options bluetooth disable_ertm=Y
-  '';
+  hardware.enableRedistributableFirmware = true;
 
   services.displayManager = {
     autoLogin.enable = true;
