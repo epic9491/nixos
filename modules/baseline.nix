@@ -68,7 +68,9 @@ in
       settings = {
         General = {
           Experimental = true;
-          FastConnectable = false;
+          FastConnectable = true;
+          JustWorksRepairing = "always";
+          Privacy = "device";
         };
         Policy = {
           AutoEnable = true;
