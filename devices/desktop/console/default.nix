@@ -62,7 +62,6 @@
 
   environment.systemPackages = with pkgs; [
     moonlight-qt
-    chromium
     (chromium.override { enableWideVine = true; })
   ];
 }
