@@ -19,6 +19,16 @@
 
   networking.hostName = "console";
 
+  boot.extraModprobeConfig = ''
+  options bluetooth disable_ertm=Y
+  '';
+
+  services.displayManager = {
+    autoLogin.enable = true;
+    autoLogin.user = "gumbo";
+    defaultSession = "plasma";
+  };
+
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
