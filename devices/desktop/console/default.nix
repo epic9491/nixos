@@ -21,6 +21,10 @@
 
   hardware.enableRedistributableFirmware = true;
 
+  boot.extraModprobeConfig = ''
+    options bluetooth disable_ertm=Y
+  '';
+
   services.displayManager = {
     autoLogin.enable = true;
     autoLogin.user = "gumbo";
