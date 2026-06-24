@@ -23,6 +23,8 @@
 
   hardware.xpadneo.enable = true; 
 
+  boot.extraModprobeConfig = '' options bluetooth disable_ertm=1 '';
+
   services.displayManager = {
     autoLogin.enable = true;
     autoLogin.user = "gumbo";
