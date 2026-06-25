@@ -46,6 +46,7 @@ let
     rustlings
     terraform
     distrobox
+    python3
   ];
 
   appsPackages = with pkgs; [
