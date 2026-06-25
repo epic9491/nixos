@@ -10,7 +10,7 @@
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
-    #./backup.nix
+    ./backup.nix
     ../../../modules/ssh.nix
     ../../../modules/baseline.nix
     ../../../modules/packages.nix
@@ -58,7 +58,7 @@
     kde.enable = true;
   };
 
-  #age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
+  age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
 
   environment.systemPackages = with pkgs; [
     moonlight-qt
