@@ -63,5 +63,6 @@
   environment.systemPackages = with pkgs; [
     moonlight-qt
     (chromium.override { enableWideVine = true; })
+    python3
   ];
 }
