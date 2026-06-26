@@ -97,7 +97,6 @@ in
               "regex"
               "rust"
               "tsx"
-              "typescript"
               "vim"
               "yaml"
             ];
@@ -153,7 +152,6 @@ in
         nui-nvim
         snacks-nvim
         ts-comments-nvim
-        typescript-nvim
       ];
       extraConfigLua = ''
         -- flash.nvim
