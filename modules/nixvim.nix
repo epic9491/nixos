@@ -30,6 +30,7 @@ in
       enable = true;
       viAlias = true;
       vimAlias = true;
+      nixpkgs.source = inputs.nixpkgs-unstable;
       opts = {
         number = true;
         relativenumber = true;
