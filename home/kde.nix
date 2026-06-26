@@ -8,7 +8,7 @@
 {
   gtk = {
     enable = true;
-
+    gtk4.theme = config.gtk.theme;
     theme = {
       name = "Tokyonight-Dark";
       package = pkgs.tokyonight-gtk-theme;

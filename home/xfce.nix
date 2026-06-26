@@ -6,6 +6,7 @@ in
 {
   gtk = {
     enable = true;
+    gtk4.theme = config.gtk.theme;
     theme = {
       name = "Graphite-Dark";
       package = pkgs.graphite-gtk-theme;
