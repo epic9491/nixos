@@ -16,6 +16,7 @@
     ../../../modules/baseline.nix
     ../../../modules/packages.nix
     ../../../modules/kde.nix
+    ../../../modules/retroshare.nix
   ];
 
   networking.hostName = "console";
@@ -57,6 +58,7 @@
     };
     ssh.enable = true;
     kde.enable = true;
+    retroshare.enable = true;
   };
 
   age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];

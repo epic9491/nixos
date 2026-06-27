@@ -19,27 +19,21 @@ in
 
       settings = {
         devices = {
-          "manga" = {
-            id = "I3J5UCJ-NZIOJCX-FIV6PUT-QSTITFA-4TI6PB7-MVR67TI-SW56QXD-6ARBAAE";
+          "rom-server" = {
+            id = "24SWUHL-ACNDYW3-33VLYSV-XFOJNVJ-YFWUKQE-YNXNZJ2-OABB2XN-NPSAEAD";
           };
         };
         folders = {
-          "retro-bios" = {
-            id = "p4epq-mmgmv";
-            path = "/home/gumbo/sync/retro/BIOS";
-            devices = [ "manga" ];
+          "roms" = {
+            id = "gbqcn-diyh4";
+            path = "/home/gumbo/roms";
+            devices = [ "rom-server" ];
             type = "receiveonly";
           };
-          "retro-roms" = {
-            id = "74edp-unucu";
-            path = "/home/gumbo/sync/retro/ROMs";
-            devices = [ "manga" ];
-            type = "receiveonly";
-          };
-          "retro-saves" = {
-            id = "ymtp3-m4ngw";
-            path = "/home/gumbo/sync/retro/Saves";
-            devices = [ "manga" ];
+          "saves" = {
+            id = "fewek-jpwfx";
+            path = "/home/gumbo/saves";
+            devices = [ "rom-server" ];
             type = "sendreceive";
           };
         };
