@@ -10,17 +10,17 @@
     extraOpts = {
       "WebAppInstallForceList" = [
         {
-          "url" = "https://www.netflix.com";
+          "url" = "https://netflix.com";
           "default_launch_container" = "window";
           "create_desktop_shortcut" = true;
         }
         {
-          "url" = "https://www.play.hbomax.com";
+          "url" = "https://play.hbomax.com";
           "default_launch_container" = "window";
           "create_desktop_shortcut" = true;
         }
         {
-          "url" = "https://www.peacocktv.com";
+          "url" = "https://peacocktv.com";
           "default_launch_container" = "window";
           "create_desktop_shortcut" = true;
         }
