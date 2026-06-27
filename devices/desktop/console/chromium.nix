@@ -15,7 +15,7 @@
           "create_desktop_shortcut" = true;
         }
         {
-          "url" = "https://www.max.com";
+          "url" = "https://www.play.hbomax.com";
           "default_launch_container" = "window";
           "create_desktop_shortcut" = true;
         }
