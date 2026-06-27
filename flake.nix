@@ -77,7 +77,7 @@
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                backupFileExtension = "backup";
+                backupCommand = "rm";
                 extraSpecialArgs = { inherit inputs; };
                 sharedModules = [
                   (
@@ -112,7 +112,7 @@
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                backupFileExtension = "backup";
+                backupCommand = "rm";
                 extraSpecialArgs = { inherit inputs; };
                 sharedModules = [
                   (
