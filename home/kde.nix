@@ -6,6 +6,8 @@
 }:
 
 {
+  home.file.".gtkrc-2.0".force = true;
+
   gtk = {
     enable = true;
     gtk4.theme = config.gtk.theme;
