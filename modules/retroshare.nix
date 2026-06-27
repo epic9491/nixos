@@ -21,6 +21,7 @@ in
         devices = {
           "rom-server" = {
             id = "24SWUHL-ACNDYW3-33VLYSV-XFOJNVJ-YFWUKQE-YNXNZJ2-OABB2XN-NPSAEAD";
+            addresses = [ "tcp://100.69.69.202:22000" ];
           };
         };
         folders = {
