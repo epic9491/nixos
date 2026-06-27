@@ -11,6 +11,7 @@
     ./hardware-configuration.nix
     ./disko.nix
     ./backup.nix
+    ./chromium.nix
     ../../../modules/ssh.nix
     ../../../modules/baseline.nix
     ../../../modules/packages.nix
@@ -62,7 +63,6 @@
 
   environment.systemPackages = with pkgs; [
     moonlight-qt
-    (chromium.override { enableWideVine = true; })
     python3
   ];
 }
