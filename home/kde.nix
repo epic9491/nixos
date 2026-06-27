@@ -33,15 +33,15 @@
   };
 
   home.pointerCursor = {
-    name = "BreezeX-RosePine-Linux";
-    package = pkgs.rose-pine-cursor;
+    name = "Future-cursors";
+    package = pkgs.future-cursors;
     size = 24;
     gtk.enable = true;
     x11.enable = true;
   };
 
   home.sessionVariables = {
-    XCURSOR_THEME = "BreezeX-RosePine-Linux";
+    XCURSOR_THEME = "Future-cursors";
     XCURSOR_SIZE = "24";
   };
 
