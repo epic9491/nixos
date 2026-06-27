@@ -55,12 +55,19 @@
       libU = nixpkgs-unstable.lib;
       libS = nixpkgs-stable.lib;
 
+      overlays = [
+        (final: prev: {
+          future-cursors = prev.callPackage ./pkgs/future-cursor.nix { };
+        })
+      ];
+
       mkWorkstation =
         { deviceModule, hmImports }:
         libU.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [
+            { nixpkgs.overlays = overlays; }
             deviceModule
             home-managerU.nixosModules.home-manager
             disko.nixosModules.disko
@@ -94,6 +101,7 @@
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [
+            { nixpkgs.overlays = overlays; }
             deviceModule
             disko.nixosModules.disko
             agenix.nixosModules.default
