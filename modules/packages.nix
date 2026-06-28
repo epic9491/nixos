@@ -50,7 +50,7 @@ let
 
   appsPackages = with pkgs; [
     yubioath-flutter
-    (retroarch.withCores (cores: with cores; [ mgba dolphin-emu ]))
+    (retroarch.withCores (cores: with cores; [ mgba dolphin ]))
     vlc
     libreoffice
     gimp
