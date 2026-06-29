@@ -30,7 +30,6 @@
   services.displayManager = {
     autoLogin.enable = true;
     autoLogin.user = "gumbo";
-    defaultSession = "plasma";
   };
 
   hardware.graphics = {
