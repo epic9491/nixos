@@ -18,7 +18,7 @@
 
   age.secrets."newt.env" = {
     file = ../../../../../secrets/srv-n1.newt.env.age;
-    path = "/run/agenix/newt.env";
+    path = "/run/secrets/newt.env";
     owner = "newt";
     group = "newt";
     mode = "0400";
