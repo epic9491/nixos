@@ -20,8 +20,7 @@ jobs:
       - id: list
         run: |
           set -eu
-          hosts=$(nix eval --json '.#nixosConfigurations' --apply \
-            'cfgs: builtins.filter (n: n != "steamos") (builtins.attrNames cfgs)')
+          hosts=$(nix eval --json '.#nixosConfigurations' --apply 'builtins.attrNames')
           echo "hosts=$hosts" >> "$GITHUB_OUTPUT"
 
   build:
