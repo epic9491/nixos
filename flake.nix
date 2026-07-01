@@ -30,6 +30,11 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
+
     flatpaks.url = "github:in-a-dil-emma/declarative-flatpak/latest";
 
     disko.url = "github:nix-community/disko";
@@ -197,7 +202,7 @@
             ./home/kde.nix
           ];
         };
-        srv-n1 = mkWorkstation {
+        srv-n1 = mkServer {
           deviceModule = ./devices/server/vms/srv-n1/default.nix;
           hmImports = [
             ./home/server.nix

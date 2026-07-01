@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  inputs,
   modulesPath,
   ...
 }:
@@ -9,14 +10,39 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./disko.nix
+    inputs.lanzaboote.nixosModules.lanzaboote
     # ./backup.nix
   ];
 
-  boot.loader.grub = {
-    enable = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-    device = "nodev";
+  environment.systemPackages = [ pkgs.sbctl ];
+
+  boot = {
+    loader = {
+      efi.canTouchEfiVariables = true;
+      systemd-boot = {
+        enable = lib.mkForce false;
+        configurationLimit = 8;
+      };
+    };
+    initrd.systemd.enable = true;
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+      autoGenerateKeys.enable = true;
+      autoEnrollKeys = {
+        enable = true;
+        autoReboot = true;
+      };
+      measuredBoot = {
+        enable = true;
+        pcrs = [
+          0
+          4
+          7
+        ];
+      };
+    };
   };
 
   users.users.gumbo = {

@@ -12,5 +12,11 @@ module "deploy_srv-n1" {
   nixos_generate_config_path = "/home/gumbo/nixos/devices/server/vms/srv-n1/hardware-configuration.nix"
   install_ssh_key            = file("/home/gumbo/.ssh/temp")
   deployment_ssh_key         = file("/home/gumbo/.ssh/temp")
+  disk_encryption_key_scripts = [
+    {
+      path   = "/tmp/disk.key"
+      script = "cat /home/gumbo/.secrets/srv-n1-luks"
+    }
+  ]
 }
 
