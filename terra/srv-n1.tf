@@ -1,5 +1,5 @@
 locals {
-  srv-n1_ipv4 = "192.168.0.1"
+  srv-n1_ipv4 = "192.168.0.40"
 }
 module "deploy_srv-n1" {
   source                 = "github.com/nix-community/nixos-anywhere//terraform/all-in-one"
