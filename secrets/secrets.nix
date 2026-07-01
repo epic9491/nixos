@@ -40,6 +40,6 @@ in
   "grafana-datasources-s1.age".publicKeys = [ secret-mgmt k3s-s1 ];
   "wg0.age".publicKeys = [ secret-mgmt seed v-null ];
   "pbs.console.age".publicKeys = [ secret-mgmt console ];
-  "srv-n1.console.age".publicKeys = [ secret-mgmt srv-n1 ];
+  "pbs.srv-n1.age".publicKeys = [ secret-mgmt srv-n1 ];
   "pbs.srv-n1.key.age".publicKeys = [ secret-mgmt srv-n1 ];
 }
