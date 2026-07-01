@@ -13,6 +13,7 @@
     ./disko.nix
     ./backup.nix
     ./boot.nix
+    ./containers
   ];
 
   users.users.gumbo = {
