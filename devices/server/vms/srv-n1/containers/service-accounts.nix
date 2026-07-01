@@ -1,25 +1,18 @@
+{ lib, ... }:
+let
+  containerUsers = [ "mealie" "newt" ]; # add new services here, nothing else to touch
+in
 {
   users.manageLingering = true;
 
-  users.users.mealie = {
+  users.users = lib.genAttrs containerUsers (name: {
     isSystemUser = true;
-    group = "mealie";
+    group = name;
     linger = true;
-    home = "/var/lib/mealie";
+    home = "/var/lib/${name}";
     createHome = true;
-    subUidRanges = [ { startUid = 100000; count = 65536; } ];
-    subGidRanges = [ { startGid = 100000; count = 65536; } ];
-  };
-  users.groups.mealie = { };
+    autoSubUidGidRange = true;
+  });
 
-  users.users.newt = {
-    isSystemUser = true;
-    group = "newt";
-    linger = true;
-    home = "/var/lib/newt";
-    createHome = true;
-    subUidRanges = [ { startUid = 165536; count = 65536; } ];
-    subGidRanges = [ { startGid = 165536; count = 65536; } ];
-  };
-  users.groups.newt = { };
+  users.groups = lib.genAttrs containerUsers (_: { });
 }
