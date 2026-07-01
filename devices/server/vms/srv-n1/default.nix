@@ -11,8 +11,8 @@
   imports = [
     ./hardware-configuration.nix
     ./disko.nix
+    ./backup.nix
     inputs.lanzaboote.nixosModules.lanzaboote
-    # ./backup.nix
   ];
 
   environment.systemPackages = [ pkgs.sbctl ];
@@ -25,15 +25,21 @@
         configurationLimit = 8;
       };
     };
-    initrd.systemd.enable = true;
+    initrd = {
+      systemd = {
+        enable = true;
+        emergencyAccess = true;
+      };
+      luks.devices."cryptroot" = {
+        keyFile = lib.mkForce null;
+        crypttabExtraOpts = [ "tpm2-device=auto" ];
+      };
+    };
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
       autoGenerateKeys.enable = true;
-      autoEnrollKeys = {
-        enable = true;
-        autoReboot = true;
-      };
+      autoEnrollKeys.enable = true;
       measuredBoot = {
         enable = true;
         pcrs = [

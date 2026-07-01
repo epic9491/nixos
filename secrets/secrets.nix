@@ -1,6 +1,7 @@
 let
   secret-mgmt = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMvYIo3MxF2XpAhMjZ/T6NfI+PAlB8GDrZ11xjH5uVb gumbo@nixos";
   console = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwFGIeJCte8DLdoBmE7Q8FYhTWazkVLMwq6B/6hadd8 gumbo@console";
+  srv-n1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINSDR29Go5nMlk58JRcYWM3qNET5tUP1/0jdNPBh6x2S gumbo@srv-n1";
   seed = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMQCpz0YViCu28wuI30HiOFBKld/sAAfwKDSGK2W2+J5 gumbo@seed";
   v-null = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDK/9uPYOJkAqnA8HVAr+g0aThRP4N8bFd9erpAMMCZY gumbo@null";
   k3s-s1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGUVBtM6haqazKIi6nYx3KF+1N1OliHW+KjQDLqEdLzO gumbo@k3s-s1";
@@ -18,6 +19,7 @@ let
     k3s-a3 
     k3s-a4 
     v-null 
+    srv-n1
   ];
   k3s = [ 
     secret-mgmt 
@@ -38,6 +40,6 @@ in
   "grafana-datasources-s1.age".publicKeys = [ secret-mgmt k3s-s1 ];
   "wg0.age".publicKeys = [ secret-mgmt seed v-null ];
   "pbs.console.age".publicKeys = [ secret-mgmt console ];
-  "srv-n1.console.age".publicKeys = [ secret-mgmt ];
-  "pbs.srv-n1.key.age".publicKeys = [ secret-mgmt ];
+  "srv-n1.console.age".publicKeys = [ secret-mgmt srv-n1 ];
+  "pbs.srv-n1.key.age".publicKeys = [ secret-mgmt srv-n1 ];
 }

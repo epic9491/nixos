@@ -1,5 +1,5 @@
 locals {
-  srv-n1_ipv4 = "192.168.0.40"
+  srv-n1_ipv4 = "192.168.0.38"
 }
 module "deploy_srv-n1" {
   source                 = "github.com/nix-community/nixos-anywhere//terraform/all-in-one"
@@ -15,7 +15,7 @@ module "deploy_srv-n1" {
   disk_encryption_key_scripts = [
     {
       path   = "/tmp/disk.key"
-      script = "cat /home/gumbo/.secrets/srv-n1-luks"
+      script = "/home/gumbo/.secrets/srv-n1-luks.sh"
     }
   ]
 }
