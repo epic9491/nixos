@@ -64,7 +64,7 @@
   age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
 
   networking.hostName = "srv-n1";
-  networking.nameservers = [ "9.9.9.9" "1.1.1.1" ];
+  networking.networkmanager.insertNameservers = [ "9.9.9.9" "1.1.1.1" ];
 
   server.baseline.enable = true;
   workstation = {
