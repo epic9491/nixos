@@ -29,7 +29,6 @@
       "wheel"
       "docker"
       "networkmanager"
-      "borg"
     ];
   };
 
