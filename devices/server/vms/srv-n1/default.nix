@@ -19,7 +19,6 @@
   users.users.gumbo = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    initialPassword = "supersecretpassword";
     extraGroups = [
       "wheel"
       "networkmanager"

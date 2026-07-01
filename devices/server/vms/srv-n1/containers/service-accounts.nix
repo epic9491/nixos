@@ -1,6 +1,6 @@
 { lib, ... }:
 let
-  containerUsers = [ "mealie" "newt" ]; # add new services here, nothing else to touch
+  containerUsers = [ "mealie" "newt" ];
 in
 {
   users.manageLingering = true;
