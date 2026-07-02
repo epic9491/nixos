@@ -1,6 +1,13 @@
 { lib, ... }:
 let
-  containerUsers = [ "mealie" "newt" "karakeep" "kavita" "vaultwarden" ];
+  containerUsers = [
+    "mealie"
+    "newt"
+    "karakeep"
+    "kavita"
+    "vaultwarden"
+    "navidrome"
+  ];
 in
 {
   users.manageLingering = true;

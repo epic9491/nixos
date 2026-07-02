@@ -6,5 +6,6 @@
     ./karakeep.nix
     ./kavita.nix
     ./vaultwarden.nix
+    ./navidrome.nix
   ];
 }
