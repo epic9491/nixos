@@ -11,7 +11,7 @@
         ports = [ "127.0.0.1:4533:4533" ];
         volumes = [
           "/var/lib/navidrome/data:/data:Z"
-          "/srv/music:/library:ro"
+          "/srv/music:/music:ro"
         ];
         environment = {
           ND_AcceptExtensions = ".mp4,.flac,.m4a";
