@@ -9,7 +9,7 @@
         autoStart = true;
         autoUpdate = "registry";
         ports = [ "127.0.0.1:8000:8000" ];
-        volumes = [ "/srv/vaultwarden/data:/data:Z" ];
+        volumes = [ "/var/lib/vaultwarden/data:/data:Z" ];
         environmentFile = [ "/run/secrets/vaultwarden.env" ];
         environment = {
           SIGNUPS_ALLOWED = "false";

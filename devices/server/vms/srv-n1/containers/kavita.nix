@@ -10,7 +10,7 @@
         autoUpdate = "registry";
         ports = [ "127.0.0.1:5000:5000" ];
         volumes = [
-          "/srv/kavita/config:/kavita/config:Z"
+          "/var/lib/kavita/config:/kavita/config:Z"
           "/mnt/manga:/library:ro"
         ];
         environment = {

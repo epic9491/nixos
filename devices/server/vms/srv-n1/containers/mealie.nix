@@ -9,7 +9,7 @@
         autoStart = true;
         autoUpdate = "registry";
         ports = [ "127.0.0.1:9000:9000" ];
-        volumes = [ "/srv/mealie/data:/app/data:Z" ];
+        volumes = [ "/var/lib/mealie/data:/app/data:Z" ];
         environment = {
           ALLOW_SIGNUP = "false";
           PUID = 1000;

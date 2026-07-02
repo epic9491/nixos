@@ -12,7 +12,7 @@
         autoStart = true;
         autoUpdate = "registry";
         ports = [ "127.0.0.1:3000:3000" ];
-        volumes = [ "/srv/karakeep/data:/data:Z" ];
+        volumes = [ "/var/lib/karakeep/data:/data:Z" ];
         network = "karakeep.network";
         environmentFile = [ "/run/secrets/karakeep.env" ];
         environment = {
