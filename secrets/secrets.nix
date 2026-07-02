@@ -43,4 +43,5 @@ in
   "pbs.srv-n1.age".publicKeys = [ secret-mgmt srv-n1 ];
   "pbs.srv-n1.key.age".publicKeys = [ secret-mgmt srv-n1 ];
   "srv-n1.newt.env.age".publicKeys = [ secret-mgmt srv-n1 ];
+  "srv-n1.karakeep.env.age".publicKeys = [ secret-mgmt srv-n1 ];
 }
