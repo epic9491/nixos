@@ -5,5 +5,6 @@
     ./newt.nix
     ./karakeep.nix
     ./kavita.nix
+    ./vaultwarden.nix
   ];
 }
