@@ -14,6 +14,7 @@
     ./backup.nix
     ./boot.nix
     ./containers
+    ./mounts.nix
   ];
 
   users.users.gumbo = {

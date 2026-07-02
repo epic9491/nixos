@@ -4,5 +4,6 @@
     ./mealie.nix
     ./newt.nix
     ./karakeep.nix
+    ./kavita.nix
   ];
 }
