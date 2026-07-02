@@ -14,7 +14,7 @@
           "/srv/music:/library:ro"
         ];
         environment = {
-          ND_AcceptExtensions: ".mp4,.flac,.m4a";
+          ND_AcceptExtensions = ".mp4,.flac,.m4a";
         };
         extraConfig.Service.Restart = "always";
       };
