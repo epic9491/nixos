@@ -9,7 +9,10 @@
         autoStart = true;
         autoUpdate = "registry";
         ports = [ "127.0.0.1:8081:8080" ];
-        volumes = [ "/var/lib/lubelogger/data:/app/data:Z" ];
+        volumes = [
+          "/var/lib/lubelogger/data:/app/data:Z"
+          "/var/lib/lubelogger/keys:/root/.aspnet/DataProtection-Keys:Z"
+        ];
         volumes = [ "/var/lib/lubelogger/keys:/root/.aspnet/DataProtection-Keys:Z" ];
         extraConfig.Service.Restart = "always";
       };
