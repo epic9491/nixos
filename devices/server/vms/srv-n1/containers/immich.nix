@@ -8,7 +8,7 @@
       networks.immich = { };
 
       containers.immich-server = {
-        image = "ghcr.io/immich-app/immich-server:v2";
+        image = "ghcr.io/immich-app/immich-server:v3";
         autoStart = true;
         autoUpdate = "registry";
         network = "immich.network";
