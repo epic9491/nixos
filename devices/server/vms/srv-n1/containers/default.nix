@@ -6,7 +6,7 @@
     ./karakeep.nix
     ./kavita.nix
     ./vaultwarden.nix
-    ./navidrome.nix
+    # ./navidrome.nix <-- pausing for now until upload speeds get better
     ./lube.nix
   ];
 }
