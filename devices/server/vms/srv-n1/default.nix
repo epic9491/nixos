@@ -13,6 +13,7 @@
     ./disko.nix
     ./backup.nix
     ./boot.nix
+    ./cockpit.nix
     ./containers
     ./mounts.nix
   ];
