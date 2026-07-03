@@ -9,6 +9,7 @@ let
     "navidrome"
     "lubelogger"
     "adguard"
+    "immich"
   ];
 in
 {

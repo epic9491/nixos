@@ -45,4 +45,5 @@ in
   "srv-n1.newt.env.age".publicKeys = [ secret-mgmt srv-n1 ];
   "srv-n1.karakeep.env.age".publicKeys = [ secret-mgmt srv-n1 ];
   "srv-n1.vaultwarden.env.age".publicKeys = [ secret-mgmt srv-n1 ];
+  "srv-n1.immich.env.age".publicKeys = [ secret-mgmt srv-n1 ];
 }
