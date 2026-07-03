@@ -8,6 +8,7 @@ let
     "vaultwarden"
     "navidrome"
     "lubelogger"
+    "adguard"
   ];
 in
 {
