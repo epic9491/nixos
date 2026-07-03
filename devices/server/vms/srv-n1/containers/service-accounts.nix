@@ -7,6 +7,7 @@ let
     "kavita"
     "vaultwarden"
     "navidrome"
+    "lubelogger"
   ];
 in
 {

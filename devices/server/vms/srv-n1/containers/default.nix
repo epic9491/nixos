@@ -7,5 +7,6 @@
     ./kavita.nix
     ./vaultwarden.nix
     ./navidrome.nix
+    ./lube.nix
   ];
 }
