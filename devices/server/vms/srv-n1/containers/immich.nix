@@ -15,6 +15,7 @@
         ports = [ "127.0.0.1:2283:2283" ];
         volumes = [
           "/var/lib/immich/library:/data"
+          "/mnt/photos/Apple-Photos:/external/apple-photos:ro"
           "/etc/localtime:/etc/localtime:ro"
         ];
         environmentFile = [ "/run/secrets/immich.env" ];
