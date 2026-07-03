@@ -13,7 +13,6 @@
           "/var/lib/lubelogger/data:/app/data:Z"
           "/var/lib/lubelogger/keys:/root/.aspnet/DataProtection-Keys:Z"
         ];
-        volumes = [ "/var/lib/lubelogger/keys:/root/.aspnet/DataProtection-Keys:Z" ];
         extraConfig.Service.Restart = "always";
       };
     };
