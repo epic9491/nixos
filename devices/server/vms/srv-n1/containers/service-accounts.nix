@@ -10,6 +10,7 @@ let
     "lubelogger"
     "adguard"
     "immich"
+    "uptime-kuma"
   ];
 in
 {
