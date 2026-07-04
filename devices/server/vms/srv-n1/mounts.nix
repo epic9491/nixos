@@ -15,4 +15,12 @@
       "nofail"
     ];
   };
+  fileSystems."/mnt/music" = {
+    device = "192.168.0.183:/mnt/jelly/music/lossless";
+    fsType = "nfs";
+    options = [
+      "noatime"
+      "nofail"
+    ];
+  };
 }
