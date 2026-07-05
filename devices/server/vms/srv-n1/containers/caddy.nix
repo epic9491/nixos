@@ -5,6 +5,7 @@
       caddyfile = pkgs.writeText "Caddyfile" ''
         {
           default_bind 100.69.69.210
+          http_port 8080
           https_port 8443
         }
 
