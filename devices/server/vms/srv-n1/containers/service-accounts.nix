@@ -13,6 +13,7 @@ let
     "immich-public"
     "uptime-kuma"
     "caddy"
+    "searxng"
   ];
 in
 {

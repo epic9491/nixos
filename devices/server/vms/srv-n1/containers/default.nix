@@ -13,5 +13,6 @@
     ./immich.nix
     ./immich-public.nix
     ./uptime-kuma.nix
+    ./searxng.nix
   ];
 }
