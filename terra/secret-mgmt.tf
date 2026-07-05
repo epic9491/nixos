@@ -10,7 +10,7 @@ module "deploy_secret-mgmt" {
   instance_id            = local.secret-mgmt_ipv4
   debug_logging              = true
   build_on_remote            = false
-  nixos_generate_config_path = "/home/gumbo/nixos/devices/server/vms/secret-mgmt/hardware-configuration.nix"
+  nixos_generate_config_path = "/home/gumbo/nixos/devices/server/secret-mgmt/hardware-configuration.nix"
   install_ssh_key            = file("/home/gumbo/.ssh/temp")
   deployment_ssh_key         = file("/home/gumbo/.ssh/temp")
 }

@@ -23,7 +23,7 @@
   users.groups.newt = {};
   
   age.secrets."newt.env.age" = {
-    file = ../../../secrets/newt.env.age;
+    file = ../../../../secrets/newt.env.age;
     path = "/run/agenix/newt.env.age";
     owner = "newt";
     group = "newt";

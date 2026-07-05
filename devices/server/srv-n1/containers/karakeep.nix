@@ -64,7 +64,7 @@
   };
 
   age.secrets."karakeep.env" = {
-    file = ../../../../../secrets/srv-n1.karakeep.env.age;
+    file = ../../../../secrets/srv-n1.karakeep.env.age;
     path = "/run/secrets/karakeep.env";
     owner = "karakeep";
     group = "karakeep";

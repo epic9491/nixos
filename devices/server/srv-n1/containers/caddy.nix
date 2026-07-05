@@ -46,7 +46,7 @@
     };
 
   age.secrets."caddy.env" = {
-    file = ../../../../../secrets/srv-n1.caddy.env.age;
+    file = ../../../../secrets/srv-n1.caddy.env.age;
     path = "/run/secrets/caddy.env";
     owner = "caddy";
     group = "caddy";

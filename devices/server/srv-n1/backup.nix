@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   age.secrets."srv-n1.token" = {
-    file = ../../../../secrets/pbs.srv-n1.age;
+    file = ../../../secrets/pbs.srv-n1.age;
     path = "/run/secrets/srv-n1.token";
     owner = "root";
     group = "root";
@@ -9,7 +9,7 @@
   };
 
   age.secrets."srv-n1.key" = {
-    file = ../../../../secrets/pbs.srv-n1.key.age;
+    file = ../../../secrets/pbs.srv-n1.key.age;
     path = "/run/secrets/srv-n1.key";
     owner = "root";
     group = "root";

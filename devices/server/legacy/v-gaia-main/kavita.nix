@@ -13,7 +13,7 @@
   };
 
   age.secrets."kavita.tokenkey.age" = {
-    file = ../../../secrets/kavita.tokenkey.age;
+    file = ../../../../secrets/kavita.tokenkey.age;
     path = "/run/agenix/kavita.tokenkey.age";
     owner = "kavita";
     group = "users";

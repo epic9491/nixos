@@ -22,7 +22,7 @@
   };
 
   age.secrets."vaultwarden.env" = {
-    file = ../../../../../secrets/srv-n1.vaultwarden.env.age;
+    file = ../../../../secrets/srv-n1.vaultwarden.env.age;
     path = "/run/secrets/vaultwarden.env";
     owner = "vaultwarden";
     group = "vaultwarden";

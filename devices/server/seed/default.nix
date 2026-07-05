@@ -9,11 +9,11 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ../../../../modules/baseline.nix
-    ../../../../modules/kde.nix
-    ../../../../modules/packages.nix
-    ../../../../modules/ssh.nix
-    ../../../../modules/flatpak.nix
+    ../../../modules/baseline.nix
+    ../../../modules/kde.nix
+    ../../../modules/packages.nix
+    ../../../modules/ssh.nix
+    ../../../modules/flatpak.nix
   ];
 
   # hostname
