@@ -20,6 +20,7 @@
     ];
     text = ''
       source /run/secrets/cockpit.env
+      rm -f /etc/cockpit/cockpit.conf
       cat > /etc/cockpit/cockpit.conf <<EOF
       [WebService]
       Origins = https://localhost:9090 https://$COCKPIT_DOMAIN
