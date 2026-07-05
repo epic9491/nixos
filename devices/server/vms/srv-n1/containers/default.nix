@@ -11,6 +11,7 @@
     ./lube.nix
     ./adguard.nix
     ./immich.nix
+    ./immich-public.nix
     ./uptime-kuma.nix
   ];
 }

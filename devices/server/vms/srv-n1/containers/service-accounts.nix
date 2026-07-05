@@ -10,6 +10,7 @@ let
     "lubelogger"
     "adguard"
     "immich"
+    "immich-public"
     "uptime-kuma"
     "caddy"
   ];
