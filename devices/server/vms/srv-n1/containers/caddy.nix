@@ -4,7 +4,7 @@
     let
       caddyfile = pkgs.writeText "Caddyfile" ''
         {
-          bind 100.69.69.210
+          default_bind 100.69.69.210
           https_port 8443
         }
 
