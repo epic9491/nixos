@@ -1,9 +1,13 @@
-{ ... }:
+{ lib, ... }:
 {
   services.cockpit = {
     enable = true;
     openFirewall = false;
   };
+
+  systemd.sockets.cockpit.listenStreams = lib.mkForce [ "100.69.69.210:9090" ];
+
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 9090 ];
 
   age.secrets."cockpit.env" = {
     file = ../../../../secrets/srv-n1.cockpit.env.age;
@@ -23,7 +27,7 @@
       rm -f /etc/cockpit/cockpit.conf
       cat > /etc/cockpit/cockpit.conf <<EOF
       [WebService]
-      Origins = https://localhost:9090 https://$COCKPIT_DOMAIN
+      Origins = https://$COCKPIT_DOMAIN
       ProtocolHeader = X-Forwarded-Proto
       LoginTo = false
       EOF
