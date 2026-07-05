@@ -52,6 +52,8 @@
     mode = "0400";
   };
 
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 8443 ];
+
   networking.firewall.extraCommands = ''
     iptables -t nat -A PREROUTING -d 100.69.69.210 -p tcp --dport 443 -j REDIRECT --to-port 8443
   '';
