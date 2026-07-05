@@ -47,4 +47,5 @@ in
   "srv-n1.vaultwarden.env.age".publicKeys = [ secret-mgmt srv-n1 ];
   "srv-n1.immich.env.age".publicKeys = [ secret-mgmt srv-n1 ];
   "srv-n1.caddy.env.age".publicKeys = [ secret-mgmt srv-n1 ];
+  "srv-n1.cockpit.env.age".publicKeys = [ secret-mgmt srv-n1 ];
 }
