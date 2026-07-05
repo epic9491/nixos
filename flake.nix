@@ -174,28 +174,28 @@
         };
 
        # void = mkServer {
-       #   deviceModule = ./devices/server/void/default.nix;
+       #   deviceModule = ./devices/server/legacy/void/default.nix;
        #   hmImports = [
        #     ./home/server.nix
        #     ./home/zsh.nix
        #   ];
        # };
        # v-gaia-main = mkServer {
-       #   deviceModule = ./devices/server/v-gaia-main/default.nix;
+       #   deviceModule = ./devices/server/legacy/v-gaia-main/default.nix;
        #   hmImports = [
        #     ./home/server.nix
        #     ./home/zsh.nix
        #   ];
        # };
        # zeus = mkServer {
-       #   deviceModule = ./devices/server/zeus/default.nix;
+       #   deviceModule = ./devices/server/legacy/zeus/default.nix;
        #   hmImports = [
        #     ./home/server.nix
        #     ./home/zsh.nix
        #   ];
        # };
 	      seed = mkWorkstation {
-          deviceModule = ./devices/server/vms/seed/default.nix;
+          deviceModule = ./devices/server/seed/default.nix;
           hmImports = [
             ./home/common.nix
             ./home/zsh.nix
@@ -203,49 +203,49 @@
           ];
         };
         srv-n1 = mkServer {
-          deviceModule = ./devices/server/vms/srv-n1/default.nix;
+          deviceModule = ./devices/server/srv-n1/default.nix;
           hmImports = [
             ./home/server.nix
             ./home/zsh.nix
           ];
         };
         secret-mgmt = mkServer {
-          deviceModule = ./devices/server/vms/secret-mgmt/default.nix;
+          deviceModule = ./devices/server/secret-mgmt/default.nix;
           hmImports = [
             ./home/server.nix
             ./home/zsh.nix
           ];
         };
         k3s-a1 = mkServer {
-          deviceModule = ./devices/server/vms/k3s-a1/default.nix;
+          deviceModule = ./devices/server/k3s/k3s-a1/default.nix;
           hmImports = [
             ./home/server.nix
             ./home/zsh.nix
           ];
         };
         k3s-a2 = mkServer {
-          deviceModule = ./devices/server/vms/k3s-a2/default.nix;
+          deviceModule = ./devices/server/k3s/k3s-a2/default.nix;
           hmImports = [
             ./home/server.nix
             ./home/zsh.nix
           ];
         };
         k3s-a3 = mkServer {
-          deviceModule = ./devices/server/vms/k3s-a3/default.nix;
+          deviceModule = ./devices/server/k3s/k3s-a3/default.nix;
           hmImports = [
             ./home/server.nix
             ./home/zsh.nix
           ];
         };
         k3s-a4 = mkServer {
-          deviceModule = ./devices/server/vms/k3s-a4/default.nix;
+          deviceModule = ./devices/server/k3s/k3s-a4/default.nix;
           hmImports = [
             ./home/server.nix
             ./home/zsh.nix
           ];
         };
         k3s-s1 = mkServer {
-          deviceModule = ./devices/server/vms/k3s-s1/default.nix;
+          deviceModule = ./devices/server/k3s/k3s-s1/default.nix;
           hmImports = [
             ./home/server.nix
             ./home/zsh.nix

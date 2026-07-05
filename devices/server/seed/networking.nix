@@ -17,7 +17,7 @@
     libnatpmp
   ];
  # age.secrets."wg0.age" = {
- #   file = ../../../../secrets/wg0.age;
+ #   file = ../../../secrets/wg0.age;
  #   path = "/run/secrets/wg0.age";
  #   owner = "gumbo";
  #   group = "users";

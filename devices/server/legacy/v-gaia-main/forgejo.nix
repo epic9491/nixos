@@ -62,7 +62,7 @@
   };
 
   age.secrets."forgejo_dbPass.age" = {
-    file = ../../../secrets/forgejo_dbPass.age;
+    file = ../../../../secrets/forgejo_dbPass.age;
     path = "/run/agenix/forgejo_dbPass.age";
     owner = "forgejo";
     group = "forgejo";

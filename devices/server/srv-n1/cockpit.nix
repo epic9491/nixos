@@ -11,7 +11,7 @@
   ];
 
   age.secrets."cockpit.env" = {
-    file = ../../../../secrets/srv-n1.cockpit.env.age;
+    file = ../../../secrets/srv-n1.cockpit.env.age;
     path = "/run/secrets/cockpit.env";
     owner = "root";
     group = "root";

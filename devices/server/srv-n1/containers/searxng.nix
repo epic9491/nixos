@@ -40,7 +40,7 @@
   };
 
   age.secrets."searxng.env" = {
-    file = ../../../../../secrets/srv-n1.searxng.env.age;
+    file = ../../../../secrets/srv-n1.searxng.env.age;
     path = "/run/secrets/searxng.env";
     owner = "searxng";
     group = "searxng";

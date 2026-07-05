@@ -67,7 +67,7 @@
   };
 
   age.secrets."immich.env" = {
-    file = ../../../../../secrets/srv-n1.immich.env.age;
+    file = ../../../../secrets/srv-n1.immich.env.age;
     path = "/run/secrets/immich.env";
     owner = "immich";
     group = "immich";
