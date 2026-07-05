@@ -1,35 +1,31 @@
-{ pkgs, ... }:
+{ ... }:
 {
   services.cockpit = {
     enable = true;
     openFirewall = false;
-    allowed-origins = [
-      "https://srv-n1.zorse-ruffe.ts.net"
-      "https://srv-n1.zorse-ruffe.ts.net:443"
+  };
+
+  age.secrets."cockpit.env" = {
+    file = ../../../../secrets/srv-n1.cockpit.env.age;
+    path = "/run/secrets/cockpit.env";
+    owner = "root";
+    group = "root";
+    mode = "0400";
+  };
+
+  system.activationScripts.cockpitConfig = {
+    deps = [
+      "agenixInstall"
+      "etc"
     ];
-    settings = {
-      WebService = {
-        ProtocolHeader = "X-Forwarded-Proto";
-      };
-    };
-  };
-
-  services.tailscale = {
-    enable = true;
-    permitCertUid = "root";
-  };
-
-  systemd.services.tailscale-serve-cockpit = {
-    description = "Expose Cockpit via tailscale serve";
-    after = [ "tailscaled.service" "cockpit.socket" ];
-    requires = [ "tailscaled.service" ];
-    bindsTo = [ "tailscaled.service" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg --https=443 localhost:9090";
-      ExecStop = "${pkgs.tailscale}/bin/tailscale serve --https=443 off";
-    };
+    text = ''
+      source /run/secrets/cockpit.env
+      cat > /etc/cockpit/cockpit.conf <<EOF
+      [WebService]
+      Origins = https://localhost:9090 https://$COCKPIT_DOMAIN
+      ProtocolHeader = X-Forwarded-Proto
+      LoginTo = false
+      EOF
+    '';
   };
 }
