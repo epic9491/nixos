@@ -5,9 +5,7 @@
     openFirewall = false;
   };
 
-  systemd.sockets.cockpit.listenStreams = lib.mkForce [ "100.69.69.210:9090" ];
-
-  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 9090 ];
+  systemd.sockets.cockpit.listenStreams = lib.mkForce [ "127.0.0.1:9090" ];
 
   age.secrets."cockpit.env" = {
     file = ../../../../secrets/srv-n1.cockpit.env.age;

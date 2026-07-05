@@ -3,6 +3,11 @@
     { pkgs, ... }:
     let
       caddyfile = pkgs.writeText "Caddyfile" ''
+        {
+          bind 100.69.69.210
+          https_port 8443
+        }
+
         {env.DOMAIN} {
           reverse_proxy 100.69.69.210:4533
           tls {
@@ -11,7 +16,7 @@
         }
 
         {env.COCKPIT_DOMAIN} {
-          reverse_proxy 100.69.69.210:9090
+          reverse_proxy 127.0.0.1:9090
           tls {
             dns cloudflare {env.CF_API_TOKEN}
           }
@@ -27,7 +32,7 @@
           image = "ghcr.io/caddybuilds/caddy-cloudflare:latest";
           autoStart = true;
           autoUpdate = "registry";
-          ports = [ "100.69.69.210:8443:443/tcp" ];
+          network = "host";
           volumes = [
             "/var/lib/caddy/data:/data:Z"
             "/var/lib/caddy/config:/config:Z"
