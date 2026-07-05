@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - main
+      - claude
     paths:
       - 'devices/**'
       - 'home/**'
