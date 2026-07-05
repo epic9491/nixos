@@ -11,6 +11,7 @@ let
     "adguard"
     "immich"
     "uptime-kuma"
+    "caddy"
   ];
 in
 {

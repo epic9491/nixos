@@ -7,6 +7,7 @@
     ./kavita.nix
     ./vaultwarden.nix
     ./navidrome.nix
+    ./caddy.nix
     ./lube.nix
     ./adguard.nix
     ./immich.nix
