@@ -16,6 +16,7 @@
     ./cockpit.nix
     ./containers
     ./mounts.nix
+    ./svc.nix
   ];
 
   users.users.gumbo = {
