@@ -14,6 +14,7 @@ let
     "uptime-kuma"
     "caddy"
     "searxng"
+    "obsidian"
   ];
 in
 {

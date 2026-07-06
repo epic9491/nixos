@@ -14,5 +14,6 @@
     ./immich-public.nix
     ./uptime-kuma.nix
     ./searxng.nix
+    ./obsidian.nix
   ];
 }
