@@ -19,6 +19,7 @@
 
   users.users.gumbo = {
     isNormalUser = true;
+    uid = 1000;
     shell = pkgs.zsh;
     initialPassword = "supersecretpassword";
     extraGroups = [

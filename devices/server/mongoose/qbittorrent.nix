@@ -3,7 +3,7 @@
   users.users.gumbo.linger = true;
 
   systemd.tmpfiles.rules = [
-    "Z /var/lib/qbittorrent/config 0755 gumbo users -"
+    "Z /var/lib/qbittorrent 0755 gumbo users -"
     "Z /mnt/data/downloads 0755 gumbo users -"
     "Z /mnt/data/seeds 0755 gumbo users -"
   ];
@@ -16,6 +16,7 @@
         autoStart = true;
         autoUpdate = "registry";
         network = "host";
+        userNS = "keep-id";
         volumes = [
           "/var/lib/qbittorrent/config:/config:Z"
           "/mnt/data/downloads:/downloads:Z"
