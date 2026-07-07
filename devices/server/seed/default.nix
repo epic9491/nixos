@@ -9,6 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./networking.nix
     ../../../modules/baseline.nix
     ../../../modules/kde.nix
     ../../../modules/packages.nix
@@ -37,6 +38,16 @@
         "flathub:app/app.zen_browser.zen//stable"
       ];
     };
+  };
+
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "gumbo";
+  };
+
+  networking.firewall.interfaces = {
+    ens18.allowedTCPPorts = [ 3389 ];
+    tailscale0.allowedTCPPorts = [ 3389 ];
   };
 
   age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];

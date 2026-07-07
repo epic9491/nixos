@@ -9,18 +9,18 @@
     interfaces = {
       wg0 = {
         autostart = true;
-        configFile = "/home/gumbo/wireguard/wg0.conf";
+        configFile = "/run/secrets/wg0.conf";
       };
     };
   };
   environment.systemPackages = with pkgs; [
     libnatpmp
   ];
- # age.secrets."wg0.age" = {
- #   file = ../../../secrets/wg0.age;
- #   path = "/run/secrets/wg0.age";
- #   owner = "gumbo";
- #   group = "users";
- #   mode = "0400";
- # };
+  age.secrets."wg0.age" = {
+    file = ../../../secrets/wg0.age;
+    path = "/run/secrets/wg0.conf";
+    owner = "gumbo";
+    group = "users";
+    mode = "0400";
+  };
 }
