@@ -45,9 +45,42 @@
     user = "gumbo";
   };
 
+  services.sunshine = {
+    enable = true;
+    capSysAdmin = true;
+  };
+
   networking.firewall.interfaces = {
-    ens18.allowedTCPPorts = [ 3389 ];
-    tailscale0.allowedTCPPorts = [ 3389 ];
+    ens18 = {
+      allowedTCPPorts = [
+        47984
+        47989
+        47990
+        48010
+      ];
+      allowedUDPPorts = [
+        47998
+        47999
+        48000
+        48002
+        48010
+      ];
+    };
+    tailscale0 = {
+      allowedTCPPorts = [
+        47984
+        47989
+        47990
+        48010
+      ];
+      allowedUDPPorts = [
+        47998
+        47999
+        48000
+        48002
+        48010
+      ];
+    };
   };
 
   age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];

@@ -200,7 +200,6 @@
             ./home/common.nix
             ./home/zsh.nix
             ./home/kde.nix
-            ./home/rdp.nix
           ];
         };
         srv-n1 = mkServer {
