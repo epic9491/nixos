@@ -1,19 +1,14 @@
 {
   users.manageLingering = true;
+  users.users.gumbo.linger = true;
 
-  users.users.qbittorrent = {
-    isSystemUser = true;
-    group = "qbittorrent";
-    linger = true;
-    home = "/var/lib/qbittorrent";
-    createHome = true;
-    autoSubUidGidRange = true;
-  };
-  users.groups.qbittorrent = { };
+  systemd.tmpfiles.rules = [
+    "Z /var/lib/qbittorrent/config 0755 gumbo users -"
+    "Z /mnt/data/downloads 0755 gumbo users -"
+    "Z /mnt/data/seeds 0755 gumbo users -"
+  ];
 
-  home-manager.users.qbittorrent = { ... }: {
-    home.stateVersion = "25.05";
-
+  home-manager.users.gumbo = { ... }: {
     services.podman = {
       enable = true;
       containers.qbittorrent = {
