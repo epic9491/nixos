@@ -17,8 +17,5 @@
     mode = "0400";
   };
 
-  networking.firewall.interfaces = {
-    ens18.allowedTCPPorts = [ 8080 ];
-    tailscale0.allowedTCPPorts = [ 8080 ];
-  };
+  networking.firewall.interfaces.ens18.allowedTCPPorts = [ 8080 ];
 }

@@ -34,6 +34,8 @@
 
   server.baseline.enable = true;
 
+  services.tailscale.enable = lib.mkForce false;
+
   workstation = {
     ssh.enable = true;
   };
