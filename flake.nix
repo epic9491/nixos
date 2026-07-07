@@ -194,14 +194,6 @@
        #     ./home/zsh.nix
        #   ];
        # };
-	      seed = mkWorkstation {
-          deviceModule = ./devices/server/seed/default.nix;
-          hmImports = [
-            ./home/common.nix
-            ./home/zsh.nix
-            ./home/kde.nix
-          ];
-        };
         srv-n1 = mkServer {
           deviceModule = ./devices/server/srv-n1/default.nix;
           hmImports = [
