@@ -1,5 +1,5 @@
 locals {
-  mongoose_ipv4 = "192.168.0.192"
+  mongoose_ipv4 = "192.168.0.191"
 }
 
 module "deploy_mongoose" {
