@@ -20,7 +20,7 @@
         image = "lscr.io/linuxserver/qbittorrent:latest";
         autoStart = true;
         autoUpdate = "registry";
-        ports = [ "8080:8080" ];
+        network = "host";
         volumes = [
           "/var/lib/qbittorrent/config:/config:Z"
           "/mnt/data/downloads:/downloads:Z"
