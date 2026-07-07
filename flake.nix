@@ -216,6 +216,13 @@
             ./home/zsh.nix
           ];
         };
+        mongoose = mkServer {
+          deviceModule = ./devices/server/mongoose/default.nix;
+          hmImports = [
+            ./home/server.nix
+            ./home/zsh.nix
+          ];
+        };
         k3s-a1 = mkServer {
           deviceModule = ./devices/server/k3s/k3s-a1/default.nix;
           hmImports = [
