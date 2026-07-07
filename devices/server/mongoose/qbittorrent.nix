@@ -24,6 +24,7 @@
         volumes = [
           "/var/lib/qbittorrent/config:/config:Z"
           "/mnt/data/downloads:/downloads:Z"
+          "/mnt/data/seeds:/seeds:Z"
         ];
         environment = {
           PUID = 1000;
