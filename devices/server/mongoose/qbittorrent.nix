@@ -23,7 +23,7 @@
         ports = [ "8080:8080" ];
         volumes = [
           "/var/lib/qbittorrent/config:/config:Z"
-          "/var/lib/qbittorrent/downloads:/downloads:Z"
+          "/mnt/data/downloads:/downloads:Z"
         ];
         environment = {
           PUID = 1000;

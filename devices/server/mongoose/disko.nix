@@ -29,6 +29,16 @@
           };
         };
       };
+      data = {
+        type = "disk";
+        device = "/dev/sdb";
+        content = {
+          type = "filesystem";
+          format = "ext4";
+          mountpoint = "/mnt/data";
+          extraArgs = [ "-m" "0" ];
+        };
+      };
     };
   };
 }

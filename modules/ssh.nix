@@ -27,6 +27,8 @@ in
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIL6UrcHX2dRQu98j1yAO2Xo+XOJReQEXHuYIukguk8/aAAAABHNzaDo= yubikey3 mobile"
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAIMHAg8btMUyPygL6n7d+aPu9surWfKncWrRf5o1pFRsxAAAABHNzaDo= yubikey4 backup"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICnfZ1F0i8Jeid2KZ0EZZWlD9yX8lDLZFyHf6NfWZZ4O ansible@ansible"
+      # terraform deploy key
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSGpPD06R4k7GUsnMc9TghbCbpu4Y1ps+Bu0jv8FTGa gumbo@suse"
     ];
     networking.firewall.allowedTCPPorts = [ 22 ];
   };

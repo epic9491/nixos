@@ -11,6 +11,6 @@ module "deploy_mongoose" {
   debug_logging              = true
   build_on_remote            = false
   nixos_generate_config_path = "/home/gumbo/nixos/devices/server/mongoose/hardware-configuration.nix"
-  install_ssh_key            = file("/home/gumbo/.ssh/temp")
-  deployment_ssh_key         = file("/home/gumbo/.ssh/temp")
+  install_ssh_key            = file("/home/gumbo/.ssh/terra_deploy")
+  deployment_ssh_key         = file("/home/gumbo/.ssh/terra_deploy")
 }
