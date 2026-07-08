@@ -19,6 +19,9 @@
     ./svc.nix
   ];
 
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 20;
+  };
   users.users.gumbo = {
     isNormalUser = true;
     shell = pkgs.zsh;
