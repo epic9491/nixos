@@ -49,4 +49,6 @@ in
   "srv-n1.searxng.env.age".publicKeys = [ secret-mgmt srv-n1 ];
   "srv-n1.obsidian-couchdb.env.age".publicKeys = [ secret-mgmt srv-n1 ];
   "srv-n1.obsidian-cloudflared.env.age".publicKeys = [ secret-mgmt srv-n1 ];
+  "srv-n1.owntracks.env.age".publicKeys = [ secret-mgmt srv-n1 ];
+  "srv-n1.owntracks-cloudflared.env.age".publicKeys = [ secret-mgmt srv-n1 ];
 }
