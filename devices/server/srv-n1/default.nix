@@ -35,7 +35,10 @@
 
   networking = {
     hostName = "srv-n1";
-    nameservers = [ "9.9.9.9" "1.1.1.1" ];
+    nameservers = [
+      "9.9.9.9"
+      "1.1.1.1"
+    ];
     networkmanager = {
       dns = "none";
       settings.main.rc-manager = "unmanaged";
@@ -43,7 +46,5 @@
   };
 
   server.baseline.enable = true;
-  workstation = {
-    ssh.enable = true;
-  };
+  ssh.enable = true;
 }

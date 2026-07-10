@@ -20,14 +20,18 @@ Though I've learned a lot about NixOS since I started daily driving it in 2025, 
 ## Repo structure
 
 - `/config`: software configuration files (ghostty, fastfetch, niri binds, etc). Pretty much all of these are managed through Home Manager and deployed to `~/.config`.
-- `/devices`: broken into `/desktop`, `/laptop`, and `/server`. This is where device-specific configurations and modules are imported and set, as well as the home for `hardware-configuration.nix`. If you're cloning this repo, don't forget to replace this file with your own.
+- `/devices`: broken into `/desktop`, `/laptop`, and `/server`. This is where device-specific configurations and modules are imported and set, as well as the home for `hardware-configuration.nix`. If you're cloning this repo, don't forget to replace this file with your own. Retired hosts are preserved on the `legacy` branch.
 - `/home`: Home Manager configurations for my baseline (`common.nix`), DE/WM-specific configurations, etc.
 - `/modules`: this is where the vast majority of the restructuring was done. Review and adjust as needed. Many things are specific to my environment. Overall, the move to modules should make this repo much more flexible for both myself and anyone else who may want to use it.
 - `/pics`: profile pictures and eventually screenshots to include in the README.
+- `/pkgs`: custom package derivations not available in nixpkgs.
+- `/secrets`: agenix-encrypted secrets and `secrets.nix`, which defines which host keys can decrypt each secret.
+- `/terra`: Terraform + nixos-anywhere deployments for provisioning hosts, one file per machine.
 
 ## Important things to note
 
-- My workstations run on the **unstable** branch, use the **latest kernel**, and **allow unfree software**. My servers run on the **stable** branch, use an **LTS kernel**, and also allow **unfree software**. Garbage collection removes all generations older than 7 days on both workstations and servers, Nix store optimization is run on every rebuild.
+- My workstations run on the **unstable** branch, use the **latest kernel**, and **allow unfree software**. My servers run on the **stable** branch, use an **LTS kernel**, and also allow **unfree software**. Garbage collection removes generations older than 7 days on workstations and 14 days on servers, Nix store optimization runs weekly on both.
+- My user is created with an `initialPassword`. It only applies the first time the user is created, and SSH is key-only, but you should still set a real password with `passwd` on first boot.
 - `/modules/baseline.nix` is exactly what it sounds like. Services, kernel and boot parameters, and other core, shared settings are defined here. You should review this file. The baseline is enabled with: ```workstation.baseline.enable = true;```. Most modules are nested within the ```workstation``` option.
 - `/modules/packages.nix` handles all shared packages for workstations. It is broken up into options, being ```tools```, ```dev```, and ```apps```. I have nested the modules options into the ```baseline``` option as I still consider it a part of the baseline, but that file was getting too big and this makes more sense.
 - All builds use **zsh** by default. I have separate **zsh** and **bash** Home Manager files, you can switch the shell to say bash by modifying the shell file Home Manager imports under either machines entry in ```flake.nix```.

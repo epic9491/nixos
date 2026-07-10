@@ -23,9 +23,9 @@
 
   hardware.enableRedistributableFirmware = true;
 
-  hardware.xpadneo.enable = true; 
+  hardware.xpadneo.enable = true;
 
-  boot.extraModprobeConfig = '' options bluetooth disable_ertm=1 '';
+  boot.extraModprobeConfig = "options bluetooth disable_ertm=1 ";
 
   services.displayManager = {
     autoLogin.enable = true;
@@ -55,10 +55,11 @@
         apps = true;
       };
     };
-    ssh.enable = true;
     kde.enable = true;
     retroshare.enable = true;
   };
+
+  ssh.enable = true;
 
   age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
 

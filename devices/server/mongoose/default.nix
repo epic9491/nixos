@@ -37,7 +37,5 @@
 
   services.tailscale.enable = lib.mkForce false;
 
-  workstation = {
-    ssh.enable = true;
-  };
+  ssh.enable = true;
 }

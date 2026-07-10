@@ -1,6 +1,11 @@
-{ config, lib, pkgs, ... }:
 {
-    services.k3s.autoDeployCharts.grafana = {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  services.k3s.autoDeployCharts.grafana = {
     enable = true;
     name = "grafana";
     repo = "https://grafana.github.io/helm-charts";

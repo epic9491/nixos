@@ -20,7 +20,7 @@ in
     networking.firewall.allowedUDPPorts = [ 8472 ]; # Flannel
 
     services.tailscale.authKeyFile = "/run/secrets/k3s-ts-auth";
-    
+
     services.k3s = {
       enable = true;
       role = "agent";
@@ -36,7 +36,7 @@ in
       group = "root";
       mode = "0400";
     };
-    
+
     age.secrets."k3s-ts-auth.age" = {
       file = ../secrets/k3s-ts-auth.age;
       path = "/run/secrets/k3s-ts-auth";

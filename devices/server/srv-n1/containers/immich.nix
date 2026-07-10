@@ -35,7 +35,7 @@
       };
 
       containers.immich-machine-learning = {
-        image = "ghcr.io/immich-app/immich-machine-learning:v2";
+        image = "ghcr.io/immich-app/immich-machine-learning:v3";
         autoStart = true;
         autoUpdate = "registry";
         network = "immich.network";

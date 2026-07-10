@@ -19,7 +19,7 @@
 
   networking.firewall.allowedUDPPorts = [ 8472 ]; # Flannel
   networking.firewall.allowedTCPPorts = [
-    6443  # k3s API server
+    6443 # k3s API server
     10250 # kubelet
   ];
 

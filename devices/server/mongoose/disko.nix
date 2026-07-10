@@ -37,7 +37,10 @@
           format = "ext4";
           mountpoint = "/mnt/data";
           mountOptions = [ "nofail" ];
-          extraArgs = [ "-m" "0" ];
+          extraArgs = [
+            "-m"
+            "0"
+          ];
         };
       };
     };

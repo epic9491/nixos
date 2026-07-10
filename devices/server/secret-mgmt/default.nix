@@ -36,10 +36,11 @@
 
   server.baseline.enable = true;
 
-  boot.initrd.kernelModules = [ "virtio_pci" "virtio_scsi" "sd_mod" ];
+  boot.initrd.kernelModules = [
+    "virtio_pci"
+    "virtio_scsi"
+    "sd_mod"
+  ];
 
-  workstation = {
-    ssh.enable = true;
-  };
+  ssh.enable = true;
 }
-

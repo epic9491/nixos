@@ -35,7 +35,10 @@
     oh-my-zsh = {
       enable = true;
       package = pkgs.oh-my-zsh;
-      plugins = [ "autojump" "terraform" ];
+      plugins = [
+        "autojump"
+        "terraform"
+      ];
     };
   };
 }

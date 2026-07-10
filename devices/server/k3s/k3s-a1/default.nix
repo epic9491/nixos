@@ -38,8 +38,5 @@
     vim
   ];
 
-  workstation = {
-    ssh.enable = true;
-  };
+  ssh.enable = true;
 }
-

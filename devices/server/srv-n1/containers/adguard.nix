@@ -23,7 +23,7 @@
       };
     };
   };
-  
+
   # Redirect traffic from 5353 to 53 since adguard cant bind to a privileged port
   networking.firewall.extraCommands = ''
     iptables -t nat -A PREROUTING -d 100.69.69.210 -p udp --dport 53 -j REDIRECT --to-port 5353
