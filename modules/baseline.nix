@@ -39,6 +39,11 @@ in
       options = "--delete-older-than 7d";
     };
 
+    nix.optimise = {
+      automatic = true;
+      dates = [ "weekly" ];
+    };
+
     time.timeZone = "America/Chicago";
 
     i18n.defaultLocale = "en_US.UTF-8";
@@ -116,7 +121,7 @@ in
       };
     };
     security.rtkit.enable = true;
-    
+
     xdg.portal.enable = true;
     xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 

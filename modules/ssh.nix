@@ -6,10 +6,10 @@
   ...
 }:
 let
-  cfg = config.workstation.ssh;
+  cfg = config.ssh;
 in
 {
-  options.workstation.ssh.enable = lib.mkEnableOption "Default SSH configuration";
+  options.ssh.enable = lib.mkEnableOption "Default SSH configuration";
   config = lib.mkIf cfg.enable {
     services.openssh = {
       enable = true;

@@ -55,10 +55,11 @@
         apps = true;
       };
     };
-    ssh.enable = true;
     kde.enable = true;
     retroshare.enable = true;
   };
+
+  ssh.enable = true;
 
   age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
 

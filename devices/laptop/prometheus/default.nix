@@ -56,12 +56,6 @@
     };
   };
 
-  # environments, switch to true as needed
-  # workstation.hypr.enable = true;
-  # workstation.gnome.enable = true;
-  # workstation.kde.enable = true;
-  # workstation.xfce.enable = true;
-
   services.fprintd.enable = true;
 
   age.identityPaths = [ "/home/gumbo/.ssh/agenix_gumbo" ];

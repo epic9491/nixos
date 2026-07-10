@@ -43,7 +43,6 @@
     kde.enable = true;
     polkit.enable = true;
     yazi.enable = true;           # yazi
-    ssh.enable = true;            # enable default ssh configuration + authorized yubikeys
     virtualization.enable = true; # enable QEMU/KVM virtualization
     flatpak = {
       enable = true;
@@ -55,11 +54,7 @@
     };
   };
 
-  # environments, switch to true or false as needed
-  # workstation.hypr.enable = true;
-  # workstation.gnome.enable = true;
-  # workstation.kde.enable = true;
-  # workstation.xfce.enable = true;
+  ssh.enable = true;              # enable default ssh configuration + authorized yubikeys
 
   age.identityPaths = [ "/home/gumbo/.ssh/agenix_gumbo" ];
   

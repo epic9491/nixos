@@ -43,7 +43,5 @@
   };
 
   server.baseline.enable = true;
-  workstation = {
-    ssh.enable = true;
-  };
+  ssh.enable = true;
 }

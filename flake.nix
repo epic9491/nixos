@@ -85,7 +85,7 @@
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                backupCommand = "rm";
+                backupFileExtension = "bak";
                 extraSpecialArgs = { inherit inputs; };
                 sharedModules = [
                   (
@@ -151,6 +151,8 @@
         };
     in
     {
+      formatter.${system} = nixpkgs-unstable.legacyPackages.${system}.nixfmt;
+
       nixosConfigurations = {
         erebos = mkWorkstation {
           deviceModule = ./devices/desktop/erebos/default.nix;
