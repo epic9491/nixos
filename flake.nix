@@ -48,9 +48,7 @@
       nixpkgs-stable,
       home-managerU,
       home-managerS,
-      noctalia,
       agenix,
-      nixvim,
       flatpaks,
       disko,
       ...
@@ -66,18 +64,24 @@
         })
       ];
 
-      mkWorkstation =
-        { deviceModule, hmImports }:
-        libU.nixosSystem {
+      # Shared host builder. `modules` carries the kind-specific stack (and any
+      # per-host extras); `hm` is the full list of Home Manager imports for gumbo.
+      mkHost =
+        {
+          lib,
+          deviceModule,
+          modules ? [ ],
+          hm ? [ ],
+        }:
+        lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [
             { nixpkgs.overlays = overlays; }
             deviceModule
-            home-managerU.nixosModules.home-manager
-            disko.nixosModules.disko
-            flatpaks.nixosModules.default
-            agenix.nixosModules.default
+          ]
+          ++ modules
+          ++ [
             {
               home-manager = {
                 useGlobalPkgs = true;
@@ -92,163 +96,114 @@
                     }
                   )
                 ];
-                users.gumbo = {
-                  imports = hmImports;
-                };
+                users.gumbo.imports = hm;
               };
             }
           ];
         };
 
-      mkServer =
-        { deviceModule, hmImports }:
-        libS.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs; };
+      # Workstations: unstable channel. `hm` extends the common baseline (this is
+      # where the DE/WM file goes); `modules` appends host-specific NixOS modules.
+      mkWorkstation =
+        {
+          deviceModule,
+          hm ? [ ],
+          modules ? [ ],
+        }:
+        mkHost {
+          lib = libU;
+          inherit deviceModule;
           modules = [
-            { nixpkgs.overlays = overlays; }
-            deviceModule
+            home-managerU.nixosModules.home-manager
+            disko.nixosModules.disko
+            flatpaks.nixosModules.default
+            agenix.nixosModules.default
+          ]
+          ++ modules;
+          hm = [
+            ./home/common.nix
+            ./home/zsh.nix
+          ]
+          ++ hm;
+        };
+
+      # Servers: stable channel, server baseline + ssh. Same extension points.
+      mkServer =
+        {
+          deviceModule,
+          hm ? [ ],
+          modules ? [ ],
+        }:
+        mkHost {
+          lib = libS;
+          inherit deviceModule;
+          modules = [
             disko.nixosModules.disko
             agenix.nixosModules.default
             ./modules/baseline.server.nix
             ./modules/ssh.nix
             home-managerS.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                backupCommand = "rm";
-                extraSpecialArgs = { inherit inputs; };
-                sharedModules = [
-                  (
-                    { osConfig, ... }:
-                    {
-                      _module.args.hostName = osConfig.networking.hostName;
-                    }
-                  )
-                ];
-                users.gumbo = {
-                  imports = hmImports;
-                };
-              };
-            }
-          ];
+          ]
+          ++ modules;
+          hm = [
+            ./home/server.nix
+            ./home/zsh.nix
+          ]
+          ++ hm;
         };
     in
     {
       nixosConfigurations = {
         erebos = mkWorkstation {
           deviceModule = ./devices/desktop/erebos/default.nix;
-          hmImports = [
-            ./home/common.nix
-            ./home/zsh.nix
-            ./home/kde.nix
-          ];
+          hm = [ ./home/kde.nix ];
         };
 
         prometheus = mkWorkstation {
           deviceModule = ./devices/laptop/prometheus/default.nix;
-          hmImports = [
-            ./home/common.nix
-            ./home/zsh.nix
-            ./home/niri.nix
-          ];
+          hm = [ ./home/niri.nix ];
         };
 
         null = mkWorkstation {
           deviceModule = ./devices/desktop/null/default.nix;
-          hmImports = [
-            ./home/common.nix
-            ./home/zsh.nix
-            ./home/kde.nix
-          ];
+          hm = [ ./home/kde.nix ];
         };
 
         console = mkWorkstation {
           deviceModule = ./devices/desktop/console/default.nix;
-          hmImports = [
-            ./home/common.nix
-            ./home/zsh.nix
-            ./home/kde.nix
-          ];
+          hm = [ ./home/kde.nix ];
         };
 
-       # void = mkServer {
-       #   deviceModule = ./devices/server/legacy/void/default.nix;
-       #   hmImports = [
-       #     ./home/server.nix
-       #     ./home/zsh.nix
-       #   ];
-       # };
-       # v-gaia-main = mkServer {
-       #   deviceModule = ./devices/server/legacy/v-gaia-main/default.nix;
-       #   hmImports = [
-       #     ./home/server.nix
-       #     ./home/zsh.nix
-       #   ];
-       # };
-       # zeus = mkServer {
-       #   deviceModule = ./devices/server/legacy/zeus/default.nix;
-       #   hmImports = [
-       #     ./home/server.nix
-       #     ./home/zsh.nix
-       #   ];
-       # };
         srv-n1 = mkServer {
           deviceModule = ./devices/server/srv-n1/default.nix;
-          hmImports = [
-            ./home/server.nix
-            ./home/zsh.nix
-          ];
         };
+
         secret-mgmt = mkServer {
           deviceModule = ./devices/server/secret-mgmt/default.nix;
-          hmImports = [
-            ./home/server.nix
-            ./home/zsh.nix
-          ];
         };
+
         mongoose = mkServer {
           deviceModule = ./devices/server/mongoose/default.nix;
-          hmImports = [
-            ./home/server.nix
-            ./home/zsh.nix
-          ];
         };
+
         k3s-a1 = mkServer {
           deviceModule = ./devices/server/k3s/k3s-a1/default.nix;
-          hmImports = [
-            ./home/server.nix
-            ./home/zsh.nix
-          ];
         };
+
         k3s-a2 = mkServer {
           deviceModule = ./devices/server/k3s/k3s-a2/default.nix;
-          hmImports = [
-            ./home/server.nix
-            ./home/zsh.nix
-          ];
         };
+
         k3s-a3 = mkServer {
           deviceModule = ./devices/server/k3s/k3s-a3/default.nix;
-          hmImports = [
-            ./home/server.nix
-            ./home/zsh.nix
-          ];
         };
+
         k3s-a4 = mkServer {
           deviceModule = ./devices/server/k3s/k3s-a4/default.nix;
-          hmImports = [
-            ./home/server.nix
-            ./home/zsh.nix
-          ];
         };
+
         k3s-s1 = mkServer {
           deviceModule = ./devices/server/k3s/k3s-s1/default.nix;
-          hmImports = [
-            ./home/server.nix
-            ./home/zsh.nix
-          ];
         };
       };
     };
