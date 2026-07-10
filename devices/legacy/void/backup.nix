@@ -42,7 +42,7 @@
   };
 
   age.secrets."borg.void.age" = {
-    file = ../../../../secrets/borg.void.age;
+    file = ../../../secrets/borg.void.age;
     path = "/run/agenix/borg.void.age";
     owner = "gumbo";
     group = "users";

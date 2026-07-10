@@ -164,11 +164,6 @@
           hm = [ ./home/niri.nix ];
         };
 
-        null = mkWorkstation {
-          deviceModule = ./devices/desktop/null/default.nix;
-          hm = [ ./home/kde.nix ];
-        };
-
         console = mkWorkstation {
           deviceModule = ./devices/desktop/console/default.nix;
           hm = [ ./home/kde.nix ];

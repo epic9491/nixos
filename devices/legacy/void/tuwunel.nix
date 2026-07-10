@@ -1,7 +1,7 @@
 { config, ... }:
 {
   age.secrets."tuwunel-token" = {
-    file = ../../../../secrets/tuwunel-token.age;
+    file = ../../../secrets/tuwunel-token.age;
     path = "/run/agenix/tuwunel-token";
     owner = "root";
     group = "root";

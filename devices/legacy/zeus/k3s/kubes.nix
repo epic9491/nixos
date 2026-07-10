@@ -24,7 +24,7 @@
   ];
 
   age.secrets."k3s-token.age" = {
-    file = ../../../../../secrets/k3s-token.age;
+    file = ../../../../secrets/k3s-token.age;
     path = "/run/secrets/k3s-token";
     owner = "root";
     group = "root";

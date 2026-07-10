@@ -45,7 +45,7 @@
     startAt = "daily";
   };
   age.secrets."borg.v-gaia-main.age" = {
-    file = ../../../../secrets/borg.v-gaia-main.age;
+    file = ../../../secrets/borg.v-gaia-main.age;
     path = "/run/agenix/borg.v-gaia-main.age";
     owner = "gumbo";
     group = "users";
