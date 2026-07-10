@@ -64,8 +64,7 @@
         })
       ];
 
-      # Shared host builder. `modules` carries the kind-specific stack (and any
-      # per-host extras); `hm` is the full list of Home Manager imports for gumbo.
+      # shared host builder 
       mkHost =
         {
           lib,
@@ -102,8 +101,7 @@
           ];
         };
 
-      # Workstations: unstable channel. `hm` extends the common baseline (this is
-      # where the DE/WM file goes); `modules` appends host-specific NixOS modules.
+      # workstations on unstable, import hm common files here 
       mkWorkstation =
         {
           deviceModule,
@@ -127,7 +125,7 @@
           ++ hm;
         };
 
-      # Servers: stable channel, server baseline + ssh. Same extension points.
+      # servers on stable, import defaults (ssh, baseline, etc) 
       mkServer =
         {
           deviceModule,
