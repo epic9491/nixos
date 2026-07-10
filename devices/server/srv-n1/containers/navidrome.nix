@@ -8,7 +8,7 @@
         image = "docker.io/deluan/navidrome:latest";
         autoStart = true;
         autoUpdate = "registry";
-        ports = [ "100.69.69.210:4533:4533" ];
+        ports = [ "127.0.0.1:4533:4533" ];
         volumes = [
           "/var/lib/navidrome/data:/data:Z"
           "/mnt/music:/music:ro"
