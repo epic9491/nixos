@@ -6,9 +6,11 @@
   ...
 }:
 let
-  niriConfig = if hostName == "prometheus" 
-    then ../config/niri/config.laptop.kdl 
-    else ../config/niri/config.desktop.kdl;
+  niriConfig =
+    if hostName == "prometheus" then
+      ../config/niri/config.laptop.kdl
+    else
+      ../config/niri/config.desktop.kdl;
 in
 {
   gtk = {

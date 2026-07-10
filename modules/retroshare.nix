@@ -1,10 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.workstation.retroshare;
 in
 {
-  options.workstation.retroshare.enable =
-    lib.mkEnableOption "Syncthing RetroArch share";
+  options.workstation.retroshare.enable = lib.mkEnableOption "Syncthing RetroArch share";
 
   config = lib.mkIf cfg.enable {
     services.syncthing = {

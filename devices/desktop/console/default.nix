@@ -23,9 +23,9 @@
 
   hardware.enableRedistributableFirmware = true;
 
-  hardware.xpadneo.enable = true; 
+  hardware.xpadneo.enable = true;
 
-  boot.extraModprobeConfig = '' options bluetooth disable_ertm=1 '';
+  boot.extraModprobeConfig = "options bluetooth disable_ertm=1 ";
 
   services.displayManager = {
     autoLogin.enable = true;

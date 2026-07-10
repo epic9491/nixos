@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   types = lib.types;
   cfg = config.mount.storagebox;
@@ -68,13 +73,15 @@ in
     fileSystems.${cfg.mountPoint} = {
       device = "//${cfg.host}/${cfg.share}";
       fsType = "cifs";
-      options = let
-        automount_opts =
-          "x-systemd.automount,noauto,x-systemd.idle-timeout=60," +
-          "x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
-      in [
-        "${automount_opts},credentials=${cfg.credentialsFile},uid=${toString cfg.userId},gid=${toString cfg.groupId},iocharset=utf8,rw,seal,file_mode=0660,dir_mode=0770"
-      ];
+      options =
+        let
+          automount_opts =
+            "x-systemd.automount,noauto,x-systemd.idle-timeout=60,"
+            + "x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s";
+        in
+        [
+          "${automount_opts},credentials=${cfg.credentialsFile},uid=${toString cfg.userId},gid=${toString cfg.groupId},iocharset=utf8,rw,seal,file_mode=0660,dir_mode=0770"
+        ];
     };
   };
 }

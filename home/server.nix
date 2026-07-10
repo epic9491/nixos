@@ -18,7 +18,7 @@
     enable = true;
     package = pkgs.git;
     settings = {
-        core.editor = "nvim";
+      core.editor = "nvim";
     };
   };
 

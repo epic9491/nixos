@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   services.k3s = {
     autoDeployCharts.headlamp = {
@@ -36,11 +41,13 @@
           kind = "ClusterRole";
           name = "cluster-admin";
         };
-        subjects = [{
-          kind = "ServiceAccount";
-          name = "headlamp-user";
-          namespace = "kube-system";
-        }];
+        subjects = [
+          {
+            kind = "ServiceAccount";
+            name = "headlamp-user";
+            namespace = "kube-system";
+          }
+        ];
       };
       headlamp-user-token.content = {
         apiVersion = "v1";

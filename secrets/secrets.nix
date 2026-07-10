@@ -20,23 +20,80 @@ in
 {
   "k3s-token.age".publicKeys = k3s;
   "k3s-ts-auth.age".publicKeys = k3s;
-  "newt-auth.age".publicKeys = [ secret-mgmt k3s-s1 ];
-  "influx-auth-s1.age".publicKeys = [ secret-mgmt k3s-s1 ];
-  "grafana-auth-s1.age".publicKeys = [ secret-mgmt k3s-s1 ];
-  "grafana-datasources-s1.age".publicKeys = [ secret-mgmt k3s-s1 ];
-  "wg0.age".publicKeys = [ secret-mgmt mongoose ];
-  "pbs.console.age".publicKeys = [ secret-mgmt console ];
-  "pbs.srv-n1.age".publicKeys = [ secret-mgmt srv-n1 ];
-  "pbs.srv-n1.key.age".publicKeys = [ secret-mgmt srv-n1 ];
-  "srv-n1.newt.env.age".publicKeys = [ secret-mgmt srv-n1 ];
-  "srv-n1.karakeep.env.age".publicKeys = [ secret-mgmt srv-n1 ];
-  "srv-n1.vaultwarden.env.age".publicKeys = [ secret-mgmt srv-n1 ];
-  "srv-n1.immich.env.age".publicKeys = [ secret-mgmt srv-n1 ];
-  "srv-n1.immich-public.env.age".publicKeys = [ secret-mgmt srv-n1 ];
-  "srv-n1.caddy.env.age".publicKeys = [ secret-mgmt srv-n1 ];
-  "srv-n1.cockpit.env.age".publicKeys = [ secret-mgmt srv-n1 ];
-  "srv-n1.searxng.env.age".publicKeys = [ secret-mgmt srv-n1 ];
-  "srv-n1.obsidian-couchdb.env.age".publicKeys = [ secret-mgmt srv-n1 ];
-  "srv-n1.obsidian-cloudflared.env.age".publicKeys = [ secret-mgmt srv-n1 ];
-  "srv-n1.owntracks.env.age".publicKeys = [ secret-mgmt srv-n1 ];
+  "newt-auth.age".publicKeys = [
+    secret-mgmt
+    k3s-s1
+  ];
+  "influx-auth-s1.age".publicKeys = [
+    secret-mgmt
+    k3s-s1
+  ];
+  "grafana-auth-s1.age".publicKeys = [
+    secret-mgmt
+    k3s-s1
+  ];
+  "grafana-datasources-s1.age".publicKeys = [
+    secret-mgmt
+    k3s-s1
+  ];
+  "wg0.age".publicKeys = [
+    secret-mgmt
+    mongoose
+  ];
+  "pbs.console.age".publicKeys = [
+    secret-mgmt
+    console
+  ];
+  "pbs.srv-n1.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
+  "pbs.srv-n1.key.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
+  "srv-n1.newt.env.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
+  "srv-n1.karakeep.env.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
+  "srv-n1.vaultwarden.env.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
+  "srv-n1.immich.env.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
+  "srv-n1.immich-public.env.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
+  "srv-n1.caddy.env.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
+  "srv-n1.cockpit.env.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
+  "srv-n1.searxng.env.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
+  "srv-n1.obsidian-couchdb.env.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
+  "srv-n1.obsidian-cloudflared.env.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
+  "srv-n1.owntracks.env.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
 }

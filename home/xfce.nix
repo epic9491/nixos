@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   nixIconPath = "${config.xdg.dataHome}/icons/nix/nix-icon.svg";

@@ -1,6 +1,11 @@
-{ config, lib, pkgs, ... }:
 {
-    services.k3s.autoDeployCharts.influxdb = {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  services.k3s.autoDeployCharts.influxdb = {
     enable = true;
     name = "influxdb2";
     repo = "https://helm.influxdata.com/";
