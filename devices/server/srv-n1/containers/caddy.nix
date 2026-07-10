@@ -9,14 +9,14 @@
         }
 
         {env.DOMAIN} {
-          reverse_proxy host.containers.internal:4533
+          reverse_proxy 169.254.1.2:4533
           tls {
             dns cloudflare {env.CF_API_TOKEN}
           }
         }
 
         {env.COCKPIT_DOMAIN} {
-          reverse_proxy host.containers.internal:9090
+          reverse_proxy 169.254.1.2:9090
           tls {
             dns cloudflare {env.CF_API_TOKEN}
           }
@@ -33,6 +33,7 @@
           autoStart = true;
           autoUpdate = "registry";
           ports = [ "100.69.69.210:8443:8443" ];
+          extraPodmanArgs = [ "--network=pasta:--map-host-loopback,169.254.1.2" ];
           volumes = [
             "/var/lib/caddy/data:/data:Z"
             "/var/lib/caddy/config:/config:Z"

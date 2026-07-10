@@ -10,7 +10,10 @@
         autoUpdate = "registry";
         environmentFile = [ "/run/secrets/newt.env" ];
         devices = [ "/dev/net/tun" ];
-        extraPodmanArgs = [ "--cap-add=NET_ADMIN" ];
+        extraPodmanArgs = [
+          "--cap-add=NET_ADMIN"
+          "--network=pasta:--map-host-loopback,169.254.1.2"
+        ];
         extraConfig.Service.RestartSec = 2;
       };
     };
