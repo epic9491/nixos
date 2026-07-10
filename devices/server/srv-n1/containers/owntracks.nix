@@ -1,77 +1,79 @@
 {
-  home-manager.users.owntracks = { ... }: {
-    home.stateVersion = "25.05";
+  home-manager.users.owntracks =
+    { pkgs, ... }:
+    let
+      caddyfile = pkgs.writeText "Caddyfile" ''
+        {
+          auto_https off
+        }
 
-    services.podman = {
-      enable = true;
+        :80 {
+          basic_auth {
+            {$OT_AUTH_USER_1} {$OT_AUTH_HASH_1}
+            {$OT_AUTH_USER_2} {$OT_AUTH_HASH_2}
+          }
+          handle /pub {
+            reverse_proxy recorder:8083 {
+              header_up X-Limit-U {http.auth.user.id}
+            }
+          }
+          handle {
+            respond 403
+          }
+        }
+      '';
+    in
+    {
+      home.stateVersion = "25.05";
 
-      networks.owntracks = { };
+      services.podman = {
+        enable = true;
 
-      containers.recorder = {
-        image = "docker.io/owntracks/recorder:latest";
-        autoStart = true;
-        autoUpdate = "registry";
-        network = "owntracks.network";
-        networkAlias = [ "recorder" ];
-        ports = [ "127.0.0.1:8083:8083" ];
-        volumes = [ "/var/lib/owntracks/recorder:/store:Z" ];
-        environment = {
-          # Disable MQTT, accept locations over HTTP only
-          OTR_PORT = 0;
+        networks.owntracks = { };
+
+        containers.recorder = {
+          image = "docker.io/owntracks/recorder:latest";
+          autoStart = true;
+          autoUpdate = "registry";
+          network = "owntracks.network";
+          networkAlias = [ "recorder" ];
+          volumes = [ "/var/lib/owntracks/recorder:/store:Z" ];
+          environment = {
+            # no mqtt, http auth only
+            OTR_PORT = 0;
+          };
+          environmentFile = [ "/run/secrets/owntracks.env" ];
+          extraConfig.Service.Restart = "always";
         };
-        environmentFile = [ "/run/secrets/owntracks.env" ];
-        extraConfig.Service.Restart = "always";
-      };
 
-      containers.frontend = {
-        image = "docker.io/owntracks/frontend:latest";
-        autoStart = true;
-        autoUpdate = "registry";
-        network = "owntracks.network";
-        networkAlias = [ "frontend" ];
-        ports = [ "127.0.0.1:8084:80" ];
-        environment = {
-          SERVER_HOST = "recorder";
-          SERVER_PORT = 8083;
-        };
-        extraConfig = {
-          Service.Restart = "always";
-          Unit = {
-            After = [ "podman-recorder.service" ];
-            Wants = [ "podman-recorder.service" ];
+        containers.caddy = {
+          image = "docker.io/library/caddy:latest";
+          autoStart = true;
+          autoUpdate = "registry";
+          network = "owntracks.network";
+          networkAlias = [ "caddy" ];
+          ports = [ "127.0.0.1:8085:80" ];
+          volumes = [
+            "/var/lib/owntracks/caddy/data:/data:Z"
+            "/var/lib/owntracks/caddy/config:/config:Z"
+            "${caddyfile}:/etc/caddy/Caddyfile:ro"
+          ];
+          environmentFile = [ "/run/secrets/owntracks.env" ];
+          extraConfig = {
+            Service.Restart = "always";
+            Unit = {
+              After = [ "podman-recorder.service" ];
+              Wants = [ "podman-recorder.service" ];
+            };
           };
         };
-      };
 
-      containers.cloudflared = {
-        image = "docker.io/cloudflare/cloudflared:latest";
-        autoStart = true;
-        autoUpdate = "registry";
-        network = "owntracks.network";
-        exec = "tunnel --no-autoupdate run";
-        environmentFile = [ "/run/secrets/owntracks-cloudflared.env" ];
-        extraConfig = {
-          Service.Restart = "always";
-          Unit = {
-            After = [ "podman-recorder.service" ];
-            Wants = [ "podman-recorder.service" ];
-          };
-        };
       };
     };
-  };
 
   age.secrets."owntracks.env" = {
     file = ../../../../secrets/srv-n1.owntracks.env.age;
     path = "/run/secrets/owntracks.env";
-    owner = "owntracks";
-    group = "owntracks";
-    mode = "0400";
-  };
-
-  age.secrets."owntracks-cloudflared.env" = {
-    file = ../../../../secrets/srv-n1.owntracks-cloudflared.env.age;
-    path = "/run/secrets/owntracks-cloudflared.env";
     owner = "owntracks";
     group = "owntracks";
     mode = "0400";
