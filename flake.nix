@@ -64,7 +64,7 @@
         })
       ];
 
-      # shared host builder 
+      # shared host builder
       mkHost =
         {
           lib,
@@ -101,7 +101,7 @@
           ];
         };
 
-      # workstations on unstable, import hm common files here 
+      # workstations on unstable, import hm common files here
       mkWorkstation =
         {
           deviceModule,
@@ -125,7 +125,7 @@
           ++ hm;
         };
 
-      # servers on stable, import defaults (ssh, baseline, etc) 
+      # servers on stable, import defaults (ssh, baseline, etc)
       mkServer =
         {
           deviceModule,
@@ -151,7 +151,7 @@
         };
     in
     {
-      formatter.${system} = nixpkgs-unstable.legacyPackages.${system}.nixfmt;
+      formatter.${system} = nixpkgs-unstable.legacyPackages.${system}.nixfmt-tree;
 
       nixosConfigurations = {
         erebos = mkWorkstation {
