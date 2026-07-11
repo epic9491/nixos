@@ -91,7 +91,7 @@
   environment.systemPackages = with pkgs; [
     lm_sensors
     heroic
-    input-remapper
+    # input-remapper <-- needs 2.2.1, see nixpkgs #540703
   ];
 
   networking.firewall.allowedTCPPorts = [ 2049 ];
