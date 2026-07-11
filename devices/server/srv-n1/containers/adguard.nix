@@ -5,7 +5,7 @@
     services.podman = {
       enable = true;
       containers.adguard = {
-        image = "docker.io/adguard/adguardhome:latest";
+        image = "docker.io/adguard/adguardhome@sha256:e6f2b8bcda06064ab055b44933a4f0e983c35558b9cdb8d2e7ab1efcee36d890";
         autoStart = true;
         autoUpdate = "registry";
         ports = [

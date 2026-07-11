@@ -22,7 +22,7 @@
       services.podman = {
         enable = true;
         containers.caddy = {
-          image = "ghcr.io/caddybuilds/caddy-cloudflare:latest";
+          image = "ghcr.io/caddybuilds/caddy-cloudflare@sha256:62639363ceb043393da9c3895d7c97a9a49ccf840bea0cc7e6479465d12ade96";
           autoStart = true;
           autoUpdate = "registry";
           ports = [ "100.69.69.210:8443:8443" ];

@@ -32,7 +32,7 @@
         networks.owntracks = { };
 
         containers.recorder = {
-          image = "docker.io/owntracks/recorder:latest";
+          image = "docker.io/owntracks/recorder@sha256:050c3ac9ed798d4110f12e53851e94f9fa0fcecb16cf4d7457967eac2e498da7";
           autoStart = true;
           autoUpdate = "registry";
           network = "owntracks.network";
@@ -47,7 +47,7 @@
         };
 
         containers.caddy = {
-          image = "docker.io/library/caddy:latest";
+          image = "docker.io/library/caddy@sha256:af5fdcd76f2db5e4e974ee92f96ee8c0fc3edb55bd4ba5032547cbf3f65e486d";
           autoStart = true;
           autoUpdate = "registry";
           network = "owntracks.network";
