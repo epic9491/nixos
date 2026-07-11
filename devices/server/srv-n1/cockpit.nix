@@ -3,35 +3,17 @@
   services.cockpit = {
     enable = true;
     openFirewall = false;
+    settings.WebService.LoginTo = false;
   };
 
-  systemd.sockets.cockpit.listenStreams = lib.mkForce [
-    ""
-    "127.0.0.1:9090"
-  ];
-
-  age.secrets."cockpit.env" = {
-    file = ../../../secrets/srv-n1.cockpit.env.age;
-    path = "/run/secrets/cockpit.env";
-    owner = "root";
-    group = "root";
-    mode = "0400";
-  };
-
-  system.activationScripts.cockpitConfig = {
-    deps = [
-      "agenixInstall"
-      "etc"
+  systemd.sockets.cockpit = {
+    socketConfig.FreeBind = true;
+    listenStreams = lib.mkForce [
+      ""
+      "100.69.69.210:9090"
+      "[fd7a:115c:a1e0::7e36:ab2a]:9090"
     ];
-    text = ''
-      source /run/secrets/cockpit.env
-      rm -f /etc/cockpit/cockpit.conf
-      cat > /etc/cockpit/cockpit.conf <<EOF
-      [WebService]
-      Origins = https://$COCKPIT_DOMAIN
-      ProtocolHeader = X-Forwarded-Proto
-      LoginTo = false
-      EOF
-    '';
   };
+
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 9090 ];
 }

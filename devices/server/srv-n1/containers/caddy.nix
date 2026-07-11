@@ -14,13 +14,6 @@
             dns cloudflare {env.CF_API_TOKEN}
           }
         }
-
-        {env.COCKPIT_DOMAIN} {
-          reverse_proxy 169.254.1.2:9090
-          tls {
-            dns cloudflare {env.CF_API_TOKEN}
-          }
-        }
       '';
     in
     {
