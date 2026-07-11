@@ -13,7 +13,8 @@
           "100.69.69.210:5353:53/udp"
           "[fd7a:115c:a1e0::7e36:ab2a]:5353:53/tcp"
           "[fd7a:115c:a1e0::7e36:ab2a]:5353:53/udp"
-          "127.0.0.1:8080:80"
+          "100.69.69.210:8080:80"
+          "[fd7a:115c:a1e0::7e36:ab2a]:8080:80"
         ];
         volumes = [
           "/var/lib/adguard/work:/opt/adguardhome/work:Z"
@@ -23,6 +24,8 @@
       };
     };
   };
+
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 8080 ];
 
   # Redirect traffic from 5353 to 53 since adguard cant bind to a privileged port
   networking.firewall.extraCommands = ''
