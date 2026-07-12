@@ -200,6 +200,10 @@
         k3s-s1 = mkServer {
           deviceModule = ./devices/server/k3s/k3s-s1/default.nix;
         };
+
+        pangolin = mkServer {
+          deviceModule = ./devices/server/pangolin/default.nix;
+        };
       };
     };
 }
