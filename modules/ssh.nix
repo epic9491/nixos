@@ -9,11 +9,17 @@ let
   cfg = config.ssh;
 in
 {
-  options.ssh.enable = lib.mkEnableOption "Default SSH configuration";
+  options.ssh = {
+    enable = lib.mkEnableOption "Default SSH configuration";
+    port = lib.mkOption {
+      type = lib.types.port;
+      default = 22;
+    };
+  };
   config = lib.mkIf cfg.enable {
     services.openssh = {
       enable = true;
-      ports = [ 22 ];
+      ports = [ cfg.port ];
       settings = {
         PasswordAuthentication = false;
         KbdInteractiveAuthentication = false;
@@ -30,6 +36,6 @@ in
       # terraform deploy key
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGSGpPD06R4k7GUsnMc9TghbCbpu4Y1ps+Bu0jv8FTGa gumbo@suse"
     ];
-    networking.firewall.allowedTCPPorts = [ 22 ];
+    networking.firewall.allowedTCPPorts = [ cfg.port ];
   };
 }

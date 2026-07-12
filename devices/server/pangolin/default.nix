@@ -49,5 +49,8 @@
   };
 
   server.baseline.enable = true;
-  ssh.enable = true;
+  ssh = {
+    enable = true;
+    port = 420;
+  };
 }
