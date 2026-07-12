@@ -7,6 +7,10 @@
 
       settings.containers.containers.base_hosts_file = "none";
 
+      # waiting for nixpkgs podman 6.0+ bump. forwards real ip's so crowdsec can actually ban offenders,
+      # container only sees bridge ip's which can't be banned
+      # settings.containers.network.rootless_port_forwarder = "pasta";
+
       networks.pangolin = { };
 
       containers.pangolin = {
