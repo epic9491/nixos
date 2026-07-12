@@ -5,6 +5,8 @@
     services.podman = {
       enable = true;
 
+      settings.containers.containers.base_hosts_file = "none";
+
       networks.pangolin = { };
 
       containers.pangolin = {
