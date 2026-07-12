@@ -56,7 +56,6 @@
           volumes = [ "/var/lib/pangolin/config:/app/config" ];
           extraConfig = {
             Container = {
-              AddHost = netnsAliases;
               DropCapability = "ALL";
               NoNewPrivileges = true;
               HealthCmd = "curl -f http://localhost:3001/api/v1/";
@@ -85,7 +84,6 @@
           ];
           extraConfig = {
             Container = {
-              AddHost = netnsAliases;
               DropCapability = "ALL";
               AddCapability = "NET_BIND_SERVICE";
               NoNewPrivileges = true;
@@ -121,7 +119,6 @@
           environmentFile = [ "/run/secrets/pangolin.crowdsec.env" ];
           extraConfig = {
             Container = {
-              AddHost = netnsAliases;
               DropCapability = "ALL";
               AddCapability = [
                 "CHOWN"
@@ -159,7 +156,6 @@
           };
           extraConfig = {
             Container = {
-              AddHost = netnsAliases;
               DropCapability = "ALL";
               NoNewPrivileges = true;
             };
