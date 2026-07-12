@@ -111,7 +111,7 @@
 
       containers.middleware-manager = {
         image = "docker.io/hhftechnology/middleware-manager@sha256:d739d47886631a04bd7e3c83d2c02799010d0a944c2f6256bfcd9b89f0b25487";
-        autoStart = true;
+        autoStart = false;
         autoUpdate = "registry";
         network = "pangolin.network";
         ports = [ "3456:3456" ];
