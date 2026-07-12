@@ -2,6 +2,7 @@ let
   secret-mgmt = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDMvYIo3MxF2XpAhMjZ/T6NfI+PAlB8GDrZ11xjH5uVb gumbo@nixos";
   console = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwFGIeJCte8DLdoBmE7Q8FYhTWazkVLMwq6B/6hadd8 gumbo@console";
   srv-n1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINSDR29Go5nMlk58JRcYWM3qNET5tUP1/0jdNPBh6x2S gumbo@srv-n1";
+  pangolin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKgrZ+dLkK4yiv7raye7I685m10Fm43gPEyuqtmA1GWb gumbo@pangolin";
   mongoose = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMPiB69ISkgnUYuY5od9v4uss3GfCft6mip3BNjO7Q3M gumbo@mongoose";
   k3s-s1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGUVBtM6haqazKIi6nYx3KF+1N1OliHW+KjQDLqEdLzO gumbo@k3s-s1";
   k3s-a1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAK9uDYiTln0BcPYwzHFCUur2ZG50G/410N8qCqSU7PT gumbo@k3s-a1";
@@ -54,12 +55,15 @@ in
   ];
   "pbs.pangolin.age".publicKeys = [
     secret-mgmt
+    pangolin
   ];
   "pbs.pangolin.key.age".publicKeys = [
     secret-mgmt
+    pangolin
   ];
   "pangolin.crowdsec.env.age".publicKeys = [
     secret-mgmt
+    pangolin
   ];
   "srv-n1.newt.env.age".publicKeys = [
     secret-mgmt
