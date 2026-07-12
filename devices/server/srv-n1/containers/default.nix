@@ -8,6 +8,7 @@
     ./vaultwarden.nix
     ./navidrome.nix
     ./caddy.nix
+    ./grafana
     ./lube.nix
     ./adguard.nix
     ./immich.nix

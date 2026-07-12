@@ -89,6 +89,10 @@ in
     secret-mgmt
     srv-n1
   ];
+  "srv-n1.grafana.env.age".publicKeys = [
+    secret-mgmt
+    srv-n1
+  ];
   "srv-n1.cockpit.env.age".publicKeys = [
     secret-mgmt
     srv-n1
