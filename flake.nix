@@ -204,6 +204,10 @@
         pangolin = mkServer {
           deviceModule = ./devices/server/pangolin/default.nix;
         };
+
+        lxc-n1 = mkServer {
+          deviceModule = ./devices/server/lxc-n1/default.nix;
+        };
       };
     };
 }
