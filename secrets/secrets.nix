@@ -52,6 +52,15 @@ in
     secret-mgmt
     srv-n1
   ];
+  "pbs.pangolin.age".publicKeys = [
+    secret-mgmt
+  ];
+  "pbs.pangolin.key.age".publicKeys = [
+    secret-mgmt
+  ];
+  "pangolin.crowdsec.env.age".publicKeys = [
+    secret-mgmt
+  ];
   "srv-n1.newt.env.age".publicKeys = [
     secret-mgmt
     srv-n1
