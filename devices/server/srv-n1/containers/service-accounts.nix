@@ -9,6 +9,7 @@ let
     "navidrome"
     "lubelogger"
     "adguard"
+    "grafana"
     "immich"
     "immich-public"
     "uptime-kuma"
