@@ -3,3 +3,5 @@ terra/.terraform/
 terra/terraform.tfstate
 terra/terraform.tfstate.backup
 terra/.terraform.tfstate.lock.info
+devices/server/pangolin/containers/__pycache__
+devices/server/pangolin/containers/__pycache__/

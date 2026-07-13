@@ -33,6 +33,7 @@
             "8443:443"
             "8080:80"
             "6060:6060"
+            "6061:6061"
           ];
           volumes = [ "/var/lib/pangolin/config:/var/config" ];
           devices = [ "/dev/net/tun" ];
@@ -45,6 +46,12 @@
               NoNewPrivileges = true;
             };
             Service.Restart = "always";
+            Unit.Upholds = [
+              "podman-pangolin.service"
+              "podman-traefik.service"
+              "podman-crowdsec.service"
+              "podman-crowdsec-export.service"
+            ];
           };
         };
 
@@ -139,6 +146,41 @@
           };
         };
 
+        containers.crowdsec-export = {
+          image = "docker.io/library/python@sha256:399babc8b49529dabfd9c922f2b5eea81d611e4512e3ed250d75bd2e7683f4b0";
+          autoStart = true;
+          network = "container:gerbil";
+          exec = "python3 /app/lapi-export.py";
+          volumes = [
+            "${./lapi-export.py}:/app/lapi-export.py:ro"
+            "/var/lib/pangolin/config/crowdsec/local_api_credentials.yaml:/etc/crowdsec/local_api_credentials.yaml:ro"
+          ];
+          environment = {
+            LAPI_URL = "http://127.0.0.1:8080";
+            PYTHONDONTWRITEBYTECODE = "1";
+            PYTHONUNBUFFERED = "1";
+          };
+          extraConfig = {
+            Container = {
+              DropCapability = "ALL";
+              NoNewPrivileges = true;
+              ReadOnly = true;
+              HealthCmd = "python3 -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:6061/healthz', timeout=10)\"";
+              HealthInterval = "60s";
+              HealthTimeout = "15s";
+              HealthRetries = 3;
+              HealthStartPeriod = "30s";
+            };
+            Service.Restart = "always";
+            Unit = {
+              After = netnsOwner.After ++ [ "podman-crowdsec.service" ];
+              Requires = netnsOwner.Requires;
+              PartOf = netnsOwner.PartOf;
+              Wants = [ "podman-crowdsec.service" ];
+            };
+          };
+        };
+
         containers.middleware-manager = {
           image = "docker.io/hhftechnology/middleware-manager@sha256:d739d47886631a04bd7e3c83d2c02799010d0a944c2f6256bfcd9b89f0b25487";
           autoStart = false;
@@ -207,6 +249,7 @@
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
     3456
     6060
+    6061
   ];
 
   networking.firewall.extraCommands = ''

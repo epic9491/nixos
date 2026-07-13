@@ -21,6 +21,12 @@
                   - localhost:9090
       '';
 
+      infinityPlugin = pkgs.fetchzip {
+        url = "https://grafana.com/api/plugins/yesoreyeram-infinity-datasource/versions/3.10.1/download?os=linux&arch=amd64";
+        extension = "zip";
+        hash = "sha256-/weiN7dtfJaqywfGpyg1k5rDJlDq6OX37WlDeK3U/zA=";
+      };
+
       grafanaDatasources = pkgs.writeText "datasources.yml" ''
         apiVersion: 1
         datasources:
@@ -31,6 +37,16 @@
             url: http://prometheus:9090
             isDefault: true
             editable: false
+          - name: CrowdSec LAPI
+            uid: crowdsec-lapi
+            type: yesoreyeram-infinity-datasource
+            access: proxy
+            url: http://100.69.69.201:6061
+            isDefault: false
+            editable: false
+            jsonData:
+              allowedHosts:
+                - http://100.69.69.201:6061
       '';
 
       grafanaDashboardProvider = pkgs.writeText "dashboards.yml" ''
@@ -83,6 +99,7 @@
             "${grafanaDashboardProvider}:/etc/grafana/provisioning/dashboards/dashboards.yml:ro"
             "${./crowdsec-dashboard.json}:/etc/grafana/dashboards/crowdsec.json:ro"
             "/var/lib/grafana/data:/var/lib/grafana:U"
+            "${infinityPlugin}:/var/lib/grafana/plugins/yesoreyeram-infinity-datasource:ro"
           ];
           environment = {
             GF_ANALYTICS_REPORTING_ENABLED = "false";
