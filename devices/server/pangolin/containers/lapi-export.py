@@ -19,7 +19,8 @@ _lock = threading.Lock()
 _token = None
 _cache = {}
 
-DURATION_RE = re.compile(r"(?:(\d+)h)?(?:(\d+)m)?(?:([\d.]+)s)?")
+DURATION_RE = re.compile(r"(\d+(?:\.\d+)?)(h|ms|m|µs|us|ns|s)")
+DURATION_UNITS = {"h": 3600, "m": 60, "s": 1, "ms": 1e-3, "µs": 1e-6, "us": 1e-6, "ns": 1e-9}
 
 
 def load_credentials():
@@ -64,11 +65,8 @@ def lapi_get(path):
 
 def duration_seconds(text):
     sign = -1 if text.startswith("-") else 1
-    m = DURATION_RE.match(text.lstrip("-"))
-    if not m:
-        return 0
-    h, mi, s = m.groups()
-    return sign * int(int(h or 0) * 3600 + int(mi or 0) * 60 + float(s or 0))
+    total = sum(float(value) * DURATION_UNITS[unit] for value, unit in DURATION_RE.findall(text))
+    return sign * int(total)
 
 
 def country_flag(cn):
@@ -91,7 +89,7 @@ def event_paths(alert):
 
 def flatten_bans():
     rows = []
-    for alert in lapi_get("/v1/alerts?has_active_decision=true&include_capi=false&limit=500"):
+    for alert in lapi_get("/v1/alerts?has_active_decision=true&include_capi=false&limit=500") or []:
         source = alert.get("source") or {}
         last_path, paths = event_paths(alert)
         for decision in alert.get("decisions") or []:
@@ -118,7 +116,7 @@ def flatten_bans():
 
 def flatten_alerts():
     rows = []
-    for alert in lapi_get(f"/v1/alerts?since={ALERTS_SINCE}&include_capi=false&limit={ALERTS_LIMIT}"):
+    for alert in lapi_get(f"/v1/alerts?since={ALERTS_SINCE}&include_capi=false&limit={ALERTS_LIMIT}") or []:
         source = alert.get("source") or {}
         last_path, paths = event_paths(alert)
         country = source.get("cn", "")
