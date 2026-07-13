@@ -46,6 +46,12 @@
               NoNewPrivileges = true;
             };
             Service.Restart = "always";
+            Unit.Upholds = [
+              "podman-pangolin.service"
+              "podman-traefik.service"
+              "podman-crowdsec.service"
+              "podman-crowdsec-export.service"
+            ];
           };
         };
 
