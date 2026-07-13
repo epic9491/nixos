@@ -18,9 +18,6 @@
         environment = {
           MEILI_ADDR = "http://meilisearch:7700";
           BROWSER_WEB_URL = "http://chrome:9222";
-          OLLAMA_BASE_URL = "http://100.69.0.2:11434";
-          INFERENCE_TEXT_MODEL = "qwen3:8b";
-          INFERENCE_IMAGE_MODEL = "qwen3:8b";
           DATA_DIR = "/data";
         };
         extraPodmanArgs = [ "--memory=3g" ];
