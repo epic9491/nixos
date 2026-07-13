@@ -81,8 +81,8 @@ def event_paths(alert):
     paths = []
     latest = ""
     for event in alert.get("events") or []:
-        meta = {m["key"]: m["value"] for m in event.get("meta") or []}
-        if "http_path" in meta:
+        meta = {m.get("key", ""): m.get("value", "") for m in event.get("meta") or []}
+        if meta.get("http_path"):
             latest = (meta.get("http_verb", "") + " " + meta["http_path"]).strip()
             if meta["http_path"] not in paths:
                 paths.append(meta["http_path"])
