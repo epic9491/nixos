@@ -239,8 +239,8 @@
       "type": "stat",
       "title": "Alerts (24h)",
       "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "crowdsec-lapi"
       },
       "gridPos": {
         "h": 4,
@@ -250,14 +250,28 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "sum(increase(cs_alerts[24h]))",
           "refId": "A",
-          "instant": true,
-          "range": false
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "crowdsec-lapi"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "url": "/stats",
+          "url_options": {
+            "method": "GET",
+            "data": ""
+          },
+          "format": "table",
+          "root_selector": "",
+          "columns": [
+            {
+              "selector": "alerts_24h",
+              "text": "Alerts (24h)",
+              "type": "number"
+            }
+          ]
         }
       ],
       "fieldConfig": {
@@ -293,12 +307,12 @@
         "graphMode": "none",
         "justifyMode": "auto"
       },
-      "description": "Local alerts raised by scenarios and AppSec in the last 24h"
+      "description": "Alerts raised in the last 24h, counted live from the local API (community blocklist excluded)"
     },
     {
       "id": 6,
       "type": "stat",
-      "title": "Active decisions",
+      "title": "Banned IPs (total)",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -353,7 +367,8 @@
         "colorMode": "value",
         "graphMode": "none",
         "justifyMode": "auto"
-      }
+      },
+      "description": "All ban decisions active right now: community blocklist + subscribed blocklists + local bans. Dominated by imported blocklists, not local activity"
     },
     {
       "id": 7,
@@ -539,6 +554,254 @@
       "description": "Bans issued by this engine's own scenarios"
     },
     {
+      "id": 43,
+      "type": "row",
+      "title": "Active bans",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 5
+      },
+      "panels": []
+    },
+    {
+      "id": 44,
+      "type": "table",
+      "title": "Active bans (local decisions)",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "crowdsec-lapi"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "crowdsec-lapi"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "url": "/bans",
+          "url_options": {
+            "method": "GET",
+            "data": ""
+          },
+          "format": "table",
+          "root_selector": "",
+          "columns": [
+            {
+              "selector": "ip",
+              "text": "IP",
+              "type": "string"
+            },
+            {
+              "selector": "country",
+              "text": "Country",
+              "type": "string"
+            },
+            {
+              "selector": "as_name",
+              "text": "AS",
+              "type": "string"
+            },
+            {
+              "selector": "reason",
+              "text": "Reason",
+              "type": "string"
+            },
+            {
+              "selector": "last_target",
+              "text": "Last target",
+              "type": "string"
+            },
+            {
+              "selector": "events",
+              "text": "Events",
+              "type": "number"
+            },
+            {
+              "selector": "origin",
+              "text": "Origin",
+              "type": "string"
+            },
+            {
+              "selector": "banned_at",
+              "text": "Banned at",
+              "type": "timestamp"
+            },
+            {
+              "selector": "expires_in",
+              "text": "Expires in",
+              "type": "number"
+            }
+          ]
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "IP": 0,
+              "Country": 1,
+              "AS": 2,
+              "Reason": 3,
+              "Last target": 4,
+              "Events": 5,
+              "Banned at": 6,
+              "Expires in": 7,
+              "Origin": 8
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Expires in"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dtdurations"
+              },
+              {
+                "id": "custom.width",
+                "value": 110
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Banned at"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 180
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Events"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Origin"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 90
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IP"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Country"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Last target"
+            },
+            "properties": [
+              {
+                "id": "custom.inspect",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        },
+        "sortBy": [
+          {
+            "displayName": "Banned at",
+            "desc": true
+          }
+        ]
+      },
+      "description": "Bans triggered by this engine (scenarios, AppSec, manual cscli), live from the local API. Community and third-party blocklist bans are counted in the Decisions row instead"
+    },
+    {
       "id": 10,
       "type": "row",
       "title": "Decisions",
@@ -547,7 +810,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 5
+        "y": 14
       },
       "panels": []
     },
@@ -563,7 +826,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 6
+        "y": 15
       },
       "targets": [
         {
@@ -651,7 +914,7 @@
         "h": 9,
         "w": 6,
         "x": 12,
-        "y": 6
+        "y": 15
       },
       "targets": [
         {
@@ -779,7 +1042,7 @@
         "h": 9,
         "w": 6,
         "x": 18,
-        "y": 6
+        "y": 15
       },
       "targets": [
         {
@@ -903,14 +1166,14 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 15
+        "y": 24
       },
       "panels": []
     },
     {
       "id": 15,
       "type": "bargauge",
-      "title": "Alerts by scenario (since engine start)",
+      "title": "Alerts by scenario (stored)",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -919,7 +1182,7 @@
         "h": 10,
         "w": 10,
         "x": 0,
-        "y": 16
+        "y": 25
       },
       "targets": [
         {
@@ -971,7 +1234,7 @@
         "namePlacement": "auto",
         "sizing": "auto"
       },
-      "description": "Top 15 scenarios by alert count; counters reset at the nightly engine restart"
+      "description": "Alerts currently stored in the local database, per scenario. Old alerts are pruned by the flush policy"
     },
     {
       "id": 16,
@@ -985,7 +1248,7 @@
         "h": 5,
         "w": 14,
         "x": 10,
-        "y": 16
+        "y": 25
       },
       "targets": [
         {
@@ -993,7 +1256,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(increase(cs_alerts[$__rate_interval]))",
+          "expr": "sum(clamp_min(delta(cs_alerts[$__rate_interval]), 0))",
           "refId": "A",
           "legendFormat": "alerts"
         }
@@ -1059,7 +1322,7 @@
           "calcs": []
         }
       },
-      "description": "New alerts over time across all scenarios"
+      "description": "New alerts over time. Database pruning no longer shows up as fake spikes"
     },
     {
       "id": 17,
@@ -1073,7 +1336,7 @@
         "h": 5,
         "w": 14,
         "x": 10,
-        "y": 21
+        "y": 30
       },
       "targets": [
         {
@@ -1081,7 +1344,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (reason) (increase(cs_alerts[$__rate_interval])) > 0",
+          "expr": "sum by (reason) (clamp_min(delta(cs_alerts[$__rate_interval]), 0)) > 0",
           "refId": "A",
           "legendFormat": "{{reason}}"
         }
@@ -1149,6 +1412,244 @@
       }
     },
     {
+      "id": 45,
+      "type": "table",
+      "title": "Recent alerts (24h)",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "crowdsec-lapi"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 35
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "crowdsec-lapi"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "url": "/alerts",
+          "url_options": {
+            "method": "GET",
+            "data": ""
+          },
+          "format": "table",
+          "root_selector": "",
+          "columns": [
+            {
+              "selector": "time",
+              "text": "Time",
+              "type": "timestamp"
+            },
+            {
+              "selector": "ip",
+              "text": "IP",
+              "type": "string"
+            },
+            {
+              "selector": "country",
+              "text": "Country",
+              "type": "string"
+            },
+            {
+              "selector": "as_name",
+              "text": "AS",
+              "type": "string"
+            },
+            {
+              "selector": "scenario",
+              "text": "Scenario",
+              "type": "string"
+            },
+            {
+              "selector": "last_target",
+              "text": "Last target",
+              "type": "string"
+            },
+            {
+              "selector": "events",
+              "text": "Events",
+              "type": "number"
+            },
+            {
+              "selector": "decision",
+              "text": "Decision",
+              "type": "string"
+            }
+          ]
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "Time": 0,
+              "IP": 1,
+              "Country": 2,
+              "AS": 3,
+              "Scenario": 4,
+              "Last target": 5,
+              "Events": 6,
+              "Decision": 7
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 180
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Events"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 80
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IP"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 150
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Country"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Decision"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "ban": {
+                        "text": "ban",
+                        "color": "semi-dark-red",
+                        "index": 0
+                      },
+                      "none": {
+                        "text": "\u2014",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Last target"
+            },
+            "properties": [
+              {
+                "id": "custom.inspect",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        },
+        "sortBy": [
+          {
+            "displayName": "Time",
+            "desc": true
+          }
+        ]
+      },
+      "description": "Alerts raised in the last 24h, live from the local API, with the request path that triggered them"
+    },
+    {
       "id": 18,
       "type": "row",
       "title": "AppSec / WAF",
@@ -1157,7 +1658,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 44
       },
       "panels": []
     },
@@ -1173,7 +1674,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 27
+        "y": 45
       },
       "targets": [
         {
@@ -1233,7 +1734,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 27
+        "y": 45
       },
       "targets": [
         {
@@ -1293,7 +1794,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 27
+        "y": 45
       },
       "targets": [
         {
@@ -1354,7 +1855,7 @@
         "h": 5,
         "w": 12,
         "x": 0,
-        "y": 31
+        "y": 49
       },
       "targets": [
         {
@@ -1450,7 +1951,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 27
+        "y": 45
       },
       "targets": [
         {
@@ -1574,7 +2075,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 36
+        "y": 54
       },
       "panels": []
     },
@@ -1590,7 +2091,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 37
+        "y": 55
       },
       "targets": [
         {
@@ -1677,7 +2178,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 37
+        "y": 55
       },
       "targets": [
         {
@@ -1773,7 +2274,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 37
+        "y": 55
       },
       "targets": [
         {
@@ -1858,7 +2359,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 45
+        "y": 63
       },
       "panels": []
     },
@@ -1874,7 +2375,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 46
+        "y": 64
       },
       "targets": [
         {
@@ -1962,7 +2463,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 46
+        "y": 64
       },
       "targets": [
         {
@@ -2064,7 +2565,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 54
+        "y": 72
       },
       "panels": []
     },
@@ -2080,7 +2581,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 55
+        "y": 73
       },
       "targets": [
         {
@@ -2168,7 +2669,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 55
+        "y": 73
       },
       "targets": [
         {
@@ -2255,7 +2756,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 55
+        "y": 73
       },
       "targets": [
         {
@@ -2316,7 +2817,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 55
+        "y": 73
       },
       "targets": [
         {
@@ -2388,7 +2889,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 59
+        "y": 77
       },
       "targets": [
         {
@@ -2452,7 +2953,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 59
+        "y": 77
       },
       "targets": [
         {
@@ -2513,7 +3014,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 63
+        "y": 81
       },
       "panels": []
     },
@@ -2529,7 +3030,7 @@
         "h": 6,
         "w": 6,
         "x": 0,
-        "y": 64
+        "y": 82
       },
       "targets": [
         {
@@ -2616,7 +3117,7 @@
         "h": 6,
         "w": 6,
         "x": 6,
-        "y": 64
+        "y": 82
       },
       "targets": [
         {
@@ -2703,7 +3204,7 @@
         "h": 6,
         "w": 6,
         "x": 12,
-        "y": 64
+        "y": 82
       },
       "targets": [
         {
@@ -2790,7 +3291,7 @@
         "h": 6,
         "w": 6,
         "x": 18,
-        "y": 64
+        "y": 82
       },
       "targets": [
         {
