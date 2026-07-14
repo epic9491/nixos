@@ -1,0 +1,19 @@
+on:
+  schedule:
+    - cron: '0 12 * * 1'
+  workflow_dispatch:
+
+jobs:
+  renovate:
+    runs-on: nix
+    steps:
+      - run: nix shell nixpkgs#renovate nixpkgs#git --command renovate
+        env:
+          RENOVATE_PLATFORM: forgejo
+          RENOVATE_ENDPOINT: https://codeberg.org/api/v1
+          RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
+          RENOVATE_REPOSITORIES: sensei/nixos
+          RENOVATE_ONBOARDING: 'false'
+          RENOVATE_GIT_AUTHOR: 'Renovate Bot <renovate@gaialabs.space>'
+          GITHUB_COM_TOKEN: ${{ secrets.RENOVATE_GITHUB_TOKEN }}
+          LOG_LEVEL: info

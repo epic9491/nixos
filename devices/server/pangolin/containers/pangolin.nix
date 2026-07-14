@@ -147,7 +147,7 @@
         };
 
         containers.crowdsec-export = {
-          image = "docker.io/library/python@sha256:399babc8b49529dabfd9c922f2b5eea81d611e4512e3ed250d75bd2e7683f4b0";
+          image = "docker.io/library/python:3.13-alpine@sha256:399babc8b49529dabfd9c922f2b5eea81d611e4512e3ed250d75bd2e7683f4b0";
           autoStart = true;
           network = "container:gerbil";
           exec = "python3 /app/lapi-export.py";
