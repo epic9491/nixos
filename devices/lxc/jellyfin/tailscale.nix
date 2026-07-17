@@ -9,7 +9,7 @@
       Type = "oneshot";
       Restart = "on-failure";
       RestartSec = 5;
-      ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg --https=443 localhost:8096";
+      ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg --https=443 127.0.0.1:8096";
     };
   };
 }
