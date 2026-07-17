@@ -77,5 +77,6 @@ jobs:
           fi
           for ref in $refs; do
             echo "Verifying $ref"
-            nix run nixpkgs#skopeo -- inspect --no-tags --format 'OK: {{.Digest}}' "docker://$ref"
+            digestref=$(echo "$ref" | sed 's/:[^@/]*@sha256:/@sha256:/')
+            nix run nixpkgs#skopeo -- inspect --no-tags --format 'OK: {{.Digest}}' "docker://$digestref"
           done
