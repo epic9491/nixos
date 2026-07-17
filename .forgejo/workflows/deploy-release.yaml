@@ -1,0 +1,16 @@
+name: deploy-release
+
+on:
+  schedule:
+    - cron: 'CRON_TZ=America/Chicago 0 7 * * *'
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: nix
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: deploy-candidate
+      - run: git push origin HEAD:deploy
