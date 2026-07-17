@@ -1,3 +1,5 @@
+name: nix-build
+
 on:
   push:
     branches:
@@ -9,6 +11,8 @@ on:
       - 'modules/**'
       - 'flake.nix'
       - 'flake.lock'
+  # unfiltered so required checks report on every PR
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -37,3 +41,23 @@ jobs:
           nix build \
             ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel" \
             --print-build-logs
+
+  verify-images:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: nix
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - run: |
+          set -eu
+          refs=$(git diff "origin/${{ github.base_ref }}...HEAD" -- '*.nix' \
+            | sed -n 's/^+.*image = "\([^"]*\)".*/\1/p' | sort -u)
+          if [ -z "$refs" ]; then
+            echo "No container image changes to verify."
+            exit 0
+          fi
+          for ref in $refs; do
+            echo "Verifying $ref"
+            nix run nixpkgs#skopeo -- inspect --no-tags --format 'OK: {{.Digest}}' "docker://$ref"
+          done

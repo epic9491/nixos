@@ -8,9 +8,8 @@
       networks.karakeep = { };
 
       containers.karakeep = {
-        image = "ghcr.io/karakeep-app/karakeep:release";
+        image = "ghcr.io/karakeep-app/karakeep:release@sha256:64d6a9bbf2d37b5c808cf06b5d87f1f1c7846fdd3844724145a9741aeb06fd31";
         autoStart = true;
-        autoUpdate = "registry";
         ports = [ "127.0.0.1:3000:3000" ];
         volumes = [ "/var/lib/karakeep/data:/data:Z" ];
         network = "karakeep.network";
@@ -37,7 +36,7 @@
       };
 
       containers.karakeep-chrome = {
-        image = "gcr.io/zenika-hub/alpine-chrome:124";
+        image = "gcr.io/zenika-hub/alpine-chrome:124@sha256:1a0046448e0bb6c275c88f86e01faf0de62b02ec8572901256ada0a8c08be23f";
         autoStart = true;
         network = "karakeep.network";
         networkAlias = [ "chrome" ];
@@ -46,7 +45,7 @@
       };
 
       containers.karakeep-meilisearch = {
-        image = "docker.io/getmeili/meilisearch:v1.41.0";
+        image = "docker.io/getmeili/meilisearch:v1.41.0@sha256:860fa4baed04ae1c235de870edab0c8006227546dea1bbb6411fbfc5e27cf1db";
         autoStart = true;
         network = "karakeep.network";
         networkAlias = [ "meilisearch" ];

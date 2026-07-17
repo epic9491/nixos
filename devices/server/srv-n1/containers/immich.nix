@@ -8,9 +8,8 @@
       networks.immich = { };
 
       containers.immich-server = {
-        image = "ghcr.io/immich-app/immich-server:v3";
+        image = "ghcr.io/immich-app/immich-server:v3@sha256:c716dc20f957aafd89fa9d284a2ec63e25c9e2d8d8e87c6197d540a3dce237db";
         autoStart = true;
-        autoUpdate = "registry";
         network = "immich.network";
         ports = [ "127.0.0.1:2283:2283" ];
         volumes = [
@@ -35,9 +34,8 @@
       };
 
       containers.immich-machine-learning = {
-        image = "ghcr.io/immich-app/immich-machine-learning:v3";
+        image = "ghcr.io/immich-app/immich-machine-learning:v3@sha256:d76fe88b69282c09a97eac4f82dafa82cfd77bce274bc742591cde974f87dacb";
         autoStart = true;
-        autoUpdate = "registry";
         network = "immich.network";
         networkAlias = [ "immich-machine-learning" ];
         volumes = [ "/var/lib/immich/model-cache:/cache" ];

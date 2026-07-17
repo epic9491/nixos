@@ -34,7 +34,6 @@
         containers.recorder = {
           image = "docker.io/owntracks/recorder@sha256:050c3ac9ed798d4110f12e53851e94f9fa0fcecb16cf4d7457967eac2e498da7";
           autoStart = true;
-          autoUpdate = "registry";
           network = "owntracks.network";
           networkAlias = [ "recorder" ];
           volumes = [ "/var/lib/owntracks/recorder:/store:Z" ];
@@ -49,7 +48,6 @@
         containers.caddy = {
           image = "docker.io/library/caddy@sha256:844f60b64e4724a5aa8245e019dace0d3f199f7433ce6c57676cb30a920dbad9";
           autoStart = true;
-          autoUpdate = "registry";
           network = "owntracks.network";
           networkAlias = [ "caddy" ];
           ports = [ "127.0.0.1:8085:80" ];

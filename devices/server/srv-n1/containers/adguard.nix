@@ -7,7 +7,6 @@
       containers.adguard = {
         image = "docker.io/adguard/adguardhome@sha256:1ea34eafe5dc691007946e8eaab7bf46b0de9412f39213d8c06e48b53bf9a6c5";
         autoStart = true;
-        autoUpdate = "registry";
         ports = [
           "100.69.69.210:5353:53/tcp"
           "100.69.69.210:5353:53/udp"

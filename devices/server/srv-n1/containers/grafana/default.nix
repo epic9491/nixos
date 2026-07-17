@@ -70,7 +70,6 @@
         containers.prometheus = {
           image = "docker.io/prom/prometheus@sha256:1f0f50f06acaceb0f5670d2c8a658a599affe7b0d8e78b898c1035653849a702";
           autoStart = true;
-          autoUpdate = "registry";
           network = "monitoring.network";
           networkAlias = [ "prometheus" ];
           exec = "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.retention.time=90d";
@@ -91,7 +90,6 @@
         containers.grafana = {
           image = "docker.io/grafana/grafana@sha256:26b8f35a9e4e4431995cf64c3f396505a4faf17bcfc19f9ed84943ec6bfd5ecd";
           autoStart = true;
-          autoUpdate = "registry";
           network = "monitoring.network";
           ports = [ "127.0.0.1:3030:3000" ];
           volumes = [

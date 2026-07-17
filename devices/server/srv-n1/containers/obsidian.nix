@@ -8,9 +8,8 @@
       networks.obsidian = { };
 
       containers.couchdb = {
-        image = "docker.io/library/couchdb:3.5";
+        image = "docker.io/library/couchdb:3.5@sha256:7feb744b60195233219f3fa801cbc2384efa24b28c76a5d1f3e93efe6557f921";
         autoStart = true;
-        autoUpdate = "registry";
         network = "obsidian.network";
         networkAlias = [ "couchdb" ];
         ports = [ "127.0.0.1:5984:5984" ];
@@ -24,9 +23,8 @@
       };
 
       containers.cloudflared = {
-        image = "docker.io/cloudflare/cloudflared:latest";
+        image = "docker.io/cloudflare/cloudflared:latest@sha256:4f6655284ab3d252b7f28fedb19fe6c8fc82ee5b1295c20ac74d475e5398a52d";
         autoStart = true;
-        autoUpdate = "registry";
         network = "obsidian.network";
         exec = "tunnel --no-autoupdate run";
         environmentFile = [ "/run/secrets/obsidian-cloudflared.env" ];

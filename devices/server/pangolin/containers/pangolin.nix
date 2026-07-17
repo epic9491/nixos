@@ -25,7 +25,6 @@
         containers.gerbil = {
           image = "docker.io/fosrl/gerbil@sha256:431aaed724dab25e7b7b5519abd756a37401956cd4d1f9b696fedbb16f9e4ae6";
           autoStart = true;
-          autoUpdate = "registry";
           exec = "--reachableAt=http://gerbil:3004 --generateAndSaveKeyTo=/var/config/key --remoteConfig=http://pangolin:3001/api/v1/";
           ports = [
             "51820:51820/udp"
@@ -58,7 +57,6 @@
         containers.pangolin = {
           image = "docker.io/fosrl/pangolin@sha256:a48fa977d95b44a0e7fda5b94e8f6a60c0aece3ff6063b23d7bf2d814baa279c";
           autoStart = true;
-          autoUpdate = "registry";
           network = "container:gerbil";
           volumes = [ "/var/lib/pangolin/config:/app/config" ];
           extraConfig = {
@@ -79,7 +77,6 @@
         containers.traefik = {
           image = "docker.io/library/traefik@sha256:4299bbed850421258fc5448c2e0e6ad350981d4d335a68de11b92448aedbefe5";
           autoStart = true;
-          autoUpdate = "registry";
           network = "container:gerbil";
           exec = "--configFile=/etc/traefik/traefik_config.yml";
           volumes = [
@@ -109,7 +106,6 @@
         containers.crowdsec = {
           image = "docker.io/crowdsecurity/crowdsec@sha256:2f527c9bb8b367120eb08b82890aa912ce96bfa1ada93dda0721700e4b4e0dde";
           autoStart = true;
-          autoUpdate = "registry";
           network = "container:gerbil";
           volumes = [
             "/var/lib/pangolin/config/crowdsec:/etc/crowdsec"
@@ -184,7 +180,6 @@
         containers.middleware-manager = {
           image = "docker.io/hhftechnology/middleware-manager@sha256:d739d47886631a04bd7e3c83d2c02799010d0a944c2f6256bfcd9b89f0b25487";
           autoStart = false;
-          autoUpdate = "registry";
           network = "container:gerbil";
           volumes = [
             "/var/lib/pangolin/data:/data"

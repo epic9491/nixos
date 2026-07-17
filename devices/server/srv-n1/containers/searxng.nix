@@ -8,9 +8,8 @@
       networks.searxng = { };
 
       containers.searxng = {
-        image = "docker.io/searxng/searxng:latest";
+        image = "docker.io/searxng/searxng:latest@sha256:04ddbd037d72775540527eb41f03f0cb30827bc69b91b2fe209346bf7d330179";
         autoStart = true;
-        autoUpdate = "registry";
         network = "searxng.network";
         ports = [ "127.0.0.1:8082:8080" ];
         volumes = [
@@ -28,7 +27,7 @@
       };
 
       containers.searxng-redis = {
-        image = "docker.io/valkey/valkey:8-alpine";
+        image = "docker.io/valkey/valkey:8-alpine@sha256:94365b275456ae14621001c03556c732b1d93a0cdeacc317d1bdd52eba680885";
         autoStart = true;
         network = "searxng.network";
         networkAlias = [ "redis" ];

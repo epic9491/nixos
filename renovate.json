@@ -3,6 +3,14 @@
   "enabledManagers": ["custom.regex"],
   "dependencyDashboard": true,
   "prConcurrentLimit": 5,
+  "packageRules": [
+    {
+      "description": "Automerge non-major container updates once CI passes",
+      "matchDatasources": ["docker"],
+      "matchUpdateTypes": ["digest", "pin", "patch", "minor"],
+      "automerge": true
+    }
+  ],
   "customManagers": [
     {
       "customType": "regex",
