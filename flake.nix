@@ -39,6 +39,9 @@
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs-stable";
+
+    comin.url = "github:nlewo/comin";
+    comin.inputs.nixpkgs.follows = "nixpkgs-stable";
   };
 
   outputs =
@@ -141,6 +144,7 @@
             ./modules/baseline.server.nix
             ./modules/ssh.nix
             ./modules/svc.nix
+            ./modules/cd.nix
             home-managerS.nixosModules.home-manager
           ]
           ++ modules;

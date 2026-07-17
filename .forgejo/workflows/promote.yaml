@@ -2,7 +2,7 @@ name: promote
 
 on:
   schedule:
-    - cron: 'CRON_TZ=America/Chicago 0 7 * * 5'
+    - cron: 'CRON_TZ=America/Chicago 0 3 * * 5'
   workflow_dispatch:
 
 jobs:

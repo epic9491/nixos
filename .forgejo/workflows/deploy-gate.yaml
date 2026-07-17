@@ -1,0 +1,25 @@
+name: deploy-gate
+
+on:
+  schedule:
+    - cron: 'CRON_TZ=America/Chicago 0 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  gate:
+    runs-on: nix
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: main
+      - run: |
+          set -eu
+          hosts=$(nix eval --raw '.#nixosConfigurations' --apply 'cfgs:
+            builtins.concatStringsSep "\n"
+              (builtins.filter (n: cfgs.${n}.config.services.comin.enable or false)
+                (builtins.attrNames cfgs))')
+          for host in $hosts; do
+            nix build ".#nixosConfigurations.$host.config.system.build.toplevel" --print-build-logs
+          done
+          git push -f origin HEAD:deploy-candidate
