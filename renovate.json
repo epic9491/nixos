@@ -1,13 +1,34 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "enabledManagers": ["custom.regex"],
+  "enabledManagers": ["custom.regex", "nix"],
+  "nix": { "enabled": true },
   "dependencyDashboard": true,
   "prConcurrentLimit": 5,
+  "baseBranchPatterns": ["main", "staging"],
   "packageRules": [
     {
       "description": "Automerge non-major container updates once CI passes",
       "matchDatasources": ["docker"],
       "matchUpdateTypes": ["digest", "pin", "patch", "minor"],
+      "automerge": true
+    },
+    {
+      "description": "Container updates target main only",
+      "matchManagers": ["custom.regex"],
+      "matchBaseBranches": ["staging"],
+      "enabled": false
+    },
+    {
+      "description": "Flake input updates target staging only",
+      "matchManagers": ["nix"],
+      "matchBaseBranches": ["main"],
+      "enabled": false
+    },
+    {
+      "description": "Weekly grouped flake input bump, automerged into staging",
+      "matchManagers": ["nix"],
+      "groupName": "flake inputs",
+      "schedule": ["before 8am on saturday"],
       "automerge": true
     }
   ],

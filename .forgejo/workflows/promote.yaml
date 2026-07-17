@@ -1,0 +1,31 @@
+name: promote
+
+on:
+  schedule:
+    - cron: 'CRON_TZ=America/Chicago 0 7 * * 5'
+  workflow_dispatch:
+
+jobs:
+  promote:
+    runs-on: nix
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: main
+      - run: |
+          set -eu
+          git fetch origin staging
+          if git merge-base --is-ancestor origin/staging main; then
+            echo "Nothing on staging to promote."
+            exit 0
+          fi
+          git config user.name "Forgejo Actions"
+          git config user.email "actions@gaialabs.space"
+          git merge --no-ff origin/staging -m "promote staging to main"
+          for host in srv-n1 erebos; do
+            out=$(nix build ".#nixosConfigurations.$host.config.system.build.toplevel" --print-out-paths)
+            nix run github:tiiuae/sbomnix#vulnxscan -- "$out" || echo "vulnxscan reported findings for $host (informational)"
+          done
+          git push origin main
+          git push origin main:staging

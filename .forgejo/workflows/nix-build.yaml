@@ -42,6 +42,24 @@ jobs:
             ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel" \
             --print-build-logs
 
+  verify-lock:
+    if: ${{ github.event_name == 'pull_request' }}
+    runs-on: nix
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - run: |
+          set -eu
+          if git diff --quiet "origin/${{ github.base_ref }}...HEAD" -- flake.lock; then
+            echo "No flake.lock changes to scan."
+            exit 0
+          fi
+          for host in srv-n1 erebos; do
+            out=$(nix build ".#nixosConfigurations.$host.config.system.build.toplevel" --print-out-paths)
+            nix run github:tiiuae/sbomnix#vulnxscan -- "$out" || echo "vulnxscan reported findings for $host (informational)"
+          done
+
   verify-images:
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: nix
