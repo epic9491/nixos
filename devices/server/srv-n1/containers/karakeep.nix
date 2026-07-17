@@ -45,7 +45,7 @@
       };
 
       containers.karakeep-meilisearch = {
-        image = "docker.io/getmeili/meilisearch:v1.41.0@sha256:860fa4baed04ae1c235de870edab0c8006227546dea1bbb6411fbfc5e27cf1db";
+        image = "docker.io/getmeili/meilisearch:v1.49.0@sha256:bdc7d7e7939911c40d88d6bcd01f9c72c81f7293135916d48bce241569f721bd";
         autoStart = true;
         network = "karakeep.network";
         networkAlias = [ "meilisearch" ];
