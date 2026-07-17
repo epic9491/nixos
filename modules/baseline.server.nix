@@ -12,6 +12,8 @@ in
   options.server.baseline.enable = lib.mkEnableOption "Baseline server configuration";
 
   config = lib.mkIf cfg.enable {
+    svc.enable = lib.mkDefault true;
+
     nix.settings.experimental-features = [
       "nix-command"
       "flakes"

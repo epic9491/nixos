@@ -14,7 +14,6 @@
     ./disko.nix
     ./backup.nix
     ./containers
-    ./svc.nix
   ];
 
   boot.loader.grub.enable = true;

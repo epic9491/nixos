@@ -140,6 +140,7 @@
             agenix.nixosModules.default
             ./modules/baseline.server.nix
             ./modules/ssh.nix
+            ./modules/svc.nix
             home-managerS.nixosModules.home-manager
           ]
           ++ modules;

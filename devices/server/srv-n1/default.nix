@@ -16,7 +16,6 @@
     ./cockpit.nix
     ./containers
     ./mounts.nix
-    ./svc.nix
   ];
 
   boot.kernel.sysctl = {
