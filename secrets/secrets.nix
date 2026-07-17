@@ -4,6 +4,7 @@ let
   srv-n1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINSDR29Go5nMlk58JRcYWM3qNET5tUP1/0jdNPBh6x2S gumbo@srv-n1";
   pangolin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKgrZ+dLkK4yiv7raye7I685m10Fm43gPEyuqtmA1GWb gumbo@pangolin";
   mongoose = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMPiB69ISkgnUYuY5od9v4uss3GfCft6mip3BNjO7Q3M gumbo@mongoose";
+  jellyfin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFgYABW3NtIhsEibdUU05XTGel+MkAnRzJsxks02MDFS gumbo@jellyfin";
   k3s-s1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGUVBtM6haqazKIi6nYx3KF+1N1OliHW+KjQDLqEdLzO gumbo@k3s-s1";
   k3s-a1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAK9uDYiTln0BcPYwzHFCUur2ZG50G/410N8qCqSU7PT gumbo@k3s-a1";
   k3s-a2 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMQRa7a94RT7Fs/jmToF0vfAtSJRJ8ZoAWuVoWsQjGbN gumbo@k3s-a2";
@@ -19,6 +20,7 @@ let
   ];
 in
 {
+  # k3s
   "k3s-token.age".publicKeys = k3s;
   "k3s-ts-auth.age".publicKeys = k3s;
   "newt-auth.age".publicKeys = [
@@ -37,10 +39,13 @@ in
     secret-mgmt
     k3s-s1
   ];
+
   "wg0.age".publicKeys = [
     secret-mgmt
     mongoose
   ];
+
+  # proxmox backup server
   "pbs.console.age".publicKeys = [
     secret-mgmt
     console
@@ -61,10 +66,14 @@ in
     secret-mgmt
     pangolin
   ];
+
+  # pangolin server
   "pangolin.crowdsec.env.age".publicKeys = [
     secret-mgmt
     pangolin
   ];
+
+  # srv-n1
   "srv-n1.newt.env.age".publicKeys = [
     secret-mgmt
     srv-n1
@@ -112,5 +121,11 @@ in
   "srv-n1.owntracks.env.age".publicKeys = [
     secret-mgmt
     srv-n1
+  ];
+
+  # lxc's
+  "jellyfin.newt.env.age".publicKeys = [
+    secret-mgmt
+    jellyfin
   ];
 }
