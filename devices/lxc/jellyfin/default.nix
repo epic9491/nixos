@@ -10,6 +10,8 @@
 {
   imports = [
     "${modulesPath}/virtualisation/proxmox-lxc.nix"
+    ./containers
+    ./tailscale.nix
   ];
 
   proxmoxLXC = {
