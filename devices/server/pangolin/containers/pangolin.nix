@@ -77,7 +77,7 @@
         };
 
         containers.traefik = {
-          image = "docker.io/library/traefik@sha256:1cb3845d7a05e1473c9086351426597e911db49db382b6e4769f9b0744962ac8";
+          image = "docker.io/library/traefik@sha256:4299bbed850421258fc5448c2e0e6ad350981d4d335a68de11b92448aedbefe5";
           autoStart = true;
           autoUpdate = "registry";
           network = "container:gerbil";
