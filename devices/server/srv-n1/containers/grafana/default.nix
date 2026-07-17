@@ -68,7 +68,7 @@
         networks.monitoring = { };
 
         containers.prometheus = {
-          image = "docker.io/prom/prometheus@sha256:1f0f50f06acaceb0f5670d2c8a658a599affe7b0d8e78b898c1035653849a702";
+          image = "docker.io/prom/prometheus@sha256:3c42b892cf723fa54d2f262c37a0e1f80aa8c8ddb1da7b9b0df9455a35a7f893";
           autoStart = true;
           network = "monitoring.network";
           networkAlias = [ "prometheus" ];
