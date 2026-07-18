@@ -178,6 +178,10 @@
           deviceModule = ./machines/server/srv-n1/default.nix;
         };
 
+        srv-n2 = mkServer {
+          deviceModule = ./machines/server/srv-n2/default.nix;
+        };
+
         secret-mgmt = mkServer {
           deviceModule = ./machines/server/secret-mgmt/default.nix;
         };

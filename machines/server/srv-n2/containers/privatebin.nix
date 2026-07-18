@@ -1,0 +1,82 @@
+{
+  home-manager.users.privatebin =
+    { pkgs, ... }:
+    let
+      confPhp = pkgs.writeText "conf.php" ''
+        [main]
+        name = "pasted.space"
+        basepath = "https://pasted.space/"
+        discussion = false
+        opendiscussion = false
+        password = true
+        fileupload = false
+        burnafterreadingselected = false
+        defaultformatter = "plaintext"
+        sizelimit = 10485760
+        template = "bootstrap5"
+        languageselection = false
+        qrcode = false
+        icon = none
+        httpwarning = false
+        compression = zlib
+
+        [expire]
+        default = never
+
+        [expire_options]
+        1hour = 3600
+        1day = 86400
+        1week = 604800
+        1month = 2592000
+        never = 0
+
+        [formatter_options]
+        plaintext = "Plain Text"
+        syntaxhighlighting = "Source Code"
+        markdown = "Markdown"
+
+        [traffic]
+        limit = 10
+        header = "X_FORWARDED_FOR"
+
+        [purge]
+        limit = 300
+        batchsize = 10
+
+        [model]
+        class = Filesystem
+
+        [model_options]
+        dir = PATH "data"
+      '';
+    in
+    {
+      home.stateVersion = "25.05";
+
+      services.podman = {
+        enable = true;
+
+        containers.privatebin = {
+          image = "docker.io/privatebin/nginx-fpm-alpine:latest@sha256:04783e4342ea2f75880740d0be63be87403874a9fd06510b14cf2f7b338b6fb9";
+          autoStart = true;
+          userNS = "keep-id:uid=65534,gid=82";
+          ports = [ "127.0.0.1:8083:8080" ];
+          volumes = [
+            "/var/lib/privatebin/data:/srv/data"
+            "${confPhp}:/srv/cfg/conf.php:ro"
+          ];
+          environment = {
+            PHP_TZ = "UTC";
+            CONFIG_PATH = "/srv/cfg";
+          };
+          extraConfig = {
+            Container = {
+              DropCapability = "ALL";
+              NoNewPrivileges = true;
+            };
+            Service.Restart = "always";
+          };
+        };
+      };
+    };
+}
