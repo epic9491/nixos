@@ -149,6 +149,10 @@ in
     secret-mgmt
     srv-n2
   ];
+  "srv-n2.crowdsec.env.age".publicKeys = [
+    secret-mgmt
+    srv-n2
+  ];
 
   # lxc's
   "jellyfin.newt.env.age".publicKeys = [
