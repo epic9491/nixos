@@ -9,7 +9,7 @@ module "deploy_console" {
   instance_id            = local.console_ipv4
   debug_logging              = true
   build_on_remote            = false
-  nixos_generate_config_path = "/home/gumbo/nixos/devices/desktop/console/hardware-configuration.nix"
+  nixos_generate_config_path = "/home/gumbo/nixos/machines/desktop/console/hardware-configuration.nix"
   install_ssh_key            = file("/home/gumbo/.ssh/temp")
   deployment_ssh_key         = file("/home/gumbo/.ssh/temp")
 }

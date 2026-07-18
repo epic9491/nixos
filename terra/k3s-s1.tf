@@ -10,7 +10,7 @@ module "deploy_k3s-s1" {
   instance_id            = local.k3s-s1_ipv4
   debug_logging              = true
   build_on_remote            = false
-  nixos_generate_config_path = "/home/gumbo/nixos/devices/server/k3s/k3s-s1/hardware-configuration.nix"
+  nixos_generate_config_path = "/home/gumbo/nixos/machines/server/k3s/k3s-s1/hardware-configuration.nix"
   install_ssh_key            = file("/home/gumbo/.ssh/temp")
   deployment_ssh_key         = file("/home/gumbo/.ssh/temp")
 }

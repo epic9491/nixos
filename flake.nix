@@ -160,58 +160,62 @@
 
       nixosConfigurations = {
         erebos = mkWorkstation {
-          deviceModule = ./devices/desktop/erebos/default.nix;
+          deviceModule = ./machines/desktop/erebos/default.nix;
           hm = [ ./home/kde.nix ];
         };
 
         prometheus = mkWorkstation {
-          deviceModule = ./devices/laptop/prometheus/default.nix;
+          deviceModule = ./machines/laptop/prometheus/default.nix;
           hm = [ ./home/niri.nix ];
         };
 
         console = mkWorkstation {
-          deviceModule = ./devices/desktop/console/default.nix;
+          deviceModule = ./machines/desktop/console/default.nix;
           hm = [ ./home/kde.nix ];
         };
 
         srv-n1 = mkServer {
-          deviceModule = ./devices/server/srv-n1/default.nix;
+          deviceModule = ./machines/server/srv-n1/default.nix;
+        };
+
+        srv-n2 = mkServer {
+          deviceModule = ./machines/server/srv-n2/default.nix;
         };
 
         secret-mgmt = mkServer {
-          deviceModule = ./devices/server/secret-mgmt/default.nix;
+          deviceModule = ./machines/server/secret-mgmt/default.nix;
         };
 
         mongoose = mkServer {
-          deviceModule = ./devices/server/mongoose/default.nix;
+          deviceModule = ./machines/server/mongoose/default.nix;
         };
 
-        k3s-a1 = mkServer {
-          deviceModule = ./devices/server/k3s/k3s-a1/default.nix;
-        };
+       # k3s-a1 = mkServer {
+       #   deviceModule = ./machines/server/k3s/k3s-a1/default.nix;
+       # };
 
-        k3s-a2 = mkServer {
-          deviceModule = ./devices/server/k3s/k3s-a2/default.nix;
-        };
+       # k3s-a2 = mkServer {
+       #   deviceModule = ./machines/server/k3s/k3s-a2/default.nix;
+       # };
 
-        k3s-a3 = mkServer {
-          deviceModule = ./devices/server/k3s/k3s-a3/default.nix;
-        };
+       # k3s-a3 = mkServer {
+       #   deviceModule = ./machines/server/k3s/k3s-a3/default.nix;
+       # };
 
-        k3s-a4 = mkServer {
-          deviceModule = ./devices/server/k3s/k3s-a4/default.nix;
-        };
+       # k3s-a4 = mkServer {
+       #   deviceModule = ./machines/server/k3s/k3s-a4/default.nix;
+       # };
 
-        k3s-s1 = mkServer {
-          deviceModule = ./devices/server/k3s/k3s-s1/default.nix;
-        };
+       # k3s-s1 = mkServer {
+       #   deviceModule = ./machines/server/k3s/k3s-s1/default.nix;
+       # };
 
         pangolin = mkServer {
-          deviceModule = ./devices/server/pangolin/default.nix;
+          deviceModule = ./machines/server/pangolin/default.nix;
         };
 
         jellyfin = mkServer {
-          deviceModule = ./devices/lxc/jellyfin/default.nix;
+          deviceModule = ./machines/lxc/jellyfin/default.nix;
         };
       };
     };
