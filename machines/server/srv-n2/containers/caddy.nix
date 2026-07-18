@@ -89,6 +89,7 @@ in
           extraConfig = {
             Container = {
               DropCapability = "ALL";
+              AddCapability = [ "NET_BIND_SERVICE" ];
               NoNewPrivileges = true;
             };
             Service.Restart = "always";
