@@ -145,7 +145,7 @@ in
     secret-mgmt
     srv-n2
   ];
-  "srv-n2.crowdsec-cloudflare.yaml.age".publicKeys = [
+  "srv-n2.crowdsec-cloudflare-worker.yaml.age".publicKeys = [
     secret-mgmt
     srv-n2
   ];

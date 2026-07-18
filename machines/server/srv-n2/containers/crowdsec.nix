@@ -81,11 +81,11 @@ in
         };
 
         containers.crowdsec-cloudflare = {
-          image = "docker.io/crowdsecurity/cloudflare-bouncer:latest@sha256:39719a070c154866ebc81335e70fdfa1c61eac45025fee7d9bbf8da689fbb2c6";
+          image = "docker.io/crowdsecurity/cloudflare-worker-bouncer:latest@sha256:5a736b48156c0b75f900f0e6cc937b6d74b2015fe8ab240154b7059531637c9a";
           autoStart = true;
           network = "crowdsec.network";
           volumes = [
-            "/run/secrets/crowdsec-cloudflare.yaml:/etc/crowdsec/bouncers/crowdsec-cloudflare-bouncer.yaml:ro"
+            "/run/secrets/crowdsec-cloudflare-worker.yaml:/etc/crowdsec/bouncers/crowdsec-cloudflare-worker-bouncer.yaml:ro"
           ];
           extraConfig = {
             Container = {
@@ -103,9 +103,9 @@ in
       };
     };
 
-  age.secrets."crowdsec-cloudflare.yaml" = {
-    file = ../../../../secrets/srv-n2.crowdsec-cloudflare.yaml.age;
-    path = "/run/secrets/crowdsec-cloudflare.yaml";
+  age.secrets."crowdsec-cloudflare-worker.yaml" = {
+    file = ../../../../secrets/srv-n2.crowdsec-cloudflare-worker.yaml.age;
+    path = "/run/secrets/crowdsec-cloudflare-worker.yaml";
     owner = "crowdsec";
     group = "crowdsec";
     mode = "0400";
