@@ -13,4 +13,5 @@ jobs:
         with:
           fetch-depth: 0
           ref: deploy-candidate
+          token: ${{ secrets.DEPLOY_TOKEN }}
       - run: git push origin HEAD:deploy
