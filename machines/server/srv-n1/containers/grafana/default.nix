@@ -15,6 +15,13 @@
                 labels:
                   host: pangolin
 
+          - job_name: crowdsec-srv-n2
+            static_configs:
+              - targets:
+                  - 100.69.69.215:6060
+                labels:
+                  host: srv-n2
+
           - job_name: prometheus
             static_configs:
               - targets:
@@ -47,6 +54,16 @@
             jsonData:
               allowedHosts:
                 - http://100.69.69.201:6061
+          - name: CrowdSec LAPI srv-n2
+            uid: crowdsec-lapi-srv-n2
+            type: yesoreyeram-infinity-datasource
+            access: proxy
+            url: http://100.69.69.215:6061
+            isDefault: false
+            editable: false
+            jsonData:
+              allowedHosts:
+                - http://100.69.69.215:6061
       '';
 
       grafanaDashboardProvider = pkgs.writeText "dashboards.yml" ''
@@ -96,6 +113,7 @@
             "${grafanaDatasources}:/etc/grafana/provisioning/datasources/datasources.yml:ro"
             "${grafanaDashboardProvider}:/etc/grafana/provisioning/dashboards/dashboards.yml:ro"
             "${./crowdsec-dashboard.json}:/etc/grafana/dashboards/crowdsec.json:ro"
+            "${./crowdsec-srv-n2-dashboard.json}:/etc/grafana/dashboards/crowdsec-srv-n2.json:ro"
             "/var/lib/grafana/data:/var/lib/grafana:U"
             "${infinityPlugin}:/var/lib/grafana/plugins/yesoreyeram-infinity-datasource:ro"
           ];

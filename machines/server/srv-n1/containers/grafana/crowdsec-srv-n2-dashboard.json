@@ -1,0 +1,388 @@
+{
+  "title": "CrowdSec — srv-n2 (public)",
+  "uid": "crowdsec-srv-n2",
+  "tags": ["security", "crowdsec", "srv-n2"],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "1m",
+  "time": { "from": "now-24h", "to": "now" },
+  "templating": { "list": [] },
+  "panels": [
+    {
+      "type": "row",
+      "title": "Engine health",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "collapsed": false
+    },
+    {
+      "type": "stat",
+      "title": "Engine",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 4, "w": 3, "x": 0, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "up{job=\"crowdsec-srv-n2\"}" }],
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            { "type": "value", "options": { "0": { "text": "DOWN", "color": "red", "index": 0 }, "1": { "text": "UP", "color": "green", "index": 1 } } }
+          ],
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "red", "value": null }, { "color": "green", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "type": "stat",
+      "title": "Version",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 4, "w": 3, "x": 3, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "cs_info{job=\"crowdsec-srv-n2\"}", "legendFormat": "{{version}}" }],
+      "options": { "colorMode": "none", "graphMode": "none", "textMode": "name", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "type": "stat",
+      "title": "Uptime",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 4, "w": 3, "x": 6, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "time() - process_start_time_seconds{job=\"crowdsec-srv-n2\"}" }],
+      "fieldConfig": { "defaults": { "unit": "s" } },
+      "options": { "colorMode": "none", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "type": "stat",
+      "title": "Alerts (24h)",
+      "datasource": { "type": "yesoreyeram-infinity-datasource", "uid": "crowdsec-lapi-srv-n2" },
+      "gridPos": { "h": 4, "w": 3, "x": 9, "y": 1 },
+      "targets": [
+        {
+          "refId": "A",
+          "type": "json",
+          "source": "url",
+          "format": "table",
+          "url": "/stats",
+          "url_options": { "method": "GET" },
+          "root_selector": "",
+          "columns": [{ "selector": "alerts_24h", "text": "alerts_24h", "type": "number" }]
+        }
+      ],
+      "options": { "colorMode": "value", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "type": "stat",
+      "title": "Active captcha decisions",
+      "description": "srv-n2 remediates with captcha, never ban — a non-zero ban count here means profiles.yaml drifted.",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 4, "w": 4, "x": 12, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "sum(cs_active_decisions{job=\"crowdsec-srv-n2\", type=\"captcha\"}) or vector(0)" }],
+      "options": { "colorMode": "value", "graphMode": "area", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "type": "stat",
+      "title": "Active BAN decisions (should be 0)",
+      "description": "profiles.yaml only emits captcha. Anything here means a ban leaked in — likely from CAPI or a hand-added decision.",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 4, "w": 4, "x": 16, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "sum(cs_active_decisions{job=\"crowdsec-srv-n2\", type=\"ban\"}) or vector(0)" }],
+      "fieldConfig": {
+        "defaults": {
+          "thresholds": { "mode": "absolute", "steps": [{ "color": "green", "value": null }, { "color": "orange", "value": 1 }] }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "none", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "type": "stat",
+      "title": "Community (CAPI) decisions",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 4, "w": 4, "x": 20, "y": 1 },
+      "targets": [{ "refId": "A", "expr": "sum(cs_active_decisions{job=\"crowdsec-srv-n2\", origin=\"CAPI\"}) or vector(0)" }],
+      "options": { "colorMode": "none", "graphMode": "area", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+
+    {
+      "type": "row",
+      "title": "Acquisition & the Cloudflare whitelist canary",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 5 },
+      "collapsed": false
+    },
+    {
+      "type": "stat",
+      "title": "Whitelist ratio (BLIND if ≈100%)",
+      "description": "Fraction of parsed lines swallowed by srv-n2/cloudflare-whitelist. Healthy is ~0: real visitor IPs are not Cloudflare ranges. If this approaches 1, Caddy's trusted_proxies has stopped resolving the real client IP, every request looks like a CF edge address, and CrowdSec is silently inert while still reporting healthy acquisition.",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 6 },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "sum(rate(cs_node_wl_hits_total{job=\"crowdsec-srv-n2\"}[$__rate_interval])) / clamp_min(sum(rate(cs_parser_hits_ok_total{job=\"crowdsec-srv-n2\"}[$__rate_interval])), 0.0001)"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "min": 0,
+          "max": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 0.5 },
+              { "color": "red", "value": 0.9 }
+            ]
+          }
+        }
+      },
+      "options": { "colorMode": "background", "graphMode": "area", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "type": "timeseries",
+      "title": "Caddy log lines read",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 5, "w": 9, "x": 6, "y": 6 },
+      "targets": [
+        { "refId": "A", "expr": "sum by (source) (rate(cs_filesource_hits_total{job=\"crowdsec-srv-n2\"}[$__rate_interval]))", "legendFormat": "{{source}}" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "type": "timeseries",
+      "title": "Parser results",
+      "description": "A persistently high unparsed rate means the caddy collection no longer matches the JSON log format.",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 5, "w": 9, "x": 15, "y": 6 },
+      "targets": [
+        { "refId": "A", "expr": "sum(rate(cs_parser_hits_ok_total{job=\"crowdsec-srv-n2\"}[$__rate_interval]))", "legendFormat": "parsed" },
+        { "refId": "B", "expr": "sum(rate(cs_parser_hits_total{job=\"crowdsec-srv-n2\"}[$__rate_interval])) - sum(rate(cs_parser_hits_ok_total{job=\"crowdsec-srv-n2\"}[$__rate_interval]))", "legendFormat": "unparsed" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "type": "timeseries",
+      "title": "Whitelist hits by node",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 6, "w": 24, "x": 0, "y": 11 },
+      "targets": [
+        { "refId": "A", "expr": "sum by (name, reason) (rate(cs_node_wl_hits_total{job=\"crowdsec-srv-n2\"}[$__rate_interval]))", "legendFormat": "{{name}} — {{reason}}" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "fillOpacity": 10 } } }
+    },
+
+    {
+      "type": "row",
+      "title": "Remediation — Cloudflare Turnstile worker",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 17 },
+      "collapsed": false
+    },
+    {
+      "type": "timeseries",
+      "title": "Bouncer decision pulls",
+      "description": "The cloudflare worker bouncer polls LAPI every 10s. A flat zero line means the bouncer is down and no captchas are reaching the edge.",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 6, "w": 12, "x": 0, "y": 18 },
+      "targets": [
+        { "refId": "A", "expr": "sum by (bouncer) (rate(cs_lapi_bouncer_requests_total{job=\"crowdsec-srv-n2\"}[$__rate_interval]))", "legendFormat": "{{bouncer}}" }
+      ],
+      "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "fillOpacity": 10 } } }
+    },
+    {
+      "type": "timeseries",
+      "title": "Active decisions by origin",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 18 },
+      "targets": [
+        { "refId": "A", "expr": "sum by (origin) (cs_active_decisions{job=\"crowdsec-srv-n2\"})", "legendFormat": "{{origin}}" }
+      ],
+      "fieldConfig": { "defaults": { "custom": { "fillOpacity": 10, "stacking": { "mode": "normal" } } } }
+    },
+    {
+      "type": "table",
+      "title": "Active decisions (challenged IPs)",
+      "datasource": { "type": "yesoreyeram-infinity-datasource", "uid": "crowdsec-lapi-srv-n2" },
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 24 },
+      "targets": [
+        {
+          "refId": "A",
+          "type": "json",
+          "source": "url",
+          "format": "table",
+          "url": "/bans",
+          "url_options": { "method": "GET" },
+          "root_selector": "",
+          "columns": [
+            { "selector": "ip", "text": "IP", "type": "string" },
+            { "selector": "country", "text": "Country", "type": "string" },
+            { "selector": "as_name", "text": "AS", "type": "string" },
+            { "selector": "reason", "text": "Scenario", "type": "string" },
+            { "selector": "last_target", "text": "Last request", "type": "string" },
+            { "selector": "events", "text": "Events", "type": "number" },
+            { "selector": "action", "text": "Action", "type": "string" },
+            { "selector": "origin", "text": "Origin", "type": "string" },
+            { "selector": "expires_in", "text": "Expires in", "type": "number" }
+          ]
+        }
+      ],
+      "fieldConfig": {
+        "defaults": { "custom": { "align": "auto", "filterable": true } },
+        "overrides": [
+          { "matcher": { "id": "byName", "options": "Expires in" }, "properties": [{ "id": "unit", "value": "s" }] }
+        ]
+      },
+      "options": { "sortBy": [{ "displayName": "Expires in", "desc": true }] }
+    },
+
+    {
+      "type": "row",
+      "title": "Alerts & scenarios",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 33 },
+      "collapsed": false
+    },
+    {
+      "type": "bargauge",
+      "title": "Alerts by scenario (stored)",
+      "description": "cs_alerts is a gauge reflecting rows in the DB, not a counter — never wrap it in increase() or rate().",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 7, "w": 10, "x": 0, "y": 34 },
+      "targets": [
+        { "refId": "A", "expr": "topk(15, cs_alerts{job=\"crowdsec-srv-n2\"})", "legendFormat": "{{reason}}" }
+      ],
+      "options": { "orientation": "horizontal", "displayMode": "gradient", "reduceOptions": { "calcs": ["lastNotNull"] } }
+    },
+    {
+      "type": "timeseries",
+      "title": "Alert activity by scenario",
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "gridPos": { "h": 7, "w": 14, "x": 10, "y": 34 },
+      "targets": [
+        { "refId": "A", "expr": "sum by (reason) (clamp_min(delta(cs_alerts{job=\"crowdsec-srv-n2\"}[$__rate_interval]), 0)) > 0", "legendFormat": "{{reason}}" }
+      ],
+      "fieldConfig": { "defaults": { "custom": { "fillOpacity": 10, "drawStyle": "bars" } } }
+    },
+    {
+      "type": "table",
+      "title": "Recent alerts (24h)",
+      "datasource": { "type": "yesoreyeram-infinity-datasource", "uid": "crowdsec-lapi-srv-n2" },
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 41 },
+      "targets": [
+        {
+          "refId": "A",
+          "type": "json",
+          "source": "url",
+          "format": "table",
+          "url": "/alerts",
+          "url_options": { "method": "GET" },
+          "root_selector": "",
+          "columns": [
+            { "selector": "time", "text": "Time", "type": "string" },
+            { "selector": "ip", "text": "IP", "type": "string" },
+            { "selector": "country", "text": "Country", "type": "string" },
+            { "selector": "as_name", "text": "AS", "type": "string" },
+            { "selector": "scenario", "text": "Scenario", "type": "string" },
+            { "selector": "last_target", "text": "Last request", "type": "string" },
+            { "selector": "targets", "text": "Targets", "type": "string" },
+            { "selector": "events", "text": "Events", "type": "number" },
+            { "selector": "decision", "text": "Decision", "type": "string" }
+          ]
+        }
+      ],
+      "fieldConfig": { "defaults": { "custom": { "align": "auto", "filterable": true } } }
+    },
+
+    {
+      "type": "row",
+      "title": "AppSec / WAF",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 50 },
+      "collapsed": true,
+      "panels": [
+        {
+          "type": "stat",
+          "title": "Requests inspected (24h)",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "gridPos": { "h": 4, "w": 6, "x": 0, "y": 51 },
+          "targets": [{ "refId": "A", "expr": "sum(increase(cs_appsec_reqs_total{job=\"crowdsec-srv-n2\"}[24h])) or vector(0)" }],
+          "options": { "colorMode": "none", "graphMode": "area", "reduceOptions": { "calcs": ["lastNotNull"] } }
+        },
+        {
+          "type": "stat",
+          "title": "Requests blocked (24h)",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "gridPos": { "h": 4, "w": 6, "x": 6, "y": 51 },
+          "targets": [{ "refId": "A", "expr": "sum(increase(cs_appsec_block_total{job=\"crowdsec-srv-n2\"}[24h])) or vector(0)" }],
+          "options": { "colorMode": "value", "graphMode": "area", "reduceOptions": { "calcs": ["lastNotNull"] } }
+        },
+        {
+          "type": "timeseries",
+          "title": "AppSec activity",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "gridPos": { "h": 7, "w": 12, "x": 12, "y": 51 },
+          "targets": [
+            { "refId": "A", "expr": "sum(rate(cs_appsec_reqs_total{job=\"crowdsec-srv-n2\"}[$__rate_interval]))", "legendFormat": "inspected" },
+            { "refId": "B", "expr": "sum(rate(cs_appsec_block_total{job=\"crowdsec-srv-n2\"}[$__rate_interval]))", "legendFormat": "blocked" }
+          ],
+          "fieldConfig": { "defaults": { "unit": "reqps", "custom": { "fillOpacity": 10 } } }
+        },
+        {
+          "type": "table",
+          "title": "AppSec rule hits",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "gridPos": { "h": 8, "w": 24, "x": 0, "y": 55 },
+          "targets": [
+            { "refId": "A", "expr": "sum by (rule_name, type) (cs_appsec_rule_hits{job=\"crowdsec-srv-n2\"})", "format": "table", "instant": true }
+          ]
+        }
+      ]
+    },
+
+    {
+      "type": "row",
+      "title": "Buckets, LAPI & process",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 51 },
+      "collapsed": true,
+      "panels": [
+        {
+          "type": "timeseries",
+          "title": "Live buckets by scenario",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "gridPos": { "h": 6, "w": 12, "x": 0, "y": 52 },
+          "targets": [
+            { "refId": "A", "expr": "sum by (name) (cs_buckets{job=\"crowdsec-srv-n2\"})", "legendFormat": "{{name}}" }
+          ],
+          "fieldConfig": { "defaults": { "custom": { "fillOpacity": 10 } } }
+        },
+        {
+          "type": "timeseries",
+          "title": "LAPI p95 latency by endpoint",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "gridPos": { "h": 6, "w": 12, "x": 12, "y": 52 },
+          "targets": [
+            { "refId": "A", "expr": "histogram_quantile(0.95, sum by (le, endpoint) (rate(cs_lapi_request_duration_seconds_bucket{job=\"crowdsec-srv-n2\"}[$__rate_interval])))", "legendFormat": "{{endpoint}}" }
+          ],
+          "fieldConfig": { "defaults": { "unit": "s", "custom": { "fillOpacity": 0 } } }
+        },
+        {
+          "type": "timeseries",
+          "title": "Resident memory",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "gridPos": { "h": 6, "w": 8, "x": 0, "y": 58 },
+          "targets": [{ "refId": "A", "expr": "process_resident_memory_bytes{job=\"crowdsec-srv-n2\"}" }],
+          "fieldConfig": { "defaults": { "unit": "bytes", "custom": { "fillOpacity": 10 } } }
+        },
+        {
+          "type": "timeseries",
+          "title": "CPU usage",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "gridPos": { "h": 6, "w": 8, "x": 8, "y": 58 },
+          "targets": [{ "refId": "A", "expr": "rate(process_cpu_seconds_total{job=\"crowdsec-srv-n2\"}[$__rate_interval])" }],
+          "fieldConfig": { "defaults": { "unit": "percentunit", "custom": { "fillOpacity": 10 } } }
+        },
+        {
+          "type": "timeseries",
+          "title": "Goroutines",
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
+          "gridPos": { "h": 6, "w": 8, "x": 16, "y": 58 },
+          "targets": [{ "refId": "A", "expr": "go_goroutines{job=\"crowdsec-srv-n2\"}" }],
+          "fieldConfig": { "defaults": { "custom": { "fillOpacity": 0 } } }
+        }
+      ]
+    }
+  ]
+}

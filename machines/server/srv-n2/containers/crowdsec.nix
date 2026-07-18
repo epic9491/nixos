@@ -45,6 +45,8 @@ in
           image = "docker.io/crowdsecurity/crowdsec:latest@sha256:2f527c9bb8b367120eb08b82890aa912ce96bfa1ada93dda0721700e4b4e0dde";
           autoStart = true;
           network = "crowdsec.network";
+          networkAlias = [ "crowdsec" ];
+          ports = [ "6060:6060" ];
           volumes = [
             "/var/lib/crowdsec/etc:/etc/crowdsec"
             "/var/lib/crowdsec/data:/var/lib/crowdsec/data"
@@ -56,7 +58,10 @@ in
           environment = {
             COLLECTIONS = "crowdsecurity/caddy crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules";
             DISABLE_ONLINE_API = "false";
+            ENROLL_INSTANCE_NAME = "srv-n2-crowdsec";
+            ENROLL_TAGS = "public caddy searxng privatebin";
           };
+          environmentFile = [ "/run/secrets/crowdsec.env" ];
           extraConfig = {
             Container = {
               # carries weblogs membership into the userns to read caddy's log
@@ -77,6 +82,40 @@ in
               HealthStartPeriod = "30s";
             };
             Service.Restart = "always";
+          };
+        };
+
+        containers.crowdsec-export = {
+          image = "docker.io/library/python:3.14-alpine@sha256:26730869004e2b9c4b9ad09cab8625e81d256d1ce97e72df5520e806b1709f92";
+          autoStart = true;
+          network = "crowdsec.network";
+          ports = [ "6061:6061" ];
+          exec = "python3 /app/lapi-export.py";
+          volumes = [
+            "${../../pangolin/containers/lapi-export.py}:/app/lapi-export.py:ro"
+            "/var/lib/crowdsec/etc/local_api_credentials.yaml:/etc/crowdsec/local_api_credentials.yaml:ro"
+          ];
+          environment = {
+            LAPI_URL = "http://crowdsec:8080";
+            PYTHONDONTWRITEBYTECODE = "1";
+            PYTHONUNBUFFERED = "1";
+          };
+          extraConfig = {
+            Container = {
+              DropCapability = "ALL";
+              NoNewPrivileges = true;
+              ReadOnly = true;
+              HealthCmd = "python3 -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:6061/healthz', timeout=10)\"";
+              HealthInterval = "60s";
+              HealthTimeout = "15s";
+              HealthRetries = 3;
+              HealthStartPeriod = "30s";
+            };
+            Service.Restart = "always";
+            Unit = {
+              After = [ "podman-crowdsec.service" ];
+              Wants = [ "podman-crowdsec.service" ];
+            };
           };
         };
 
@@ -102,6 +141,19 @@ in
         };
       };
     };
+
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
+    6060
+    6061
+  ];
+
+  age.secrets."crowdsec.env" = {
+    file = ../../../../secrets/srv-n2.crowdsec.env.age;
+    path = "/run/secrets/crowdsec.env";
+    owner = "crowdsec";
+    group = "crowdsec";
+    mode = "0400";
+  };
 
   age.secrets."crowdsec-cloudflare-worker.yaml" = {
     file = ../../../../secrets/srv-n2.crowdsec-cloudflare-worker.yaml.age;
