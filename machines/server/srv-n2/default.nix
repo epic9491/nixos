@@ -41,6 +41,8 @@
     };
   };
 
+  systemd.targets.network-online.wantedBy = [ "multi-user.target" ];
+
   server.baseline.enable = true;
   server.cd.enable = true;
   ssh = {
