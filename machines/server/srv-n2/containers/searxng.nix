@@ -41,7 +41,14 @@
         extraConfig = {
           Container = {
             DropCapability = "ALL";
-            NoNewPrivileges = true;
+            AddCapability = [
+              "CHOWN"
+              "DAC_OVERRIDE"
+              "FOWNER"
+              "SETGID"
+              "SETUID"
+            ];
+            NoNewPrivileges = false;
           };
           Service.Restart = "always";
         };
