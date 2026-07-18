@@ -35,6 +35,7 @@
   networking.hostName = "secret-mgmt";
 
   server.baseline.enable = true;
+  server.cd.enable = true;
 
   boot.initrd.kernelModules = [
     "virtio_pci"

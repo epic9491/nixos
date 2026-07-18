@@ -34,6 +34,7 @@
   networking.hostName = "jellyfin";
 
   server.baseline.enable = true;
+  server.cd.enable = true;
 
   services.qemuGuest.enable = lib.mkForce false;
   networking.networkmanager.enable = lib.mkForce false;
