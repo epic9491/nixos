@@ -132,10 +132,16 @@ in
               NoNewPrivileges = true;
               ReadOnly = true;
             };
-            Service.Restart = "always";
+            Service = {
+              Restart = "always";
+              # helps prevent cloudflare ratelimit
+              RestartSec = 120;
+            };
             Unit = {
               After = [ "podman-crowdsec.service" ];
               Wants = [ "podman-crowdsec.service" ];
+              StartLimitIntervalSec = 1800;
+              StartLimitBurst = 3;
             };
           };
         };
