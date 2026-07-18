@@ -190,25 +190,25 @@
           deviceModule = ./machines/server/mongoose/default.nix;
         };
 
-        k3s-a1 = mkServer {
-          deviceModule = ./machines/server/k3s/k3s-a1/default.nix;
-        };
+       # k3s-a1 = mkServer {
+       #   deviceModule = ./machines/server/k3s/k3s-a1/default.nix;
+       # };
 
-        k3s-a2 = mkServer {
-          deviceModule = ./machines/server/k3s/k3s-a2/default.nix;
-        };
+       # k3s-a2 = mkServer {
+       #   deviceModule = ./machines/server/k3s/k3s-a2/default.nix;
+       # };
 
-        k3s-a3 = mkServer {
-          deviceModule = ./machines/server/k3s/k3s-a3/default.nix;
-        };
+       # k3s-a3 = mkServer {
+       #   deviceModule = ./machines/server/k3s/k3s-a3/default.nix;
+       # };
 
-        k3s-a4 = mkServer {
-          deviceModule = ./machines/server/k3s/k3s-a4/default.nix;
-        };
+       # k3s-a4 = mkServer {
+       #   deviceModule = ./machines/server/k3s/k3s-a4/default.nix;
+       # };
 
-        k3s-s1 = mkServer {
-          deviceModule = ./machines/server/k3s/k3s-s1/default.nix;
-        };
+       # k3s-s1 = mkServer {
+       #   deviceModule = ./machines/server/k3s/k3s-s1/default.nix;
+       # };
 
         pangolin = mkServer {
           deviceModule = ./machines/server/pangolin/default.nix;
