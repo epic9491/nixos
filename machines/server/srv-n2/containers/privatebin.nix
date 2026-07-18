@@ -21,7 +21,7 @@
         compression = zlib
 
         [expire]
-        default = never
+        default = 1month
 
         [expire_options]
         1hour = 3600

@@ -20,6 +20,7 @@
   users.users.gumbo = {
     isNormalUser = true;
     shell = pkgs.zsh;
+    initialPassword = "supersecretpassword";
     extraGroups = [
       "wheel"
       "networkmanager"
@@ -42,5 +43,8 @@
 
   server.baseline.enable = true;
   server.cd.enable = true;
-  ssh.enable = true;
+  ssh = {
+    enable = true;
+    port = 42069;
+  };
 }
