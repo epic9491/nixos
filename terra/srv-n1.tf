@@ -9,7 +9,7 @@ module "deploy_srv-n1" {
   instance_id            = local.srv-n1_ipv4
   debug_logging              = true
   build_on_remote            = false
-  nixos_generate_config_path = "/home/gumbo/nixos/devices/server/srv-n1/hardware-configuration.nix"
+  nixos_generate_config_path = "/home/gumbo/nixos/machines/server/srv-n1/hardware-configuration.nix"
   install_ssh_key            = file("/home/gumbo/.ssh/temp")
   deployment_ssh_key         = file("/home/gumbo/.ssh/temp")
   disk_encryption_key_scripts = [
