@@ -18,7 +18,7 @@ in
       remotes = [
         {
           name = "origin";
-          url = "https://codeberg.org/sensei/nixos.git";
+          url = "https://git.zorse-ruffe.ts.net/sensei/nixos.git";
           branches.main.name = "deploy";
         }
       ];

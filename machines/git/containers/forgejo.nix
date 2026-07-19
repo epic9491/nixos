@@ -40,7 +40,7 @@
             FORGEJO__database__USER = "forgejo";
 
             FORGEJO__service__DISABLE_REGISTRATION = "true";
-            FORGEJO__service__REQUIRE_SIGNIN_VIEW = "true";
+            FORGEJO__service__REQUIRE_SIGNIN_VIEW = "false";
             FORGEJO__service__ENABLE_NOTIFY_MAIL = "false";
             FORGEJO__service__DEFAULT_KEEP_EMAIL_PRIVATE = "true";
 

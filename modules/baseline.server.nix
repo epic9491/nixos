@@ -23,6 +23,9 @@ in
 
     networking.networkmanager.enable = true;
 
+    # tailnet names are unresolvable without magicdns
+    networking.hosts."100.69.69.216" = [ "git.zorse-ruffe.ts.net" ];
+
     nix.gc = {
       automatic = true;
       dates = "daily";
