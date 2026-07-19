@@ -4,6 +4,7 @@ let
     "caddy"
     "searxng"
     "privatebin"
+    "forgejo"
     "crowdsec"
   ];
 in
@@ -22,6 +23,7 @@ in
   users.groups = lib.genAttrs containerUsers (_: { }) // {
     weblogs.members = [
       "caddy"
+      "forgejo"
       "crowdsec"
     ];
   };

@@ -8,6 +8,8 @@ let
     "caddy.libresearch.key"
     "caddy.pasted.pem"
     "caddy.pasted.key"
+    "caddy.forgd.pem"
+    "caddy.forgd.key"
   ];
 in
 {
@@ -66,6 +68,21 @@ in
             header_up Host {host}
             header_up X-Real-IP {client_ip}
             header_up X-Forwarded-For {client_ip}
+          }
+        }
+
+        forgd.space, www.forgd.space {
+          import edge
+          header X-Frame-Options "DENY"
+          tls /run/secrets/caddy.forgd.pem /run/secrets/caddy.forgd.key
+          request_body {
+            max_size 512MB
+          }
+          reverse_proxy 169.254.1.2:8084 {
+            header_up Host {host}
+            header_up X-Real-IP {client_ip}
+            header_up X-Forwarded-For {client_ip}
+            flush_interval -1
           }
         }
       '';

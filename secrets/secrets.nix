@@ -153,6 +153,26 @@ in
     secret-mgmt
     srv-n2
   ];
+  "srv-n2.caddy.forgd.pem.age".publicKeys = [
+    secret-mgmt
+    srv-n2
+  ];
+  "srv-n2.caddy.forgd.key.age".publicKeys = [
+    secret-mgmt
+    srv-n2
+  ];
+  "srv-n2.forgejo.env.age".publicKeys = [
+    secret-mgmt
+    srv-n2
+  ];
+  "srv-n2.forgejo-db.env.age".publicKeys = [
+    secret-mgmt
+    srv-n2
+  ];
+  "srv-n2.crowdsec-firewall-bouncer.key.age".publicKeys = [
+    secret-mgmt
+    srv-n2
+  ];
 
   # lxc's
   "jellyfin.newt.env.age".publicKeys = [

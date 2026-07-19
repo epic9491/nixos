@@ -13,8 +13,23 @@ in
           type: caddy
       '';
 
-      # cloudflare serves a managed challenge, false positives stay solvable
+      forgejoAcquis = pkgs.writeText "forgejo.yaml" ''
+        filenames:
+          - /var/log/forgejo/forgejo.log
+        labels:
+          type: gitea
+      '';
+
+      # git/ssh cannot solve a challenge; must precede cloudflare_captcha
       profiles = pkgs.writeText "profiles.yaml" ''
+        name: forge_ban
+        filters:
+          - Alert.Remediation == true && Alert.GetScope() == "Ip" && Alert.GetScenario() contains "gitea"
+        decisions:
+          - type: ban
+            duration: 4h
+        on_success: break
+        ---
         name: cloudflare_captcha
         filters:
           - Alert.Remediation == true && Alert.GetScope() == "Ip"
@@ -46,20 +61,25 @@ in
           autoStart = true;
           network = "crowdsec.network";
           networkAlias = [ "crowdsec" ];
-          ports = [ "6060:6060" ];
+          ports = [
+            "6060:6060"
+            "127.0.0.1:8080:8080"
+          ];
           volumes = [
             "/var/lib/crowdsec/etc:/etc/crowdsec"
             "/var/lib/crowdsec/data:/var/lib/crowdsec/data"
             "/var/log/caddy:/var/log/caddy:ro"
+            "/var/log/forgejo:/var/log/forgejo:ro"
             "${acquis}:/etc/crowdsec/acquis.d/caddy.yaml:ro"
+            "${forgejoAcquis}:/etc/crowdsec/acquis.d/forgejo.yaml:ro"
             "${profiles}:/etc/crowdsec/profiles.yaml:ro"
             "${whitelist}:/etc/crowdsec/parsers/s02-enrich/cloudflare-whitelist.yaml:ro"
           ];
           environment = {
-            COLLECTIONS = "crowdsecurity/caddy crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules";
+            COLLECTIONS = "crowdsecurity/caddy crowdsecurity/gitea crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules";
             DISABLE_ONLINE_API = "false";
             ENROLL_INSTANCE_NAME = "srv-n2-crowdsec";
-            ENROLL_TAGS = "public caddy searxng privatebin";
+            ENROLL_TAGS = "public caddy searxng privatebin forgejo";
           };
           environmentFile = [ "/run/secrets/crowdsec.env" ];
           extraConfig = {

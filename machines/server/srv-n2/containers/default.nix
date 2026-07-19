@@ -4,6 +4,7 @@
     ./caddy.nix
     ./searxng.nix
     ./privatebin.nix
+    ./forgejo.nix
     ./crowdsec.nix
   ];
 }

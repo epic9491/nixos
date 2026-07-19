@@ -12,6 +12,7 @@
     "${modulesPath}/profiles/qemu-guest.nix"
     ./hardware-configuration.nix
     ./disko.nix
+    ./firewall-bouncer.nix
     ./containers
   ];
 
