@@ -32,13 +32,13 @@ export default {
     const results = await Promise.all(TARGETS.map(probe));
 
     for (const r of results) {
-      const prev = await env.STATE.get(r.url);
+      const prev = await env.srv_n2_monitor_state.get(r.url);
       if (!r.ok && prev !== "down") {
         await notify(env, `🔴 **DOWN** ${r.url} (status ${r.status})`);
-        await env.STATE.put(r.url, "down");
+        await env.srv_n2_monitor_state.put(r.url, "down");
       } else if (r.ok && prev === "down") {
         await notify(env, `🟢 **RECOVERED** ${r.url} (status ${r.status})`);
-        await env.STATE.put(r.url, "up");
+        await env.srv_n2_monitor_state.put(r.url, "up");
       }
       console.log(JSON.stringify(r));
     }

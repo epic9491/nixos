@@ -5,3 +5,6 @@ terra/terraform.tfstate.backup
 terra/.terraform.tfstate.lock.info
 devices/server/pangolin/containers/__pycache__
 devices/server/pangolin/containers/__pycache__/
+workers/srv-n2-monitor/.wrangler
+workers/srv-n2-monitor/.wrangler/cache
+.wrangler/cache
