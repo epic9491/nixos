@@ -119,6 +119,9 @@
             disko.nixosModules.disko
             flatpaks.nixosModules.default
             sops-nix.nixosModules.default
+            ./modules/pbs-backup.nix
+            ./modules/borg-home.nix
+            ./modules/container-users.nix
           ]
           ++ modules;
           hm = [
@@ -145,6 +148,9 @@
             ./modules/ssh.nix
             ./modules/svc.nix
             ./modules/cd.nix
+            ./modules/pbs-backup.nix
+            ./modules/borg-home.nix
+            ./modules/container-users.nix
             home-managerS.nixosModules.home-manager
           ]
           ++ modules;

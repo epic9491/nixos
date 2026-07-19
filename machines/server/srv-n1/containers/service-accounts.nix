@@ -1,5 +1,4 @@
-{ lib, ... }:
-let
+{
   containerUsers = [
     "mealie"
     "newt"
@@ -18,18 +17,4 @@ let
     "obsidian"
     "owntracks"
   ];
-in
-{
-  users.manageLingering = true;
-
-  users.users = lib.genAttrs containerUsers (name: {
-    isSystemUser = true;
-    group = name;
-    linger = true;
-    home = "/var/lib/${name}";
-    createHome = true;
-    autoSubUidGidRange = true;
-  });
-
-  users.groups = lib.genAttrs containerUsers (_: { });
 }

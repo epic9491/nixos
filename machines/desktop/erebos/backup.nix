@@ -1,40 +1,8 @@
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-{
-  services.borgbackup.jobs.erebos-home = {
-    paths = "/home/gumbo";
-    exclude = [
-      "/home/gumbo/.cache"
-      "/home/gumbo/.nix-defexpr"
-      "/home/gumbo/.nix-profile"
-      "/home/gumbo/.mozilla"
-      "/home/gumbo/.pki"
-      "/home/gumbo/.steam"
-      "/home/gumbo/.terraform.d"
-      "/home/gumbo/.var"
-    ];
-    encryption.mode = "repokey";
-    encryption.passCommand = "cat /run/secrets/borg.erebos";
-    environment.BORG_RSH = "ssh -i /home/gumbo/.ssh/borg";
+  backup.borgHome = {
+    enable = true;
+    name = "erebos";
     repo = "ssh://borg@100.106.154.7:22/mnt/backups/erebos_new";
-    compression = "auto,zstd";
-    prune.keep = {
-      daily = 7;
-      weekly = 4;
-      monthly = 3;
-    };
-    startAt = [ ];
-  };
-
-  sops.secrets."borg.erebos" = {
-    sopsFile = ../../../secrets/borg.erebos;
-    format = "binary";
-    owner = "gumbo";
-    group = "users";
-    mode = "0400";
+    passFile = ../../../secrets/borg.erebos;
   };
 }
