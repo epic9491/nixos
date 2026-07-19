@@ -6,6 +6,11 @@
   "dependencyDashboard": true,
   "prConcurrentLimit": 5,
   "baseBranchPatterns": ["main"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": ["* 0-5 * * *"]
+  },
   "packageRules": [
     {
       "description": "Automerge non-major container updates once CI passes",
