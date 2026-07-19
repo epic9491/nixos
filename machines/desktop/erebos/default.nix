@@ -56,14 +56,9 @@
 
   ssh.enable = true; # enable default ssh configuration + authorized yubikeys
 
-  age.identityPaths = [ "/home/gumbo/.ssh/agenix_gumbo" ];
+  sops.age.sshKeyPaths = [ "/home/gumbo/.ssh/agenix_gumbo" ];
 
-  # symlink agenix key so I can use it in cli
-  system.activationScripts.agenix-cli-identity = ''
-    if [ ! -e /home/gumbo/.ssh/id_ed25519 ]; then
-      ln -s /home/gumbo/.ssh/agenix_gumbo /home/gumbo/.ssh/id_ed25519
-    fi
-  '';
+  environment.sessionVariables.SOPS_AGE_KEY_CMD = "${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i /home/gumbo/.ssh/agenix_gumbo";
 
   mount = {
     media.enable = true;

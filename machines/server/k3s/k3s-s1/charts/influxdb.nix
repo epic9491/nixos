@@ -29,8 +29,9 @@
     };
   };
 
-  age.secrets."influx-auth-s1.age" = {
-    file = ../../../../../secrets/influx-auth-s1.age;
+  sops.secrets."influx-auth-s1" = {
+    sopsFile = ../../../../../secrets/influx-auth-s1;
+    format = "binary";
     path = "/var/lib/rancher/k3s/server/manifests/influx-auth.yaml";
     owner = "root";
     group = "root";

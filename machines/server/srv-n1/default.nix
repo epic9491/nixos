@@ -30,7 +30,7 @@
     ];
   };
 
-  age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
+  sops.age.sshKeyPaths = [ "/home/gumbo/.ssh/agenix" ];
 
   networking = {
     hostName = "srv-n1";

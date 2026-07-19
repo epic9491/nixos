@@ -64,9 +64,9 @@
     };
   };
 
-  age.secrets."immich.env" = {
-    file = ../../../../secrets/srv-n1.immich.env.age;
-    path = "/run/secrets/immich.env";
+  sops.secrets."immich.env" = {
+    sopsFile = ../../../../secrets/srv-n1.immich.env;
+    format = "binary";
     owner = "immich";
     group = "immich";
     mode = "0400";

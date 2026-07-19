@@ -18,7 +18,7 @@
       "/home/gumbo/.var"
     ];
     encryption.mode = "repokey";
-    encryption.passCommand = "cat /run/agenix/borg.prometheus.age";
+    encryption.passCommand = "cat /run/secrets/borg.prometheus";
     environment.BORG_RSH = "ssh -i /home/gumbo/.ssh/borg";
     repo = "ssh://borg@100.106.154.7:22/mnt/backups/thinkpad_new";
     compression = "auto,zstd";
@@ -30,9 +30,9 @@
     startAt = [ ];
   };
 
-  age.secrets."borg.prometheus.age" = {
-    file = ../../../secrets/borg.prometheus.age;
-    path = "/run/agenix/borg.prometheus.age";
+  sops.secrets."borg.prometheus" = {
+    sopsFile = ../../../secrets/borg.prometheus;
+    format = "binary";
     owner = "gumbo";
     group = "users";
     mode = "0400";

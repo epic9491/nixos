@@ -26,8 +26,9 @@
       ];
     };
   };
-  age.secrets."newt-auth.age" = {
-    file = ../../../../../secrets/newt-auth.age;
+  sops.secrets."newt-auth" = {
+    sopsFile = ../../../../../secrets/newt-auth;
+    format = "binary";
     path = "/var/lib/rancher/k3s/server/manifests/newt-auth.yaml";
     owner = "root";
     group = "root";

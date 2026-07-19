@@ -25,7 +25,7 @@ Though I've learned a lot about NixOS since I started daily driving it in 2025, 
 - `/modules`: this is where the vast majority of the restructuring was done. Review and adjust as needed. Many things are specific to my environment. Overall, the move to modules should make this repo much more flexible for both myself and anyone else who may want to use it.
 - `/pics`: profile pictures and eventually screenshots to include in the README.
 - `/pkgs`: custom package derivations not available in nixpkgs.
-- `/secrets`: agenix-encrypted secrets and `secrets.nix`, which defines which host keys can decrypt each secret.
+- `/secrets`: sops-encrypted secrets. `/.sops.yaml` at the repo root defines which host keys can decrypt each secret.
 - `/terra`: Terraform + nixos-anywhere deployments for provisioning hosts, one file per machine.
 
 ## Important things to note

@@ -1,8 +1,8 @@
 { config, pkgs, ... }:
 {
-  age.secrets."console.token" = {
-    file = ../../../secrets/pbs.console.age;
-    path = "/run/secrets/console.token";
+  sops.secrets."console.token" = {
+    sopsFile = ../../../secrets/pbs.console;
+    format = "binary";
     owner = "root";
     group = "root";
     mode = "0400";
@@ -23,7 +23,7 @@
     serviceConfig = {
       Type = "oneshot";
       LimitNOFILE = 65536;
-      LoadCredential = [ "token:${config.age.secrets."console.token".path}" ];
+      LoadCredential = [ "token:${config.sops.secrets."console.token".path}" ];
     };
 
     script = ''

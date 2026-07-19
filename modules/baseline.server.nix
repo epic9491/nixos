@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  inputs,
   ...
 }:
 let
@@ -54,7 +53,8 @@ in
 
     environment.systemPackages = with pkgs; [
       # tools/etc
-      inputs.agenix.packages.${pkgs.stdenv.hostPlatform.system}.default
+      sops
+      ssh-to-age
       wget
       git
       htop

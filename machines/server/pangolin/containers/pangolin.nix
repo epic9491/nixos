@@ -225,9 +225,9 @@
       };
     };
 
-  age.secrets."pangolin.crowdsec.env" = {
-    file = ../../../../secrets/pangolin.crowdsec.env.age;
-    path = "/run/secrets/pangolin.crowdsec.env";
+  sops.secrets."pangolin.crowdsec.env" = {
+    sopsFile = ../../../../secrets/pangolin.crowdsec.env;
+    format = "binary";
     owner = "pangolin";
     group = "pangolin";
     mode = "0400";

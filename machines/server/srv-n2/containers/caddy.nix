@@ -99,8 +99,9 @@ in
       };
     };
 
-  age.secrets = lib.genAttrs certNames (n: {
-    file = ../../../../secrets/srv-n2.${n}.age;
+  sops.secrets = lib.genAttrs certNames (n: {
+    sopsFile = ../../../../secrets/srv-n2.${n};
+    format = "binary";
     path = "/run/secrets/${n}";
     owner = "caddy";
     group = "caddy";

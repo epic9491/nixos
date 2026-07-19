@@ -56,9 +56,9 @@
     };
   };
 
-  age.secrets."searxng.env" = {
-    file = ../../../../secrets/srv-n2.searxng.env.age;
-    path = "/run/secrets/searxng.env";
+  sops.secrets."searxng.env" = {
+    sopsFile = ../../../../secrets/srv-n2.searxng.env;
+    format = "binary";
     owner = "searxng";
     group = "searxng";
     mode = "0400";

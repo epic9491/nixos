@@ -69,9 +69,9 @@
       };
     };
 
-  age.secrets."owntracks.env" = {
-    file = ../../../../secrets/srv-n1.owntracks.env.age;
-    path = "/run/secrets/owntracks.env";
+  sops.secrets."owntracks.env" = {
+    sopsFile = ../../../../secrets/srv-n1.owntracks.env;
+    format = "binary";
     owner = "owntracks";
     group = "owntracks";
     mode = "0400";

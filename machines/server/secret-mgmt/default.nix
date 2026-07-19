@@ -12,7 +12,9 @@
     ./disko.nix
   ];
 
-  age.identityPaths = [ "/home/gumbo/.ssh/agenix-master" ];
+  sops.age.sshKeyPaths = [ "/home/gumbo/.ssh/agenix-master" ];
+
+  environment.sessionVariables.SOPS_AGE_KEY_CMD = "${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i /home/gumbo/.ssh/agenix-master";
 
   users.users.gumbo = {
     isNormalUser = true;

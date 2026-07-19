@@ -59,9 +59,9 @@
     };
   };
 
-  age.secrets."karakeep.env" = {
-    file = ../../../../secrets/srv-n1.karakeep.env.age;
-    path = "/run/secrets/karakeep.env";
+  sops.secrets."karakeep.env" = {
+    sopsFile = ../../../../secrets/srv-n1.karakeep.env;
+    format = "binary";
     owner = "karakeep";
     group = "karakeep";
     mode = "0400";

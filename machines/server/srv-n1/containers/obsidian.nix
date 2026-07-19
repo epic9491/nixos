@@ -39,17 +39,17 @@
     };
   };
 
-  age.secrets."obsidian-couchdb.env" = {
-    file = ../../../../secrets/srv-n1.obsidian-couchdb.env.age;
-    path = "/run/secrets/obsidian-couchdb.env";
+  sops.secrets."obsidian-couchdb.env" = {
+    sopsFile = ../../../../secrets/srv-n1.obsidian-couchdb.env;
+    format = "binary";
     owner = "obsidian";
     group = "obsidian";
     mode = "0400";
   };
 
-  age.secrets."obsidian-cloudflared.env" = {
-    file = ../../../../secrets/srv-n1.obsidian-cloudflared.env.age;
-    path = "/run/secrets/obsidian-cloudflared.env";
+  sops.secrets."obsidian-cloudflared.env" = {
+    sopsFile = ../../../../secrets/srv-n1.obsidian-cloudflared.env;
+    format = "binary";
     owner = "obsidian";
     group = "obsidian";
     mode = "0400";
