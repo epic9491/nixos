@@ -10,7 +10,7 @@ jobs:
       - run: nix shell nixpkgs#renovate nixpkgs#git --command renovate
         env:
           RENOVATE_PLATFORM: forgejo
-          RENOVATE_ENDPOINT: https://codeberg.org/api/v1
+          RENOVATE_ENDPOINT: https://git.zorse-ruffe.ts.net/api/v1
           RENOVATE_TOKEN: ${{ secrets.RENOVATE_TOKEN }}
           RENOVATE_REPOSITORIES: sensei/nixos
           RENOVATE_ONBOARDING: 'false'
