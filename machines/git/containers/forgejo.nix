@@ -13,6 +13,7 @@
           image = "codeberg.org/forgejo/forgejo:16-rootless@sha256:33a27fad6fab44e585e86ab185ba882cbf9fd6ed28b368863474a580c526f75c";
           autoStart = true;
           network = "forgejo.network";
+          userNS = "keep-id:uid=1000,gid=1000";
           ports = [
             "127.0.0.1:3000:3000"
             "127.0.0.1:2222:2222"
