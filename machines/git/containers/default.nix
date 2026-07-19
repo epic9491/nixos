@@ -1,6 +1,6 @@
 {
   imports = [
     ./service-accounts.nix
-   # ./forgejo.nix
+    ./forgejo.nix
   ];
 }

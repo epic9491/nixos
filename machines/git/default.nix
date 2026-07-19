@@ -10,7 +10,7 @@
     ./hardware-configuration.nix
     ./disko.nix
     ./backup.nix
-#    ./tailscale.nix
+    ./tailscale.nix
     ./containers
   ];
 
