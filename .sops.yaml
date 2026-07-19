@@ -1,57 +1,43 @@
 keys:
-  - &secret-mgmt age12d42lry2a8f6l9pya6ncspgpv495stmg2mjyden6jyfjl3knqflstsa8js
-  - &console age1ym0eys54eru8rey9qjf5nyn894dmcj4wqn6zzg68uyqs5p0n4y6qjt4j22
-  - &srv-n1 age1cws0dhe7rewrck3zdc75cq8eqknky6ntjdhunwe7t37p66znr57qx0m23a
-  - &srv-n2 age1yhlz6vep5wn7gr4c4p3nzz4hmg96uk32ectucedk82wjazlj2djsfvsh4k
-  - &git age1hkxqfczqs99428trxmp9sswpsrtwdwphn4ztragclal380efj5hq9vqy86
-  - &pangolin age1j3p670fdfkqs7gzgy3c46nhrg06whqd6m940yfqfd2j06h8mz5ws5t4dec
-  - &mongoose age1y7ekwnzp7zmtmj092w8t5shvx586u5gxpyn7s60zexpmrwxs74mshyptq6
-  - &jellyfin age15etk8agxkh9cgnu5qj3uuxgqx34fzxhze86t0un7pgw924yrr9fqtuseda
-  - &k3s-s1 age1xz3nvx574pzg4qnq7yckpuxzj9kzduuaczcu7meaxcaxu7du0vxqc8nrjf
-  - &k3s-a1 age1nfkxlcpme0ujwsyer5h6nqxhtxchdl776snxjjn48qyrqjzn6yds8z4vem
-  - &k3s-a2 age1h6z6gz3k7v7ugydkhsgpxxxermwvel8efq59hfmg4kkhag0qsfhsc9lmw7
-  - &k3s-a3 age10dm0n3vemjj939lts4ykvrpp9a7njadyn4h6zax5hlw75x0fzvzsg9ytwy
-  - &k3s-a4 age16fgn2gspu5pmdalznhh2nd7rx9ldfh9g7egaqq4td9hntln3fpwqxs9pll
+  - &master age1a7jfuvqktm5pm30emf5wkt9xuycm54djvjchpsvg0l7pd62ffdwseux5xv
+  - &console age12e0zcqpclf8gh0wu39alq3ux9u0rpu5tc4qtlqvpldkd79ew0p2smnklp0
+  - &srv-n1 age1rq9r6xg57v9v07usktvug8rqv4cvp57qq5gr0yfw23ugxu88rprq75jr9m
+  - &srv-n2 age1dtahzr3uqenkj4gt6p8ranheglmh9nhl9tasyjj8ezm9xzqpx9dqtvaups
+  - &git age18apjd378vwlnts64wznwh9lknndacxakjdwl0ldstplzkpwspf7qw77w3p
+  - &pangolin age1n7luzkfg2t0a44uqsz97f2gvjhk3fys908skpd8uzkg98ah3fyashcc5ms
+  - &jellyfin age14z74sl0u6el5krjlp335zeg8uaeerlnt9yhxlu6zrjt723m24peqh4r9jc
 
 creation_rules:
   # pbs rules must stay first, path_regex is a substring match
   - path_regex: secrets/pbs\.console(\.key)?$
     key_groups:
-      - age: [*secret-mgmt, *console]
+      - age: [*master, *console]
   - path_regex: secrets/pbs\.srv-n1(\.key)?$
     key_groups:
-      - age: [*secret-mgmt, *srv-n1]
+      - age: [*master, *srv-n1]
   - path_regex: secrets/pbs\.pangolin(\.key)?$
     key_groups:
-      - age: [*secret-mgmt, *pangolin]
+      - age: [*master, *pangolin]
   - path_regex: secrets/pbs\.git(\.key)?$
     key_groups:
-      - age: [*secret-mgmt, *git]
-
-  - path_regex: secrets/k3s-(token|ts-auth)$
-    key_groups:
-      - age:
-          [*secret-mgmt, *k3s-s1, *k3s-a1, *k3s-a2, *k3s-a3, *k3s-a4]
-  - path_regex: secrets/(newt-auth|influx-auth-s1|grafana-auth-s1|grafana-datasources-s1)$
-    key_groups:
-      - age: [*secret-mgmt, *k3s-s1]
-
-  - path_regex: secrets/wg0$
-    key_groups:
-      - age: [*secret-mgmt, *mongoose]
+      - age: [*master, *git]
 
   - path_regex: secrets/srv-n1\.
     key_groups:
-      - age: [*secret-mgmt, *srv-n1]
+      - age: [*master, *srv-n1]
   - path_regex: secrets/srv-n2\.
     key_groups:
-      - age: [*secret-mgmt, *srv-n2]
+      - age: [*master, *srv-n2]
   - path_regex: secrets/git\.
     key_groups:
-      - age: [*secret-mgmt, *git]
+      - age: [*master, *git]
   - path_regex: secrets/pangolin\.
     key_groups:
-      - age: [*secret-mgmt, *pangolin]
+      - age: [*master, *pangolin]
   - path_regex: secrets/jellyfin\.
     key_groups:
-      - age: [*secret-mgmt, *jellyfin]
+      - age: [*master, *jellyfin]
+
+  - path_regex: secrets/.*
+    key_groups:
+      - age: [*master]

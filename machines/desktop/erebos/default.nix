@@ -56,9 +56,7 @@
 
   ssh.enable = true; # enable default ssh configuration + authorized yubikeys
 
-  sops.age.sshKeyPaths = [ "/home/gumbo/.ssh/agenix_gumbo" ];
-
-  environment.sessionVariables.SOPS_AGE_KEY_CMD = "${pkgs.ssh-to-age}/bin/ssh-to-age -private-key -i /home/gumbo/.ssh/agenix_gumbo";
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
   mount = {
     media.enable = true;
