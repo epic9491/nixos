@@ -3,6 +3,7 @@ let
   console = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKwFGIeJCte8DLdoBmE7Q8FYhTWazkVLMwq6B/6hadd8 gumbo@console";
   srv-n1 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINSDR29Go5nMlk58JRcYWM3qNET5tUP1/0jdNPBh6x2S gumbo@srv-n1";
   srv-n2 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAYpwiaPkRLn4AJuyqj/q3GstNGDcCMMz+zSS9zCMRtj gumbo@srv-n2";
+  git = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAr95IyjMzAmbScS/lKMk6i3hHBEY/bO9uura6LafMtq gumbo@git";
   pangolin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKgrZ+dLkK4yiv7raye7I685m10Fm43gPEyuqtmA1GWb gumbo@pangolin";
   mongoose = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMPiB69ISkgnUYuY5od9v4uss3GfCft6mip3BNjO7Q3M gumbo@mongoose";
   jellyfin = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFgYABW3NtIhsEibdUU05XTGel+MkAnRzJsxks02MDFS gumbo@jellyfin";
@@ -62,6 +63,14 @@ in
   "pbs.pangolin.age".publicKeys = [
     secret-mgmt
     pangolin
+  ];
+  "pbs.git.age".publicKeys = [
+    secret-mgmt
+    git
+  ];
+  "pbs.git.key.age".publicKeys = [
+    secret-mgmt
+    git
   ];
   "pbs.pangolin.key.age".publicKeys = [
     secret-mgmt
@@ -152,6 +161,16 @@ in
   "srv-n2.crowdsec.env.age".publicKeys = [
     secret-mgmt
     srv-n2
+  ];
+
+  # git
+  "git.forgejo.env.age".publicKeys = [
+    secret-mgmt
+    git
+  ];
+  "git.forgejo-db.env.age".publicKeys = [
+    secret-mgmt
+    git
   ];
 
   # lxc's
