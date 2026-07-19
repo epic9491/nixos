@@ -182,6 +182,10 @@
           deviceModule = ./machines/server/srv-n2/default.nix;
         };
 
+        git = mkServer {
+          deviceModule = ./machines/git/default.nix;
+        };
+
         secret-mgmt = mkServer {
           deviceModule = ./machines/server/secret-mgmt/default.nix;
         };
