@@ -1,0 +1,19 @@
+{
+  "name": "srv-n2-monitor",
+  "main": "src/index.js",
+  "compatibility_date": "2026-07-18",
+  "compatibility_flags": ["global_fetch_strictly_public"],
+  "triggers": {
+    "crons": ["*/5 * * * *"]
+  },
+  "observability": {
+    "enabled": true,
+    "logs": { "head_sampling_rate": 1 }
+  },
+  "kv_namespaces": [
+    {
+      "binding": "STATE",
+      "id": "REPLACE_WITH_SRV_N2_MONITOR_NAMESPACE_ID"
+    }
+  ]
+}
