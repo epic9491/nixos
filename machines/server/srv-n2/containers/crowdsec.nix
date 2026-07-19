@@ -153,17 +153,17 @@ in
     6061
   ];
 
-  age.secrets."crowdsec.env" = {
-    file = ../../../../secrets/srv-n2.crowdsec.env.age;
-    path = "/run/secrets/crowdsec.env";
+  sops.secrets."crowdsec.env" = {
+    sopsFile = ../../../../secrets/srv-n2.crowdsec.env;
+    format = "binary";
     owner = "crowdsec";
     group = "crowdsec";
     mode = "0400";
   };
 
-  age.secrets."crowdsec-cloudflare-worker.yaml" = {
-    file = ../../../../secrets/srv-n2.crowdsec-cloudflare-worker.yaml.age;
-    path = "/run/secrets/crowdsec-cloudflare-worker.yaml";
+  sops.secrets."crowdsec-cloudflare-worker.yaml" = {
+    sopsFile = ../../../../secrets/srv-n2.crowdsec-cloudflare-worker.yaml;
+    format = "binary";
     owner = "crowdsec";
     group = "crowdsec";
     mode = "0400";

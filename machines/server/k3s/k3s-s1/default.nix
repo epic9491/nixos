@@ -19,7 +19,7 @@
     ./charts/influxdb.nix
   ];
 
-  age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
   users.users.gumbo = {
     isNormalUser = true;

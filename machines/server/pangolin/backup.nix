@@ -1,16 +1,16 @@
 { config, pkgs, ... }:
 {
-  age.secrets."pangolin.token" = {
-    file = ../../../secrets/pbs.pangolin.age;
-    path = "/run/secrets/pangolin.token";
+  sops.secrets."pangolin.token" = {
+    sopsFile = ../../../secrets/pbs.pangolin;
+    format = "binary";
     owner = "root";
     group = "root";
     mode = "0400";
   };
 
-  age.secrets."pangolin.key" = {
-    file = ../../../secrets/pbs.pangolin.key.age;
-    path = "/run/secrets/pangolin.key";
+  sops.secrets."pangolin.key" = {
+    sopsFile = ../../../secrets/pbs.pangolin.key;
+    format = "binary";
     owner = "root";
     group = "root";
     mode = "0400";
@@ -31,7 +31,7 @@
     serviceConfig = {
       Type = "oneshot";
       LimitNOFILE = 65536;
-      LoadCredential = [ "token:${config.age.secrets."pangolin.token".path}" ];
+      LoadCredential = [ "token:${config.sops.secrets."pangolin.token".path}" ];
     };
 
     script = ''

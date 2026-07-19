@@ -29,17 +29,17 @@ in
       gracefulNodeShutdown.enable = true;
     };
 
-    age.secrets."k3s-token.age" = {
-      file = ../secrets/k3s-token.age;
-      path = "/run/secrets/k3s-token";
+    sops.secrets."k3s-token" = {
+      sopsFile = ../secrets/k3s-token;
+      format = "binary";
       owner = "root";
       group = "root";
       mode = "0400";
     };
 
-    age.secrets."k3s-ts-auth.age" = {
-      file = ../secrets/k3s-ts-auth.age;
-      path = "/run/secrets/k3s-ts-auth";
+    sops.secrets."k3s-ts-auth" = {
+      sopsFile = ../secrets/k3s-ts-auth;
+      format = "binary";
       owner = "root";
       group = "root";
       mode = "0400";

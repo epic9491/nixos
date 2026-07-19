@@ -18,7 +18,7 @@
       "/home/gumbo/.var"
     ];
     encryption.mode = "repokey";
-    encryption.passCommand = "cat /run/agenix/borg.erebos.age";
+    encryption.passCommand = "cat /run/secrets/borg.erebos";
     environment.BORG_RSH = "ssh -i /home/gumbo/.ssh/borg";
     repo = "ssh://borg@100.106.154.7:22/mnt/backups/erebos_new";
     compression = "auto,zstd";
@@ -30,9 +30,9 @@
     startAt = [ ];
   };
 
-  age.secrets."borg.erebos.age" = {
-    file = ../../../secrets/borg.erebos.age;
-    path = "/run/agenix/borg.erebos.age";
+  sops.secrets."borg.erebos" = {
+    sopsFile = ../../../secrets/borg.erebos;
+    format = "binary";
     owner = "gumbo";
     group = "users";
     mode = "0400";

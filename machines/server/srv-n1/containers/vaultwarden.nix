@@ -20,9 +20,9 @@
     };
   };
 
-  age.secrets."vaultwarden.env" = {
-    file = ../../../../secrets/srv-n1.vaultwarden.env.age;
-    path = "/run/secrets/vaultwarden.env";
+  sops.secrets."vaultwarden.env" = {
+    sopsFile = ../../../../secrets/srv-n1.vaultwarden.env;
+    format = "binary";
     owner = "vaultwarden";
     group = "vaultwarden";
     mode = "0400";

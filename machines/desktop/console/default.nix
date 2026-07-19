@@ -61,7 +61,7 @@
 
   ssh.enable = true;
 
-  age.identityPaths = [ "/home/gumbo/.ssh/agenix" ];
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
   environment.systemPackages = with pkgs; [
     moonlight-qt

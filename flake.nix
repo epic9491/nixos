@@ -20,8 +20,8 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    agenix = {
-      url = "github:ryantm/agenix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
@@ -51,7 +51,7 @@
       nixpkgs-stable,
       home-managerU,
       home-managerS,
-      agenix,
+      sops-nix,
       flatpaks,
       disko,
       ...
@@ -118,7 +118,7 @@
             home-managerU.nixosModules.home-manager
             disko.nixosModules.disko
             flatpaks.nixosModules.default
-            agenix.nixosModules.default
+            sops-nix.nixosModules.default
           ]
           ++ modules;
           hm = [
@@ -140,7 +140,7 @@
           inherit deviceModule;
           modules = [
             disko.nixosModules.disko
-            agenix.nixosModules.default
+            sops-nix.nixosModules.default
             ./modules/baseline.server.nix
             ./modules/ssh.nix
             ./modules/svc.nix
@@ -194,25 +194,25 @@
           deviceModule = ./machines/server/mongoose/default.nix;
         };
 
-       # k3s-a1 = mkServer {
-       #   deviceModule = ./machines/server/k3s/k3s-a1/default.nix;
-       # };
+        # k3s-a1 = mkServer {
+        #   deviceModule = ./machines/server/k3s/k3s-a1/default.nix;
+        # };
 
-       # k3s-a2 = mkServer {
-       #   deviceModule = ./machines/server/k3s/k3s-a2/default.nix;
-       # };
+        # k3s-a2 = mkServer {
+        #   deviceModule = ./machines/server/k3s/k3s-a2/default.nix;
+        # };
 
-       # k3s-a3 = mkServer {
-       #   deviceModule = ./machines/server/k3s/k3s-a3/default.nix;
-       # };
+        # k3s-a3 = mkServer {
+        #   deviceModule = ./machines/server/k3s/k3s-a3/default.nix;
+        # };
 
-       # k3s-a4 = mkServer {
-       #   deviceModule = ./machines/server/k3s/k3s-a4/default.nix;
-       # };
+        # k3s-a4 = mkServer {
+        #   deviceModule = ./machines/server/k3s/k3s-a4/default.nix;
+        # };
 
-       # k3s-s1 = mkServer {
-       #   deviceModule = ./machines/server/k3s/k3s-s1/default.nix;
-       # };
+        # k3s-s1 = mkServer {
+        #   deviceModule = ./machines/server/k3s/k3s-s1/default.nix;
+        # };
 
         pangolin = mkServer {
           deviceModule = ./machines/server/pangolin/default.nix;

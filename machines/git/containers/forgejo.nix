@@ -99,16 +99,18 @@
       };
     };
 
-  age.secrets = {
+  sops.secrets = {
     "forgejo.env" = {
-      file = ../../../secrets/git.forgejo.env.age;
+      sopsFile = ../../../secrets/git.forgejo.env;
+      format = "binary";
       path = "/run/secrets/forgejo.env";
       owner = "forgejo";
       group = "forgejo";
       mode = "0400";
     };
     "forgejo-db.env" = {
-      file = ../../../secrets/git.forgejo-db.env.age;
+      sopsFile = ../../../secrets/git.forgejo-db.env;
+      format = "binary";
       path = "/run/secrets/forgejo-db.env";
       owner = "forgejo";
       group = "forgejo";

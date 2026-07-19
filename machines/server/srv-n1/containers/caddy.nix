@@ -37,9 +37,9 @@
       };
     };
 
-  age.secrets."caddy.env" = {
-    file = ../../../../secrets/srv-n1.caddy.env.age;
-    path = "/run/secrets/caddy.env";
+  sops.secrets."caddy.env" = {
+    sopsFile = ../../../../secrets/srv-n1.caddy.env;
+    format = "binary";
     owner = "caddy";
     group = "caddy";
     mode = "0400";

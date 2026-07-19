@@ -140,9 +140,9 @@
       };
     };
 
-  age.secrets."grafana.env" = {
-    file = ../../../../../secrets/srv-n1.grafana.env.age;
-    path = "/run/secrets/grafana.env";
+  sops.secrets."grafana.env" = {
+    sopsFile = ../../../../../secrets/srv-n1.grafana.env;
+    format = "binary";
     owner = "grafana";
     group = "grafana";
     mode = "0400";

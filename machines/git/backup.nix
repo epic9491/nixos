@@ -1,16 +1,16 @@
 { config, pkgs, ... }:
 {
-  age.secrets."git.token" = {
-    file = ../../secrets/pbs.git.age;
-    path = "/run/secrets/git.token";
+  sops.secrets."git.token" = {
+    sopsFile = ../../secrets/pbs.git;
+    format = "binary";
     owner = "root";
     group = "root";
     mode = "0400";
   };
 
-  age.secrets."git.key" = {
-    file = ../../secrets/pbs.git.key.age;
-    path = "/run/secrets/git.key";
+  sops.secrets."git.key" = {
+    sopsFile = ../../secrets/pbs.git.key;
+    format = "binary";
     owner = "root";
     group = "root";
     mode = "0400";
@@ -35,7 +35,7 @@
     serviceConfig = {
       Type = "oneshot";
       LimitNOFILE = 65536;
-      LoadCredential = [ "token:${config.age.secrets."git.token".path}" ];
+      LoadCredential = [ "token:${config.sops.secrets."git.token".path}" ];
     };
 
     script = ''

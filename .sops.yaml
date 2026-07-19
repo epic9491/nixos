@@ -1,0 +1,43 @@
+keys:
+  - &master age1a7jfuvqktm5pm30emf5wkt9xuycm54djvjchpsvg0l7pd62ffdwseux5xv
+  - &console age12e0zcqpclf8gh0wu39alq3ux9u0rpu5tc4qtlqvpldkd79ew0p2smnklp0
+  - &srv-n1 age1rq9r6xg57v9v07usktvug8rqv4cvp57qq5gr0yfw23ugxu88rprq75jr9m
+  - &srv-n2 age1dtahzr3uqenkj4gt6p8ranheglmh9nhl9tasyjj8ezm9xzqpx9dqtvaups
+  - &git age18apjd378vwlnts64wznwh9lknndacxakjdwl0ldstplzkpwspf7qw77w3p
+  - &pangolin age1n7luzkfg2t0a44uqsz97f2gvjhk3fys908skpd8uzkg98ah3fyashcc5ms
+  - &jellyfin age14z74sl0u6el5krjlp335zeg8uaeerlnt9yhxlu6zrjt723m24peqh4r9jc
+
+creation_rules:
+  # pbs rules must stay first, path_regex is a substring match
+  - path_regex: secrets/pbs\.console(\.key)?$
+    key_groups:
+      - age: [*master, *console]
+  - path_regex: secrets/pbs\.srv-n1(\.key)?$
+    key_groups:
+      - age: [*master, *srv-n1]
+  - path_regex: secrets/pbs\.pangolin(\.key)?$
+    key_groups:
+      - age: [*master, *pangolin]
+  - path_regex: secrets/pbs\.git(\.key)?$
+    key_groups:
+      - age: [*master, *git]
+
+  - path_regex: secrets/srv-n1\.
+    key_groups:
+      - age: [*master, *srv-n1]
+  - path_regex: secrets/srv-n2\.
+    key_groups:
+      - age: [*master, *srv-n2]
+  - path_regex: secrets/git\.
+    key_groups:
+      - age: [*master, *git]
+  - path_regex: secrets/pangolin\.
+    key_groups:
+      - age: [*master, *pangolin]
+  - path_regex: secrets/jellyfin\.
+    key_groups:
+      - age: [*master, *jellyfin]
+
+  - path_regex: secrets/.*
+    key_groups:
+      - age: [*master]

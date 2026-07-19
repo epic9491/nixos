@@ -1,16 +1,16 @@
 { config, pkgs, ... }:
 {
-  age.secrets."srv-n1.token" = {
-    file = ../../../secrets/pbs.srv-n1.age;
-    path = "/run/secrets/srv-n1.token";
+  sops.secrets."srv-n1.token" = {
+    sopsFile = ../../../secrets/pbs.srv-n1;
+    format = "binary";
     owner = "root";
     group = "root";
     mode = "0400";
   };
 
-  age.secrets."srv-n1.key" = {
-    file = ../../../secrets/pbs.srv-n1.key.age;
-    path = "/run/secrets/srv-n1.key";
+  sops.secrets."srv-n1.key" = {
+    sopsFile = ../../../secrets/pbs.srv-n1.key;
+    format = "binary";
     owner = "root";
     group = "root";
     mode = "0400";
@@ -31,7 +31,7 @@
     serviceConfig = {
       Type = "oneshot";
       LimitNOFILE = 65536;
-      LoadCredential = [ "token:${config.age.secrets."srv-n1.token".path}" ];
+      LoadCredential = [ "token:${config.sops.secrets."srv-n1.token".path}" ];
     };
 
     script = ''

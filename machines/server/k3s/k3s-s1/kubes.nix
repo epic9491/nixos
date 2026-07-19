@@ -23,9 +23,9 @@
     10250 # kubelet
   ];
 
-  age.secrets."k3s-token.age" = {
-    file = ../../../../secrets/k3s-token.age;
-    path = "/run/secrets/k3s-token";
+  sops.secrets."k3s-token" = {
+    sopsFile = ../../../../secrets/k3s-token;
+    format = "binary";
     owner = "root";
     group = "root";
     mode = "0400";

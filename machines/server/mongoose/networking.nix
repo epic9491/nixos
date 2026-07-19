@@ -9,9 +9,9 @@
     libnatpmp
   ];
 
-  age.secrets."wg0.age" = {
-    file = ../../../secrets/wg0.age;
-    path = "/run/secrets/wg0.conf";
+  sops.secrets."wg0.conf" = {
+    sopsFile = ../../../secrets/wg0;
+    format = "binary";
     owner = "gumbo";
     group = "users";
     mode = "0400";

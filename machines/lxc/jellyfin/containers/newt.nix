@@ -18,9 +18,9 @@
     };
   };
 
-  age.secrets."newt.env" = {
-    file = ../../../../secrets/jellyfin.newt.env.age;
-    path = "/run/secrets/newt.env";
+  sops.secrets."newt.env" = {
+    sopsFile = ../../../../secrets/jellyfin.newt.env;
+    format = "binary";
     owner = "newt";
     group = "newt";
     mode = "0400";

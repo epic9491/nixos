@@ -23,16 +23,18 @@
     };
   };
 
-  age.secrets."grafana-auth-s1.age" = {
-    file = ../../../../../secrets/grafana-auth-s1.age;
+  sops.secrets."grafana-auth-s1" = {
+    sopsFile = ../../../../../secrets/grafana-auth-s1;
+    format = "binary";
     path = "/var/lib/rancher/k3s/server/manifests/grafana-auth.yaml";
     owner = "root";
     group = "root";
     mode = "0400";
   };
 
-  age.secrets."grafana-datasources-s1.age" = {
-    file = ../../../../../secrets/grafana-datasources-s1.age;
+  sops.secrets."grafana-datasources-s1" = {
+    sopsFile = ../../../../../secrets/grafana-datasources-s1;
+    format = "binary";
     path = "/var/lib/rancher/k3s/server/manifests/grafana-datasources.yaml";
     owner = "root";
     group = "root";
