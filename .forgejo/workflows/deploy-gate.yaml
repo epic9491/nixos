@@ -8,6 +8,8 @@ on:
 jobs:
   gate:
     runs-on: nix
+    env:
+      GIT_TERMINAL_PROMPT: "0"
     steps:
       - uses: actions/checkout@v6
         with:
