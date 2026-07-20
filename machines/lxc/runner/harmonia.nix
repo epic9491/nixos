@@ -11,7 +11,7 @@
       format = "binary";
     };
 
-    services.harmonia = {
+    services.harmonia.cache = {
       enable = true;
       signKeyPaths = [ config.sops.secrets."runner.cache-key".path ];
     };
