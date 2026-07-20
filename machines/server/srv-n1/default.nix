@@ -44,7 +44,10 @@
     };
   };
 
-  server.baseline.enable = true;
-  server.cd.enable = true;
+  server = {
+    baseline.enable = true;
+    cd.enable = true;
+    cache.enable = true;
+  };
   ssh.enable = true;
 }

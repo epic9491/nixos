@@ -6,4 +6,6 @@
   ];
 
   networking.hostName = "jellyfin";
+
+  server.cache.enable = true;
 }

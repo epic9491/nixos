@@ -62,7 +62,9 @@ def main():
     failures, warnings = [], []
     recipients = {}
 
-    for path in sorted(p for p in SECRETS.iterdir() if p.is_file()):
+    # not woried about pub keys 
+    for path in sorted(p for p in SECRETS.iterdir()
+                       if p.is_file() and p.suffix != ".pub"):
         try:
             recipients[path.name] = actual = actual_recipients(path)
         except (json.JSONDecodeError, KeyError) as exc:

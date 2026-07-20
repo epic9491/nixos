@@ -148,6 +148,7 @@
             ./modules/ssh.nix
             ./modules/svc.nix
             ./modules/cd.nix
+            ./modules/cache.nix
             home-managerS.nixosModules.home-manager
           ]
           ++ modules;
