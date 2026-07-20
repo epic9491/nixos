@@ -183,7 +183,7 @@
         };
 
         git = mkServer {
-          deviceModule = ./machines/git/default.nix;
+          deviceModule = ./machines/server/git/default.nix;
         };
 
         secret-mgmt = mkServer {

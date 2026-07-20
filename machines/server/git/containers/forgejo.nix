@@ -101,7 +101,7 @@
 
   sops.secrets = {
     "forgejo.env" = {
-      sopsFile = ../../../secrets/git.forgejo.env;
+      sopsFile = ../../../../secrets/git.forgejo.env;
       format = "binary";
       path = "/run/secrets/forgejo.env";
       owner = "forgejo";
@@ -109,7 +109,7 @@
       mode = "0400";
     };
     "forgejo-db.env" = {
-      sopsFile = ../../../secrets/git.forgejo-db.env;
+      sopsFile = ../../../../secrets/git.forgejo-db.env;
       format = "binary";
       path = "/run/secrets/forgejo-db.env";
       owner = "forgejo";
