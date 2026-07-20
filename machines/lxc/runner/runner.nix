@@ -12,6 +12,14 @@
       format = "binary";
     };
 
+    systemd.services.gitea-runner-nix.serviceConfig.DynamicUser = lib.mkForce false;
+
+    users.users.gitea-runner = {
+      isSystemUser = true;
+      group = "gitea-runner";
+    };
+    users.groups.gitea-runner = { };
+
     services.gitea-actions-runner = {
       package = pkgs.forgejo-runner;
       instances.nix = {
