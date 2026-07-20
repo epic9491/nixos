@@ -8,8 +8,8 @@ keys:
   - &jellyfin age14z74sl0u6el5krjlp335zeg8uaeerlnt9yhxlu6zrjt723m24peqh4r9jc
 
 creation_rules:
-  # one rule per host; every secret is named <host>.<service> so these prefixes
-  # are mutually exclusive and order does not matter. keep the catch-all last.
+  # sops matches top to bottom, secrets always start with "host."
+  # so regex should be pretty stable
   - path_regex: secrets/console\.
     key_groups:
       - age: [*master, *console]
