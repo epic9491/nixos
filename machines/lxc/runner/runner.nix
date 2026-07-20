@@ -24,6 +24,7 @@
           bash
           coreutils
           curl
+          diffutils
           gawk
           git
           gnused
