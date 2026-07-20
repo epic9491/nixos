@@ -22,6 +22,13 @@
                 labels:
                   host: srv-n2
 
+          - job_name: harmonia
+            static_configs:
+              - targets:
+                  - 100.69.69.219:5000
+                labels:
+                  host: runner
+
           - job_name: prometheus
             static_configs:
               - targets:
@@ -74,6 +81,11 @@
             type: file
             options:
               path: /etc/grafana/dashboards
+          - name: infra
+            folder: Infra
+            type: file
+            options:
+              path: /etc/grafana/dashboards-infra
       '';
     in
     {
@@ -114,6 +126,7 @@
             "${grafanaDashboardProvider}:/etc/grafana/provisioning/dashboards/dashboards.yml:ro"
             "${./crowdsec-dashboard.json}:/etc/grafana/dashboards/crowdsec.json:ro"
             "${./crowdsec-srv-n2-dashboard.json}:/etc/grafana/dashboards/crowdsec-srv-n2.json:ro"
+            "${./harmonia-dashboard.json}:/etc/grafana/dashboards-infra/harmonia.json:ro"
             "/var/lib/grafana/data:/var/lib/grafana:U"
             "${infinityPlugin}:/var/lib/grafana/plugins/yesoreyeram-infinity-datasource:ro"
           ];
