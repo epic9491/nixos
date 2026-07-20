@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   sops.secrets."pangolin.token" = {
-    sopsFile = ../../../secrets/pbs.pangolin;
+    sopsFile = ../../../secrets/pangolin.pbs;
     format = "binary";
     owner = "root";
     group = "root";
@@ -9,7 +9,7 @@
   };
 
   sops.secrets."pangolin.key" = {
-    sopsFile = ../../../secrets/pbs.pangolin.key;
+    sopsFile = ../../../secrets/pangolin.pbs.key;
     format = "binary";
     owner = "root";
     group = "root";

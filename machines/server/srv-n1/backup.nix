@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   sops.secrets."srv-n1.token" = {
-    sopsFile = ../../../secrets/pbs.srv-n1;
+    sopsFile = ../../../secrets/srv-n1.pbs;
     format = "binary";
     owner = "root";
     group = "root";
@@ -9,7 +9,7 @@
   };
 
   sops.secrets."srv-n1.key" = {
-    sopsFile = ../../../secrets/pbs.srv-n1.key;
+    sopsFile = ../../../secrets/srv-n1.pbs.key;
     format = "binary";
     owner = "root";
     group = "root";

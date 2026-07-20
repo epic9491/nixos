@@ -42,6 +42,13 @@ jobs:
             ".#nixosConfigurations.${{ matrix.host }}.config.system.build.toplevel" \
             --print-build-logs
 
+  verify-secrets:
+    runs-on: nix
+    steps:
+      - uses: actions/checkout@v6
+      - run: |
+          python3 .forgejo/scripts/check-sops-recipients.py
+
   verify-lock:
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: nix

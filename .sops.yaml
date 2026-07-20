@@ -8,20 +8,11 @@ keys:
   - &jellyfin age14z74sl0u6el5krjlp335zeg8uaeerlnt9yhxlu6zrjt723m24peqh4r9jc
 
 creation_rules:
-  # pbs rules must stay first, path_regex is a substring match
-  - path_regex: secrets/pbs\.console(\.key)?$
+  # one rule per host; every secret is named <host>.<service> so these prefixes
+  # are mutually exclusive and order does not matter. keep the catch-all last.
+  - path_regex: secrets/console\.
     key_groups:
       - age: [*master, *console]
-  - path_regex: secrets/pbs\.srv-n1(\.key)?$
-    key_groups:
-      - age: [*master, *srv-n1]
-  - path_regex: secrets/pbs\.pangolin(\.key)?$
-    key_groups:
-      - age: [*master, *pangolin]
-  - path_regex: secrets/pbs\.git(\.key)?$
-    key_groups:
-      - age: [*master, *git]
-
   - path_regex: secrets/srv-n1\.
     key_groups:
       - age: [*master, *srv-n1]

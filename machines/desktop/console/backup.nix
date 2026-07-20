@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   sops.secrets."console.token" = {
-    sopsFile = ../../../secrets/pbs.console;
+    sopsFile = ../../../secrets/console.pbs;
     format = "binary";
     owner = "root";
     group = "root";
