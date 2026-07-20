@@ -6,6 +6,7 @@ keys:
   - &git age18apjd378vwlnts64wznwh9lknndacxakjdwl0ldstplzkpwspf7qw77w3p
   - &pangolin age1n7luzkfg2t0a44uqsz97f2gvjhk3fys908skpd8uzkg98ah3fyashcc5ms
   - &jellyfin age14z74sl0u6el5krjlp335zeg8uaeerlnt9yhxlu6zrjt723m24peqh4r9jc
+  - &runner age1aw5yu9dwdv97d0kpwlt949wq0u7t5q3mk3alrvg02rp60w5whu2sz80pgx
 
 creation_rules:
   # sops matches top to bottom, secrets always start with "host."
@@ -28,6 +29,9 @@ creation_rules:
   - path_regex: secrets/jellyfin\.
     key_groups:
       - age: [*master, *jellyfin]
+  - path_regex: secrets/runner\.
+    key_groups:
+      - age: [*master, *runner]
 
   - path_regex: secrets/.*
     key_groups:
