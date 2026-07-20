@@ -62,7 +62,6 @@ in
       tree
       fastfetch
       starship
-      ffmpeg
       whois
       parted
       usbutils
@@ -72,7 +71,6 @@ in
       dig
       oh-my-zsh
       autojump
-      compose2nix
       jq
       screen
       eza
