@@ -221,6 +221,10 @@
         jellyfin = mkServer {
           deviceModule = ./machines/lxc/jellyfin/default.nix;
         };
+
+        runner = mkServer {
+          deviceModule = ./machines/lxc/runner/default.nix;
+        };
       };
     };
 }
