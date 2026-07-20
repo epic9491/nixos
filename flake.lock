@@ -314,6 +314,7 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
         "noctalia": "noctalia",
+        "second-brain": "second-brain",
         "sops-nix": "sops-nix"
       }
     },
@@ -336,6 +337,26 @@
         "owner": "oxalica",
         "repo": "rust-overlay",
         "type": "github"
+      }
+    },
+    "second-brain": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-stable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1784573038,
+        "narHash": "sha256-TTBH2oRfn/hQEHKy7Qea0oV3sbmjnM10McEiBoBNn48=",
+        "ref": "refs/heads/master",
+        "rev": "871ea3f69d54d8c8cdd0050d76fd8b0f2ca7cb82",
+        "revCount": 3,
+        "type": "git",
+        "url": "https://git.zorse-ruffe.ts.net/sensei/second-brain"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.zorse-ruffe.ts.net/sensei/second-brain"
       }
     },
     "sops-nix": {
