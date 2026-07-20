@@ -42,6 +42,9 @@
 
     comin.url = "github:nlewo/comin";
     comin.inputs.nixpkgs.follows = "nixpkgs-stable";
+
+    second-brain.url = "git+https://git.zorse-ruffe.ts.net/sensei/second-brain";
+    second-brain.inputs.nixpkgs.follows = "nixpkgs-stable";
   };
 
   outputs =
@@ -224,6 +227,10 @@
 
         runner = mkServer {
           deviceModule = ./machines/lxc/runner/default.nix;
+        };
+
+        second-brain = mkServer {
+          deviceModule = ./machines/lxc/second-brain/default.nix;
         };
       };
     };
