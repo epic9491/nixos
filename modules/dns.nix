@@ -26,6 +26,7 @@ in
 
     systemd.network.networks."99-ethernet-default-dhcp" = lib.mkIf config.networking.useDHCP {
       dhcpV4Config.UseDNS = false;
+      dhcpV6Config.UseDNS = false;
       ipv6AcceptRAConfig.UseDNS = false;
     };
   };
