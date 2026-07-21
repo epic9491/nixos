@@ -29,7 +29,6 @@
     initialPassword = "supersecretpassword";
     extraGroups = [
       "wheel"
-      "networkmanager"
     ];
   };
 

@@ -24,16 +24,9 @@ in
       };
     };
 
-    # none stops nm pushing dhcp servers to resolved, where they race ours
-    networking.networkmanager.dns = lib.mkIf config.networking.networkmanager.enable (
-      lib.mkForce "none"
-    );
-
-    systemd.network.networks."99-ethernet-default-dhcp" =
-      lib.mkIf (config.networking.useNetworkd && config.networking.useDHCP)
-        {
-          dhcpV4Config.UseDNS = false;
-          ipv6AcceptRAConfig.UseDNS = false;
-        };
+    systemd.network.networks."99-ethernet-default-dhcp" = lib.mkIf config.networking.useDHCP {
+      dhcpV4Config.UseDNS = false;
+      ipv6AcceptRAConfig.UseDNS = false;
+    };
   };
 }

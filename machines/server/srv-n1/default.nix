@@ -26,7 +26,6 @@
     shell = pkgs.zsh;
     extraGroups = [
       "wheel"
-      "networkmanager"
     ];
   };
 

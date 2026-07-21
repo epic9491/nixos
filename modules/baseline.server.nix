@@ -21,7 +21,7 @@ in
 
     nixpkgs.config.allowUnfree = true;
 
-    networking.networkmanager.enable = true;
+    networking.useNetworkd = true;
 
     # tailnet names are unresolvable without magicdns
     networking.hosts."100.69.69.216" = [ "git.zorse-ruffe.ts.net" ];
