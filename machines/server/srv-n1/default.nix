@@ -32,17 +32,7 @@
 
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-  networking = {
-    hostName = "srv-n1";
-    nameservers = [
-      "9.9.9.9"
-      "1.1.1.1"
-    ];
-    networkmanager = {
-      dns = "none";
-      settings.main.rc-manager = "unmanaged";
-    };
-  };
+  networking.hostName = "srv-n1";
 
   server = {
     baseline.enable = true;

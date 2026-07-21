@@ -150,6 +150,7 @@
             ./modules/cd.nix
             ./modules/cache.nix
             ./modules/reboot.nix
+            ./modules/dns.nix
             home-managerS.nixosModules.home-manager
           ]
           ++ modules;

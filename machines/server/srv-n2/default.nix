@@ -29,26 +29,16 @@
 
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-  networking = {
-    hostName = "srv-n2";
-    nameservers = [
-      "9.9.9.9"
-      "1.1.1.1"
-    ];
-    networkmanager = {
-      dns = "none";
-      settings.main.rc-manager = "unmanaged";
-    };
-  };
+  networking.hostName = "srv-n2";
 
   systemd.targets.network-online.wantedBy = [ "multi-user.target" ];
 
   server = {
     baseline.enable = true;
     cd.enable = true;
-    kernelReboot = true;
+    kernelReboot.enable = true;
   };
-  
+
   ssh = {
     enable = true;
     port = 42069;
