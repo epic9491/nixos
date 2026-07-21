@@ -190,10 +190,6 @@
           deviceModule = ./machines/server/git/default.nix;
         };
 
-        secret-mgmt = mkServer {
-          deviceModule = ./machines/server/secret-mgmt/default.nix;
-        };
-
         mongoose = mkServer {
           deviceModule = ./machines/server/mongoose/default.nix;
         };
