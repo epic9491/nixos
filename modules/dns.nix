@@ -24,14 +24,10 @@ in
       };
     };
 
-    # dont want dns from dhcp, it will race resolved 
-    networking.networkmanager = lib.mkIf config.networking.networkmanager.enable {
-      dns = "systemd-resolved";
-      connectionConfig = {
-        "ipv4.ignore-auto-dns" = true;
-        "ipv6.ignore-auto-dns" = true;
-      };
-    };
+    # none stops nm pushing dhcp servers to resolved, where they race ours
+    networking.networkmanager.dns = lib.mkIf config.networking.networkmanager.enable (
+      lib.mkForce "none"
+    );
 
     systemd.network.networks."99-ethernet-default-dhcp" =
       lib.mkIf (config.networking.useNetworkd && config.networking.useDHCP)
