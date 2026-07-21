@@ -149,6 +149,7 @@
             ./modules/svc.nix
             ./modules/cd.nix
             ./modules/cache.nix
+            ./modules/reboot.nix
             home-managerS.nixosModules.home-manager
           ]
           ++ modules;

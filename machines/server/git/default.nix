@@ -42,8 +42,11 @@
 
   systemd.targets.network-online.wantedBy = [ "multi-user.target" ];
 
-  server.baseline.enable = true;
-  server.cd.enable = true;
+  server = {
+    baseline.enable = true;
+    cd.enable = true;
+    kernelReboot.enable = true;
+  };
   ssh = {
     enable = true;
     port = 42069;
