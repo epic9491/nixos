@@ -8,6 +8,8 @@
 
   networking.hostName = "second-brain";
 
+  server.cache.enable = true;
+
   services.second-brain = {
     enable = true;
     host = "0.0.0.0";
