@@ -1,5 +1,7 @@
 keys:
-  - &master age1a7jfuvqktm5pm30emf5wkt9xuycm54djvjchpsvg0l7pd62ffdwseux5xv
+  - &yubi-master1 age1yubikey1qd84d0gr6gw0kdjztwkgk8h2k5f5477c2eng5j3d9c5qavmeylwx29fcsa5
+  - &yubi-master2 age1yubikey1qvkcdmncywzgx4vvhmel4zv8cx3zzgmyx2rzvn9w6u8d95k3qatzqcrm7kj
+  - &yubi-master3 age1yubikey1qdpmtxksz55pzfaju625atdyhtksvsclmxhuqqux6s352wq43ge0cg0cw26
   - &console age12e0zcqpclf8gh0wu39alq3ux9u0rpu5tc4qtlqvpldkd79ew0p2smnklp0
   - &srv-n1 age1rq9r6xg57v9v07usktvug8rqv4cvp57qq5gr0yfw23ugxu88rprq75jr9m
   - &srv-n2 age1dtahzr3uqenkj4gt6p8ranheglmh9nhl9tasyjj8ezm9xzqpx9dqtvaups
@@ -13,26 +15,26 @@ creation_rules:
   # so regex should be pretty stable
   - path_regex: secrets/console\.
     key_groups:
-      - age: [*master, *console]
+      - age: [*yubi-master1, *yubi-master2, *yubi-master3, *console]
   - path_regex: secrets/srv-n1\.
     key_groups:
-      - age: [*master, *srv-n1]
+      - age: [*yubi-master1, *yubi-master2, *yubi-master3, *srv-n1]
   - path_regex: secrets/srv-n2\.
     key_groups:
-      - age: [*master, *srv-n2]
+      - age: [*yubi-master1, *yubi-master2, *yubi-master3, *srv-n2]
   - path_regex: secrets/git\.
     key_groups:
-      - age: [*master, *git]
+      - age: [*yubi-master1, *yubi-master2, *yubi-master3, *git]
   - path_regex: secrets/pangolin\.
     key_groups:
-      - age: [*master, *pangolin]
+      - age: [*yubi-master1, *yubi-master2, *yubi-master3, *pangolin]
   - path_regex: secrets/jellyfin\.
     key_groups:
-      - age: [*master, *jellyfin]
+      - age: [*yubi-master1, *yubi-master2, *yubi-master3, *jellyfin]
   - path_regex: secrets/runner\.
     key_groups:
-      - age: [*master, *runner]
+      - age: [*yubi-master1, *yubi-master2, *yubi-master3, *runner]
 
   - path_regex: secrets/.*
     key_groups:
-      - age: [*master]
+      - age: [*yubi-master1, *yubi-master2, *yubi-master3]
