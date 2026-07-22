@@ -61,7 +61,7 @@ workstation.niri.enable = true;
 
 Notes:
 
-- Garbage collection removes generations older than 7 days on workstations and 14 days on servers. Store optimization runs weekly on both.
+- Garbage collection removes generations older than 7 days on workstations and 5 days on servers. Store optimization runs weekly on both.
 - The user is created with an `initialPassword`, and SSH is key-only. Set a real password on first boot.
 - All builds default to zsh. A bash Home Manager file exists; swap the shell import in `flake.nix`.
 - Desktop environments use their stock display managers (GDM, SDDM, LightDM). Window managers use `tuigreet` with autologin. Niri (with Noctalia Shell) is the most actively maintained environment; GNOME, KDE, and XFCE are stable; Hyprland lags upstream.
