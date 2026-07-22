@@ -63,6 +63,7 @@
         environmentFile = [ "/run/secrets/karakeep.env" ];
         environment = {
           MEILI_NO_ANALYTICS = "true";
+          MEILI_EXPERIMENTAL_DUMPLESS_UPGRADE = "true";
         };
         extraConfig = {
           Container = {
