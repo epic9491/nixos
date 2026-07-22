@@ -9,11 +9,15 @@
         autoStart = true;
         environmentFile = [ "/run/secrets/newt.env" ];
         devices = [ "/dev/net/tun" ];
-        extraPodmanArgs = [
-          "--cap-add=NET_ADMIN"
-          "--network=pasta:--map-host-loopback,169.254.1.2"
-        ];
-        extraConfig.Service.RestartSec = 2;
+        extraPodmanArgs = [ "--network=pasta:--map-host-loopback,169.254.1.2" ];
+        extraConfig = {
+          Container = {
+            AddCapability = "NET_ADMIN";
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.RestartSec = 2;
+        };
       };
     };
   };

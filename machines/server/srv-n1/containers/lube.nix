@@ -12,7 +12,13 @@
           "/var/lib/lubelogger/data:/App/data:Z"
           "/var/lib/lubelogger/keys:/root/.aspnet/DataProtection-Keys:Z"
         ];
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
     };
   };

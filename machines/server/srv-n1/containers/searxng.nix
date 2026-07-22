@@ -18,6 +18,11 @@
         ];
         environmentFile = [ "/run/secrets/searxng.env" ];
         extraConfig = {
+          Container = {
+            AddCapability = "CHOWN DAC_OVERRIDE";
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
           Service.Restart = "always";
           Unit = {
             After = [ "podman-searxng-redis.service" ];
@@ -33,7 +38,14 @@
         networkAlias = [ "redis" ];
         volumes = [ "/var/lib/searxng/redis-data:/data" ];
         exec = "valkey-server --save 30 1 --loglevel warning --maxmemory 256mb --maxmemory-policy allkeys-lru";
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            AddCapability = "CHOWN SETGID SETUID";
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
     };
   };

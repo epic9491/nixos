@@ -42,7 +42,13 @@
             OTR_PORT = 0;
           };
           environmentFile = [ "/run/secrets/owntracks.env" ];
-          extraConfig.Service.Restart = "always";
+          extraConfig = {
+            Container = {
+              DropCapability = "ALL";
+              NoNewPrivileges = true;
+            };
+            Service.Restart = "always";
+          };
         };
 
         containers.caddy = {
@@ -58,6 +64,11 @@
           ];
           environmentFile = [ "/run/secrets/owntracks.env" ];
           extraConfig = {
+            Container = {
+              AddCapability = "NET_BIND_SERVICE";
+              DropCapability = "ALL";
+              NoNewPrivileges = true;
+            };
             Service.Restart = "always";
             Unit = {
               After = [ "podman-recorder.service" ];

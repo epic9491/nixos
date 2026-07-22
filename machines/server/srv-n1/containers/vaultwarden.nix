@@ -15,7 +15,13 @@
           ROCKET_PORT = "8000";
           WEBSOCKET_ENABLED = "true";
         };
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
     };
   };

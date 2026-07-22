@@ -32,7 +32,13 @@
             "${caddyfile}:/etc/caddy/Caddyfile:ro"
           ];
           environmentFile = [ "/run/secrets/caddy.env" ];
-          extraConfig.Service.Restart = "always";
+          extraConfig = {
+            Container = {
+              DropCapability = "ALL";
+              NoNewPrivileges = true;
+            };
+            Service.Restart = "always";
+          };
         };
       };
     };

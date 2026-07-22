@@ -21,6 +21,10 @@
         };
         extraPodmanArgs = [ "--memory=3g" ];
         extraConfig = {
+          Container = {
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
           Service.Restart = "always";
           Unit = {
             After = [
@@ -41,7 +45,13 @@
         network = "karakeep.network";
         networkAlias = [ "chrome" ];
         exec = "--no-sandbox --disable-gpu --disable-dev-shm-usage --remote-debugging-address=0.0.0.0 --remote-debugging-port=9222 --hide-scrollbars";
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
 
       containers.karakeep-meilisearch = {
@@ -54,7 +64,13 @@
         environment = {
           MEILI_NO_ANALYTICS = "true";
         };
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
     };
   };
