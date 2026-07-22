@@ -14,6 +14,7 @@
             AddCapability = "SETGID SETUID";
             DropCapability = "ALL";
             NoNewPrivileges = true;
+            Sysctl = ''"net.ipv4.ping_group_range=0 0"''; # <-- let the container ping without CAP_NET_RAW privs
           };
           Service.Restart = "always";
         };
