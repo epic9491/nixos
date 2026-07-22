@@ -16,7 +16,14 @@
           TZ = "America/New_York";
           TOKEN_TIME = 720;
         };
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            AddCapability = "CHOWN SETGID SETUID";
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
     };
   };

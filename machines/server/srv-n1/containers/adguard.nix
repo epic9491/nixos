@@ -19,7 +19,14 @@
           "/var/lib/adguard/work:/opt/adguardhome/work:Z"
           "/var/lib/adguard/conf:/opt/adguardhome/conf:Z"
         ];
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            AddCapability = "NET_BIND_SERVICE";
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
     };
   };

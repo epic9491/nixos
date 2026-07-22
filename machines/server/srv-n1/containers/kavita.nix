@@ -15,7 +15,13 @@
         environment = {
           TZ = "Etc/UTC";
         };
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
     };
   };

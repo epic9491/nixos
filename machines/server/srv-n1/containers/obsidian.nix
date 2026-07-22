@@ -19,7 +19,14 @@
         ];
         environmentFile = [ "/run/secrets/obsidian-couchdb.env" ];
         userNS = "keep-id:uid=5984,gid=5984";
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            AddCapability = "CHOWN SETGID SETUID";
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
 
       containers.cloudflared = {
@@ -29,6 +36,10 @@
         exec = "tunnel --no-autoupdate run";
         environmentFile = [ "/run/secrets/obsidian-cloudflared.env" ];
         extraConfig = {
+          Container = {
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
           Service.Restart = "always";
           Unit = {
             After = [ "podman-couchdb.service" ];

@@ -18,6 +18,10 @@
         ];
         environmentFile = [ "/run/secrets/immich-public.env" ];
         extraConfig = {
+          Container = {
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
           Service.Restart = "always";
           Unit = {
             After = [
@@ -39,7 +43,13 @@
         networkAlias = [ "immich-machine-learning" ];
         volumes = [ "/var/lib/immich-public/model-cache:/cache" ];
         environmentFile = [ "/run/secrets/immich-public.env" ];
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
 
       containers.immich-public-redis = {
@@ -47,7 +57,14 @@
         autoStart = true;
         network = "immich-public.network";
         networkAlias = [ "redis" ];
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            AddCapability = "CHOWN SETGID SETUID";
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
 
       containers.immich-public-database = {
@@ -58,7 +75,14 @@
         volumes = [ "/var/lib/immich-public/postgres:/var/lib/postgresql/data" ];
         environmentFile = [ "/run/secrets/immich-public.env" ];
         extraPodmanArgs = [ "--shm-size=128mb" ];
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            AddCapability = "CHOWN DAC_OVERRIDE FOWNER SETGID SETUID";
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
     };
   };

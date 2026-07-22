@@ -9,7 +9,14 @@
         autoStart = true;
         ports = [ "127.0.0.1:3001:3001" ];
         volumes = [ "/var/lib/uptime-kuma/data:/app/data:Z" ];
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            AddCapability = "SETGID SETUID";
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
     };
   };

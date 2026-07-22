@@ -15,7 +15,13 @@
         environment = {
           ND_AcceptExtensions = ".mp4,.flac,.m4a";
         };
-        extraConfig.Service.Restart = "always";
+        extraConfig = {
+          Container = {
+            DropCapability = "ALL";
+            NoNewPrivileges = true;
+          };
+          Service.Restart = "always";
+        };
       };
     };
   };
