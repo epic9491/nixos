@@ -1,57 +1,92 @@
-# My NixOS configurations v3
+# NixOS configurations
 
-This is a pretty significant overhaul of the structure the repo used previously, and should allow for more flexibility and easier modification. About 20 directories and 40 files were removed.
+Flake-based NixOS configurations for a fleet of servers, LXC containers, and workstations, with CI-gated GitOps deployment. Servers track the stable channel (26.05); workstations track unstable. All hosts build as `.#hostname`.
 
-The flake builds no longer depend on hostname-profile (e.g. `erebos-niri`, `prometheus-hypr`, etc) and are now only `.#hostname`. I've converted the "profiles" I used before into modules which can be enabled or disabled as needed. At the time of writing, the Home Manager file for the respective environment will need to be swapped out in `flake.nix`. Make sure you comment or remove any conflicting files from other environments.
+The primary host is **srv-n1**. Its configuration and the security layers behind it are documented at https://codeberg.org/sensei/nixos/wiki/srv-n1
 
-Nowadays, this repo largely focuses on server configurations. The relevant files are `/flake.nix`, `/modules/baseline.server.nix`, `/home/server.nix`, and `/machines/server/*`. **srv-n1** is my main server configuration; if you want more information on how that's configured and the security layers behind it, see https://codeberg.org/sensei/nixos/wiki/srv-n1
+This configuration is specific to one environment. Hostnames, usernames, disk layouts, mounts, and secrets will not transfer directly. Review every file before reusing any part of it.
 
-Though I've learned a lot about NixOS since I started daily driving it in 2025, this configuration should be used with caution. You should review all files for anything that may conflict with what you are looking for out of your build. You may need to adjust occurrences of things specific to my environment, like hostnames, usernames, filesystem mounts, etc. Part of the reason I broke things up into modules is to make that process easier.
+## Table of contents
 
-## Table of Contents
 - [Repo structure](#repo-structure)
-- [Important things to note](#important-things-to-note)
-- [Current valid build commands](#current-valid-build-commands-from-root-of-repo)
+- [Hosts](#hosts)
+- [Modules](#modules)
+- [Deployment pipeline](#deployment-pipeline)
+- [Build commands](#build-commands)
 - [Showcase](#showcase)
 - [Installation](#installation)
 - [Sponsor NixOS](#sponsor-nixos)
-- [Github mirror](#github-mirror)
+- [GitHub mirror](#github-mirror)
 
 ## Repo structure
 
-- `/config`: software configuration files (ghostty, fastfetch, niri binds, etc). Pretty much all of these are managed through Home Manager and deployed to `~/.config`.
-- `/devices`: broken into `/desktop`, `/laptop`, and `/server`. This is where device-specific configurations and modules are imported and set, as well as the home for `hardware-configuration.nix`. If you're cloning this repo, don't forget to replace this file with your own. Retired hosts are preserved on the `legacy` branch.
-- `/home`: Home Manager configurations for my baseline (`common.nix`), DE/WM-specific configurations, etc.
-- `/modules`: this is where the vast majority of the restructuring was done. Review and adjust as needed. Many things are specific to my environment. Overall, the move to modules should make this repo much more flexible for both myself and anyone else who may want to use it.
-- `/pics`: profile pictures and eventually screenshots to include in the README.
-- `/pkgs`: custom package derivations not available in nixpkgs.
+- `/.forgejo`: CI workflows. Host builds, deploy gating, Renovate, and a daily Cloudflare IP range refresh.
+- `/config`: application configuration files (ghostty, niri, waybar, etc.), deployed to `~/.config` through Home Manager.
+- `/home`: Home Manager configurations. `common.nix` is the workstation baseline, `server.nix` the server baseline, plus per-environment and per-shell files.
+- `/machines`: per-host configuration, grouped into `desktop`, `laptop`, `lxc`, and `server`. Each host directory holds its `default.nix`, `hardware-configuration.nix`, disko layout, and any host-specific services. Server hosts define their OCI containers under `containers/`. Retired hosts are preserved on the `legacy` branch.
+- `/modules`: shared NixOS modules, exposed as options under the `workstation.*` and `server.*` namespaces.
+- `/pkgs`: package derivations not available in nixpkgs.
 - `/secrets`: sops-encrypted secrets. `/.sops.yaml` at the repo root defines which host keys can decrypt each secret.
-- `/terra`: Terraform + nixos-anywhere deployments for provisioning hosts, one file per machine.
+- `/terra`: Terraform + nixos-anywhere provisioning, one file per machine.
+- `/workers`: Cloudflare Workers. `srv-n2-monitor` polls srv-n2 on a five-minute cron.
 
-## Important things to note
+## Hosts
 
-- My workstations run on the **unstable** branch, use the **latest kernel**, and **allow unfree software**. My servers run on the **stable** branch, use an **LTS kernel**, and also allow **unfree software**. Garbage collection removes generations older than 7 days on workstations and 14 days on servers, Nix store optimization runs weekly on both.
-- My user is created with an `initialPassword`. It only applies the first time the user is created, and SSH is key-only, but you should still set a real password with `passwd` on first boot.
-- `/modules/baseline.nix` is exactly what it sounds like. Services, kernel and boot parameters, and other core, shared settings are defined here. You should review this file. The baseline is enabled with: ```workstation.baseline.enable = true;```. Most modules are nested within the ```workstation``` option.
-- `/modules/packages.nix` handles all shared packages for workstations. It is broken up into options, being ```tools```, ```dev```, and ```apps```. I have nested the modules options into the ```baseline``` option as I still consider it a part of the baseline, but that file was getting too big and this makes more sense.
-- All builds use **zsh** by default. I have separate **zsh** and **bash** Home Manager files, you can switch the shell to say bash by modifying the shell file Home Manager imports under either machines entry in ```flake.nix```.
-- I use **Niri** almost exclusively. The Niri module uses **Noctalia Shell**. If you don't want to use Noctalia, remove it's input in `flake.nix` and remove the package from Niri's module. If you're using my Niri config from `/config/niri`, remove ```spawn-at-startup "noctalia-shell"``` from the file. The Niri module will be up to date more often than the others. GNOME and XFCE modules should be stable and usable.
-- Hyprland currently lags behind upstream. Breaking changes were made to window-rule syntax in version 0.53, and I have not yet made adjustments to accommodate this. I don't really have any window rules though so it's probably fine. Use niri.
-- KDE and GNOME work great if that's what you like.
-- Display managers change depending on what environment you choose:
-  - Desktop environments use their defaults (GNOME = GDM, KDE = SDDM, XFCE = LightDM)
-  - Window managers use `tuigreet` with autologin
-- This repo is not 100 MB. Wallpapers used to live here and were removed. The blobs should also be removed from `.git`. ```du -hs``` reports **8.7 MB** at the time of writing.
+`flake.nix` defines two host builders. `mkWorkstation` builds against nixpkgs-unstable with the latest kernel; `mkServer` builds against nixpkgs-stable with an LTS kernel and imports the server baseline (SSH, service defaults, continuous deployment, binary cache, DNS, scheduled reboots). Both wire in Home Manager, disko, and sops-nix.
 
-## Current valid build commands (from root of repo)
+Current outputs:
 
-```sudo nixos-rebuild boot --flake .#prometheus``` (laptop build)
+| Host | Type | Role |
+|---|---|---|
+| `console` | workstation | living-room KDE build with controller support |
+| `srv-n1` | server | primary server; runs most services as rootless Quadlets |
+| `srv-n2` | server | public-facing edge; Caddy, CrowdSec, Cloudflare-restricted ingress |
+| `git` | server | Forgejo host |
+| `mongoose` | server | qBittorrent host |
+| `pangolin` | server | Pangolin tunnel/ingress node |
+| `jellyfin` | LXC | media server |
+| `runner` | LXC | Forgejo Actions runner and Harmonia binary cache |
+| `second-brain` | LXC | second-brain service, consumed as a flake input |
 
-```sudo nixos-rebuild boot --flake .#erebos``` (desktop/gaming build)
+`erebos` (desktop) and `prometheus` (laptop) are defined but currently commented out, as is a five-node k3s cluster. Anything commented out is not being actively developed or maintained.
 
-`sudo nixos-rebuild boot --flake .#console` (console-like build with kodi)
+## Modules
 
-Same goes for any other entry in the flake.
+Modules are enable-gated options rather than unconditional imports. Workstation functionality lives under `workstation.*` (`baseline`, `packages`, desktop environments, `virtualization`, etc.); server functionality lives under `server.*` (`baseline`, `cd`, `cache`, `dns`, `kernelReboot`). A host enables what it needs:
+
+```nix
+workstation.baseline.enable = true;
+workstation.niri.enable = true;
+```
+
+Notes:
+
+- Garbage collection removes generations older than 7 days on workstations and 14 days on servers. Store optimization runs weekly on both.
+- The user is created with an `initialPassword`, and SSH is key-only. Set a real password on first boot.
+- All builds default to zsh. A bash Home Manager file exists; swap the shell import in `flake.nix`.
+- Desktop environments use their stock display managers (GDM, SDDM, LightDM). Window managers use `tuigreet` with autologin. Niri (with Noctalia Shell) is the most actively maintained environment; GNOME, KDE, and XFCE are stable; Hyprland lags upstream.
+
+## Deployment pipeline
+
+Servers are usually not rebuilt by hand.
+
+1. Forgejo Actions builds every flake output on push and pull request (`nix-build.yaml`).
+2. Renovate opens PRs for container image and flake input updates. Non-major container updates and lock file maintenance automerge once CI passes. New containers are pinned as `tag@digest`.
+3. A daily gate job (`deploy-gate.yaml`) rebuilds all comin-enabled hosts from `main` and force-pushes the result to `deploy-candidate`.
+4. A follow-up job (`deploy-release.yaml`) promotes `deploy-candidate` to `deploy`.
+5. [comin](https://github.com/nlewo/comin) on each server polls the `deploy` branch and applies it.
+
+A scheduled workflow also refreshes the Cloudflare IP allowlist consumed by srv-n2.
+
+## Build commands
+
+From the repo root:
+
+```
+sudo nixos-rebuild boot --flake .#console
+```
+
+The same form applies to any other entry in the flake. Server hosts can be built this way for testing, but routine changes reach them through the deployment pipeline above.
 
 ## Showcase
 
@@ -59,12 +94,12 @@ Same goes for any other entry in the flake.
 
 ## Installation
 
-For installation instructions, please see https://codeberg.org/sensei/nixos/wiki/Installation-instructions
+For installation instructions, see https://codeberg.org/sensei/nixos/wiki/Installation-instructions
 
 ## Sponsor NixOS
 
-Please consider sponsoring NixOS to support the people that this possible https://github.com/sponsors/NixOS
+Consider sponsoring NixOS to support the people who make this possible: https://github.com/sponsors/NixOS
 
 ## GitHub mirror
 
-For the GitHub only folks, you can find the mirror here https://github.com/epic9491/nixos
+https://github.com/epic9491/nixos
