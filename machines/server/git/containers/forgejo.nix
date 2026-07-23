@@ -53,6 +53,12 @@
             FORGEJO__repository__DEFAULT_PRIVATE = "private";
             FORGEJO__repository__DEFAULT_BRANCH = "main";
 
+            FORGEJO__repository_0X2E_signing__FORMAT = "ssh";
+            FORGEJO__repository_0X2E_signing__SIGNING_KEY = "/var/lib/gitea/ssh-signing-key.pub";
+            FORGEJO__repository_0X2E_signing__SIGNING_NAME = "forgejo-instance";
+            FORGEJO__repository_0X2E_signing__SIGNING_EMAIL = "noreply@gaialabs.space";
+            FORGEJO__repository_0X2E_signing__MERGES = "always";
+
             FORGEJO__log__LEVEL = "Info";
           };
           environmentFile = [ "/run/secrets/forgejo.env" ];

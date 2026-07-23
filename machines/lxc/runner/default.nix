@@ -6,4 +6,7 @@
   ];
 
   networking.hostName = "runner";
+
+  # enabled gives runner too much reach
+  server.cd.enable = false;
 }
