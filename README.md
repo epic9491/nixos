@@ -1,6 +1,6 @@
 # NixOS configurations
 
-Flake-based NixOS configurations for a fleet of servers, LXC containers, and workstations, with CI-gated GitOps deployment. Servers track the stable channel (26.05); workstations track unstable. All hosts build as `.#hostname`.
+Flake-based NixOS configurations for a fleet of servers, LXC containers, and workstations, with CI-gated, signature-verified GitOps deployment. Servers track the stable channel (26.05); workstations track unstable. All hosts build as `.#hostname`.
 
 The primary host is **srv-n1**. Its configuration and the security layers behind it are documented at https://codeberg.org/sensei/nixos/wiki/srv-n1
 
@@ -74,7 +74,7 @@ Servers are usually not rebuilt by hand.
 2. Renovate opens PRs for container image and flake input updates. Non-major container updates and lock file maintenance automerge once CI passes. New containers are pinned as `tag@digest`.
 3. A daily gate job (`deploy-gate.yaml`) rebuilds all comin-enabled hosts from `main` and force-pushes the result to `deploy-candidate`.
 4. A follow-up job (`deploy-release.yaml`) promotes `deploy-candidate` to `deploy`.
-5. [comin](https://github.com/nlewo/comin) on each server polls the `deploy` branch and applies it.
+5. [comin](https://github.com/nlewo/comin) on each server polls the `deploy` branch, verifies the tip commit is signed by a trusted key (hardware security key or the Forgejo instance signing key, which signs all PR merges), and applies it. Unsigned tips are refused, and `deploy` only ever moves fast-forward.
 
 A scheduled workflow also refreshes the Cloudflare IP allowlist consumed by srv-n2.
 
