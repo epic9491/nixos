@@ -165,15 +165,15 @@
       formatter.${system} = nixpkgs-unstable.legacyPackages.${system}.nixfmt-tree;
 
       nixosConfigurations = {
-       # erebos = mkWorkstation {
-       #   deviceModule = ./machines/desktop/erebos/default.nix;
-       #   hm = [ ./home/kde.nix ];
-       # };
+        # erebos = mkWorkstation {
+        #   deviceModule = ./machines/desktop/erebos/default.nix;
+        #   hm = [ ./home/kde.nix ];
+        # };
 
-       # prometheus = mkWorkstation {
-       #   deviceModule = ./machines/laptop/prometheus/default.nix;
-       #   hm = [ ./home/niri.nix ];
-       # };
+        # prometheus = mkWorkstation {
+        #   deviceModule = ./machines/laptop/prometheus/default.nix;
+        #   hm = [ ./home/niri.nix ];
+        # };
 
         console = mkWorkstation {
           deviceModule = ./machines/desktop/console/default.nix;
