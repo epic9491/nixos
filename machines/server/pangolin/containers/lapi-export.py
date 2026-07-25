@@ -6,6 +6,7 @@ import threading
 import time
 import urllib.error
 import urllib.request
+from datetime import datetime
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
@@ -15,7 +16,6 @@ LISTEN_PORT = int(os.environ.get("LISTEN_PORT", "6061"))
 CACHE_TTL = int(os.environ.get("CACHE_TTL", "30"))
 ALERTS_SINCE = os.environ.get("ALERTS_SINCE", "24h")
 ALERTS_LIMIT = int(os.environ.get("ALERTS_LIMIT", "5000"))
-SINCE_RE = re.compile(r"(?:\d+(?:\.\d+)?(?:ns|us|µs|ms|s|m|h))+")
 
 _lock = threading.Lock()
 _token = None
@@ -138,6 +138,13 @@ def flatten_alerts(since):
     return rows
 
 
+def alert_epoch(text):
+    try:
+        return datetime.fromisoformat(re.sub(r"\.\d+", "", text)).timestamp()
+    except ValueError:
+        return 0.0
+
+
 def cached(name, fn):
     now = time.time()
     with _lock:
@@ -150,24 +157,41 @@ def cached(name, fn):
     return data
 
 
+def get_alerts(from_ts, to_ts):
+    if from_ts is None:
+        return cached("alerts:" + ALERTS_SINCE, lambda: flatten_alerts(ALERTS_SINCE))
+    # round the LAPI window up to a whole minute so dashboard refreshes share a cache entry
+    seconds = max(int(time.time()) - from_ts + 59, 60) // 60 * 60
+    since = f"{seconds}s"
+    rows = cached("alerts:" + since, lambda: flatten_alerts(since))
+    to_limit = to_ts if to_ts is not None else time.time()
+    return [r for r in rows if from_ts <= alert_epoch(r["time"]) <= to_limit]
+
+
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed = urlparse(self.path)
         route = parsed.path.rstrip("/")
-        since = (parse_qs(parsed.query).get("since") or [ALERTS_SINCE])[0]
-        if not SINCE_RE.fullmatch(since):
-            since = ALERTS_SINCE
+        query = parse_qs(parsed.query)
+
+        def int_param(name):
+            try:
+                return int(query.get(name, [""])[0])
+            except ValueError:
+                return None
+
+        from_ts, to_ts = int_param("from"), int_param("to")
         try:
             if route == "/bans":
                 body = json.dumps(cached("bans", flatten_bans))
             elif route == "/alerts":
-                body = json.dumps(cached("alerts:" + since, lambda: flatten_alerts(since)))
+                body = json.dumps(get_alerts(from_ts, to_ts))
             elif route == "/stats":
                 bans = cached("bans", flatten_bans)
                 body = json.dumps({
                     "active_bans": len(bans),
                     "banned_ips": len({row["ip"] for row in bans}),
-                    "alerts": len(cached("alerts:" + since, lambda: flatten_alerts(since))),
+                    "alerts": len(get_alerts(from_ts, to_ts)),
                 })
             elif route == "/healthz":
                 lapi_get("/v1/heartbeat")

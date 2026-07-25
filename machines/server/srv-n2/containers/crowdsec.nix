@@ -56,7 +56,7 @@ in
             "${whitelist}:/etc/crowdsec/parsers/s02-enrich/cloudflare-whitelist.yaml:ro"
           ];
           environment = {
-            COLLECTIONS = "crowdsecurity/caddy crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules";
+            COLLECTIONS = "crowdsecurity/caddy";
             DISABLE_ONLINE_API = "false";
             ENROLL_INSTANCE_NAME = "srv-n2-crowdsec";
             ENROLL_TAGS = "public caddy searxng privatebin";

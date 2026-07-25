@@ -177,7 +177,7 @@
           "type": "json",
           "source": "url",
           "format": "table",
-          "url": "/stats?since=${__range_s}s",
+          "url": "/stats?from=${__from:date:seconds}&to=${__to:date:seconds}",
           "url_options": {
             "method": "GET"
           },
@@ -736,7 +736,7 @@
           "type": "json",
           "source": "url",
           "format": "table",
-          "url": "/alerts?since=${__range_s}s",
+          "url": "/alerts?from=${__from:date:seconds}&to=${__to:date:seconds}",
           "url_options": {
             "method": "GET"
           },
