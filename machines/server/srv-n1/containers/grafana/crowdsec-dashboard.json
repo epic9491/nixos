@@ -1679,7 +1679,7 @@
     {
       "id": 19,
       "type": "stat",
-      "title": "Requests inspected (24h)",
+      "title": "Requests inspected",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -1696,7 +1696,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(increase(cs_appsec_reqs_total{job=\"crowdsec\"}[24h]))",
+          "expr": "sum(increase(cs_appsec_reqs_total{job=\"crowdsec\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -1739,7 +1739,7 @@
     {
       "id": 20,
       "type": "stat",
-      "title": "Requests blocked (24h)",
+      "title": "Requests blocked",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -1756,7 +1756,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(increase(cs_appsec_block_total{job=\"crowdsec\"}[24h]))",
+          "expr": "sum(increase(cs_appsec_block_total{job=\"crowdsec\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -2761,7 +2761,7 @@
     {
       "id": 34,
       "type": "stat",
-      "title": "Empty decision pulls (24h)",
+      "title": "Empty decision pulls",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -2778,7 +2778,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(increase(cs_lapi_decisions_ko_total{job=\"crowdsec\"}[24h]))",
+          "expr": "sum(increase(cs_lapi_decisions_ko_total{job=\"crowdsec\"}[$__range]))",
           "refId": "A",
           "instant": true,
           "range": false
