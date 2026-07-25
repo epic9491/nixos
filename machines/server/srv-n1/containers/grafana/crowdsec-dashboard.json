@@ -133,7 +133,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "cs_info",
+          "expr": "cs_info{job=\"crowdsec\"}",
           "refId": "A",
           "legendFormat": "{{version}}",
           "instant": true,
@@ -237,7 +237,7 @@
     {
       "id": 5,
       "type": "stat",
-      "title": "Alerts (24h)",
+      "title": "Alerts",
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
         "uid": "crowdsec-lapi"
@@ -258,7 +258,7 @@
           "type": "json",
           "source": "url",
           "parser": "backend",
-          "url": "/stats",
+          "url": "/stats?since=${__range_s}s",
           "url_options": {
             "method": "GET",
             "data": ""
@@ -267,8 +267,8 @@
           "root_selector": "",
           "columns": [
             {
-              "selector": "alerts_24h",
-              "text": "Alerts (24h)",
+              "selector": "alerts",
+              "text": "Alerts",
               "type": "number"
             }
           ]
@@ -307,7 +307,7 @@
         "graphMode": "none",
         "justifyMode": "auto"
       },
-      "description": "Alerts raised in the last 24h, counted live from the local API (community blocklist excluded)"
+      "description": "Alerts raised in the dashboard time range, counted live from the local API (community blocklist excluded)"
     },
     {
       "id": 6,
@@ -329,7 +329,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(cs_active_decisions)",
+          "expr": "sum(cs_active_decisions{job=\"crowdsec\"})",
           "refId": "A",
           "instant": true,
           "range": false
@@ -390,7 +390,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(cs_active_decisions{origin=\"lists\"})",
+          "expr": "sum(cs_active_decisions{job=\"crowdsec\", origin=\"lists\"})",
           "refId": "A",
           "instant": true,
           "range": false
@@ -451,7 +451,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(cs_active_decisions{origin=\"CAPI\"})",
+          "expr": "sum(cs_active_decisions{job=\"crowdsec\", origin=\"CAPI\"})",
           "refId": "A",
           "instant": true,
           "range": false
@@ -497,8 +497,8 @@
       "type": "stat",
       "title": "Local bans",
       "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "crowdsec-lapi"
       },
       "gridPos": {
         "h": 4,
@@ -508,14 +508,28 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "sum(cs_active_decisions{origin=~\"crowdsec|cscli\"}) or vector(0)",
           "refId": "A",
-          "instant": true,
-          "range": false
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "crowdsec-lapi"
+          },
+          "type": "json",
+          "source": "url",
+          "parser": "backend",
+          "url": "/stats",
+          "url_options": {
+            "method": "GET",
+            "data": ""
+          },
+          "format": "table",
+          "root_selector": "",
+          "columns": [
+            {
+              "selector": "banned_ips",
+              "text": "Local bans",
+              "type": "number"
+            }
+          ]
         }
       ],
       "fieldConfig": {
@@ -551,7 +565,7 @@
         "graphMode": "none",
         "justifyMode": "auto"
       },
-      "description": "Bans issued by this engine's own scenarios"
+      "description": "Unique IPs currently banned by this engine's own scenarios; an IP tripping several scenarios counts once. The Active bans table keeps one row per decision"
     },
     {
       "id": 43,
@@ -834,7 +848,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (origin) (cs_active_decisions)",
+          "expr": "sum by (origin) (cs_active_decisions{job=\"crowdsec\"})",
           "refId": "A",
           "legendFormat": "{{origin}}"
         }
@@ -922,7 +936,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "cs_active_decisions{origin=\"lists\"}",
+          "expr": "cs_active_decisions{job=\"crowdsec\", origin=\"lists\"}",
           "refId": "A",
           "instant": true,
           "range": false,
@@ -1050,7 +1064,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "cs_active_decisions{origin=\"CAPI\"}",
+          "expr": "cs_active_decisions{job=\"crowdsec\", origin=\"CAPI\"}",
           "refId": "A",
           "instant": true,
           "range": false,
@@ -1190,7 +1204,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "topk(15, cs_alerts)",
+          "expr": "topk(15, cs_alerts{job=\"crowdsec\"})",
           "refId": "A",
           "instant": true,
           "range": false,
@@ -1256,7 +1270,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(clamp_min(delta(cs_alerts[$__rate_interval]), 0))",
+          "expr": "sum(clamp_min(delta(cs_alerts{job=\"crowdsec\"}[$__rate_interval]), 0))",
           "refId": "A",
           "legendFormat": "alerts"
         }
@@ -1344,7 +1358,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (reason) (clamp_min(delta(cs_alerts[$__rate_interval]), 0)) > 0",
+          "expr": "sum by (reason) (clamp_min(delta(cs_alerts{job=\"crowdsec\"}[$__rate_interval]), 0)) > 0",
           "refId": "A",
           "legendFormat": "{{reason}}"
         }
@@ -1414,7 +1428,7 @@
     {
       "id": 45,
       "type": "table",
-      "title": "Recent alerts (24h)",
+      "title": "Recent alerts",
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
         "uid": "crowdsec-lapi"
@@ -1435,7 +1449,7 @@
           "type": "json",
           "source": "url",
           "parser": "backend",
-          "url": "/alerts",
+          "url": "/alerts?since=${__range_s}s",
           "url_options": {
             "method": "GET",
             "data": ""
@@ -1647,7 +1661,7 @@
           }
         ]
       },
-      "description": "Alerts raised in the last 24h, live from the local API, with the request path that triggered them"
+      "description": "Alerts raised in the dashboard time range, live from the local API, with the request path that triggered them"
     },
     {
       "id": 18,
@@ -1682,7 +1696,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(increase(cs_appsec_reqs_total[24h]))",
+          "expr": "sum(increase(cs_appsec_reqs_total{job=\"crowdsec\"}[24h]))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -1742,7 +1756,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(increase(cs_appsec_block_total[24h]))",
+          "expr": "sum(increase(cs_appsec_block_total{job=\"crowdsec\"}[24h]))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -1802,7 +1816,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "histogram_quantile(0.95, sum by (le) (rate(cs_appsec_inband_parsing_time_seconds_bucket[$__range])))",
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(cs_appsec_inband_parsing_time_seconds_bucket{job=\"crowdsec\"}[$__range])))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -1863,7 +1877,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(cs_appsec_reqs_total[$__rate_interval]))",
+          "expr": "sum(rate(cs_appsec_reqs_total{job=\"crowdsec\"}[$__rate_interval]))",
           "refId": "A",
           "legendFormat": "inspected"
         },
@@ -1872,7 +1886,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(cs_appsec_block_total[$__rate_interval]))",
+          "expr": "sum(rate(cs_appsec_block_total{job=\"crowdsec\"}[$__rate_interval]))",
           "refId": "B",
           "legendFormat": "blocked"
         }
@@ -1959,7 +1973,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (rule_name, type) (cs_appsec_rule_hits)",
+          "expr": "sum by (rule_name, type) (cs_appsec_rule_hits{job=\"crowdsec\"})",
           "refId": "A",
           "instant": true,
           "range": false,
@@ -2099,7 +2113,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (source) (rate(cs_filesource_hits_total[$__rate_interval]))",
+          "expr": "sum by (source) (rate(cs_filesource_hits_total{job=\"crowdsec\"}[$__rate_interval]))",
           "refId": "A",
           "legendFormat": "{{source}}"
         }
@@ -2186,7 +2200,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(cs_parser_hits_ok_total[$__rate_interval]))",
+          "expr": "sum(rate(cs_parser_hits_ok_total{job=\"crowdsec\"}[$__rate_interval]))",
           "refId": "A",
           "legendFormat": "parsed"
         },
@@ -2195,7 +2209,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(cs_parser_hits_total[$__rate_interval])) - sum(rate(cs_parser_hits_ok_total[$__rate_interval]))",
+          "expr": "sum(rate(cs_parser_hits_total{job=\"crowdsec\"}[$__rate_interval])) - sum(rate(cs_parser_hits_ok_total{job=\"crowdsec\"}[$__rate_interval]))",
           "refId": "B",
           "legendFormat": "unparsed"
         }
@@ -2282,7 +2296,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (name, reason) (rate(cs_node_wl_hits_total[$__rate_interval]))",
+          "expr": "sum by (name, reason) (rate(cs_node_wl_hits_total{job=\"crowdsec\"}[$__rate_interval]))",
           "refId": "A",
           "legendFormat": "{{name}}: {{reason}}"
         }
@@ -2383,7 +2397,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (name) (cs_buckets)",
+          "expr": "sum by (name) (cs_buckets{job=\"crowdsec\"})",
           "refId": "A",
           "legendFormat": "{{name}}"
         }
@@ -2471,7 +2485,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(cs_bucket_instantiation_total[$__rate_interval]))",
+          "expr": "sum(rate(cs_bucket_instantiation_total{job=\"crowdsec\"}[$__rate_interval]))",
           "refId": "A",
           "legendFormat": "created"
         },
@@ -2480,7 +2494,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(cs_bucket_poured_total[$__rate_interval]))",
+          "expr": "sum(rate(cs_bucket_poured_total{job=\"crowdsec\"}[$__rate_interval]))",
           "refId": "B",
           "legendFormat": "events poured"
         },
@@ -2489,7 +2503,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(rate(cs_bucket_underflowed_total[$__rate_interval]))",
+          "expr": "sum(rate(cs_bucket_underflowed_total{job=\"crowdsec\"}[$__rate_interval]))",
           "refId": "C",
           "legendFormat": "expired without alert"
         }
@@ -2589,7 +2603,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum by (bouncer) (rate(cs_lapi_bouncer_requests_total[$__rate_interval]))",
+          "expr": "sum by (bouncer) (rate(cs_lapi_bouncer_requests_total{job=\"crowdsec\"}[$__rate_interval]))",
           "refId": "A",
           "legendFormat": "{{bouncer}}"
         }
@@ -2677,7 +2691,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "histogram_quantile(0.95, sum by (le, endpoint) (rate(cs_lapi_request_duration_seconds_bucket[$__rate_interval])))",
+          "expr": "histogram_quantile(0.95, sum by (le, endpoint) (rate(cs_lapi_request_duration_seconds_bucket{job=\"crowdsec\"}[$__rate_interval])))",
           "refId": "A",
           "legendFormat": "{{endpoint}}"
         }
@@ -2764,7 +2778,7 @@
             "type": "prometheus",
             "uid": "prometheus"
           },
-          "expr": "sum(increase(cs_lapi_decisions_ko_total[24h]))",
+          "expr": "sum(increase(cs_lapi_decisions_ko_total{job=\"crowdsec\"}[24h]))",
           "refId": "A",
           "instant": true,
           "range": false
@@ -2804,206 +2818,6 @@
         "justifyMode": "auto"
       },
       "description": "Bouncer decision pulls that returned no result; normal when nothing changed"
-    },
-    {
-      "id": 35,
-      "type": "stat",
-      "title": "PAPI last pull",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 73
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "cs_papi_last_pull_timestamp * 1000",
-          "refId": "A",
-          "instant": true,
-          "range": false
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [
-            {
-              "type": "value",
-              "options": {
-                "0": {
-                  "text": "Never",
-                  "index": 0,
-                  "color": "text"
-                }
-              }
-            }
-          ],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "text",
-                "value": null
-              }
-            ]
-          },
-          "unit": "dateTimeFromNow"
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "none",
-        "graphMode": "none",
-        "justifyMode": "auto"
-      },
-      "description": "Polling API delivers centrally-managed decisions; Never is expected without a console enrollment that pushes them"
-    },
-    {
-      "id": 36,
-      "type": "stat",
-      "title": "PAPI poll errors",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 16,
-        "y": 77
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "cs_papi_poll_errors_total",
-          "refId": "A",
-          "instant": true,
-          "range": false
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          },
-          "decimals": 0
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto"
-      }
-    },
-    {
-      "id": 37,
-      "type": "stat",
-      "title": "PAPI invalid orders",
-      "datasource": {
-        "type": "prometheus",
-        "uid": "prometheus"
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 77
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "expr": "cs_papi_invalid_orders_received_total",
-          "refId": "A",
-          "instant": true,
-          "range": false
-        }
-      ],
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          },
-          "decimals": 0
-        },
-        "overrides": []
-      },
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "orientation": "auto",
-        "textMode": "auto",
-        "colorMode": "value",
-        "graphMode": "none",
-        "justifyMode": "auto"
-      }
     },
     {
       "id": 38,

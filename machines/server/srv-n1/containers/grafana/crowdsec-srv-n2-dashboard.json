@@ -159,7 +159,8 @@
     },
     {
       "type": "stat",
-      "title": "Alerts (24h)",
+      "title": "Alerts",
+      "description": "Alerts raised in the dashboard time range, counted live from the local API (community blocklist excluded).",
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
         "uid": "crowdsec-lapi-srv-n2"
@@ -176,15 +177,15 @@
           "type": "json",
           "source": "url",
           "format": "table",
-          "url": "/stats",
+          "url": "/stats?since=${__range_s}s",
           "url_options": {
             "method": "GET"
           },
           "root_selector": "",
           "columns": [
             {
-              "selector": "alerts_24h",
-              "text": "alerts_24h",
+              "selector": "alerts",
+              "text": "alerts",
               "type": "number"
             }
           ]
@@ -718,7 +719,7 @@
     },
     {
       "type": "table",
-      "title": "Recent alerts (24h)",
+      "title": "Recent alerts",
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
         "uid": "crowdsec-lapi-srv-n2"
@@ -735,7 +736,7 @@
           "type": "json",
           "source": "url",
           "format": "table",
-          "url": "/alerts",
+          "url": "/alerts?since=${__range_s}s",
           "url_options": {
             "method": "GET"
           },
@@ -797,133 +798,6 @@
           }
         }
       }
-    },
-    {
-      "type": "row",
-      "title": "AppSec / WAF",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 50
-      },
-      "collapsed": true,
-      "panels": [
-        {
-          "type": "stat",
-          "title": "Requests inspected (24h)",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "gridPos": {
-            "h": 4,
-            "w": 6,
-            "x": 0,
-            "y": 51
-          },
-          "targets": [
-            {
-              "refId": "A",
-              "expr": "sum(increase(cs_appsec_reqs_total{job=\"crowdsec-srv-n2\"}[24h])) or vector(0)"
-            }
-          ],
-          "options": {
-            "colorMode": "none",
-            "graphMode": "area",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ]
-            }
-          }
-        },
-        {
-          "type": "stat",
-          "title": "Requests blocked (24h)",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "gridPos": {
-            "h": 4,
-            "w": 6,
-            "x": 6,
-            "y": 51
-          },
-          "targets": [
-            {
-              "refId": "A",
-              "expr": "sum(increase(cs_appsec_block_total{job=\"crowdsec-srv-n2\"}[24h])) or vector(0)"
-            }
-          ],
-          "options": {
-            "colorMode": "value",
-            "graphMode": "area",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ]
-            }
-          }
-        },
-        {
-          "type": "timeseries",
-          "title": "AppSec activity",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "gridPos": {
-            "h": 7,
-            "w": 12,
-            "x": 12,
-            "y": 51
-          },
-          "targets": [
-            {
-              "refId": "A",
-              "expr": "sum(rate(cs_appsec_reqs_total{job=\"crowdsec-srv-n2\"}[$__rate_interval]))",
-              "legendFormat": "inspected"
-            },
-            {
-              "refId": "B",
-              "expr": "sum(rate(cs_appsec_block_total{job=\"crowdsec-srv-n2\"}[$__rate_interval]))",
-              "legendFormat": "blocked"
-            }
-          ],
-          "fieldConfig": {
-            "defaults": {
-              "unit": "reqps",
-              "custom": {
-                "fillOpacity": 10
-              }
-            }
-          }
-        },
-        {
-          "type": "table",
-          "title": "AppSec rule hits",
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus"
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 24,
-            "x": 0,
-            "y": 55
-          },
-          "targets": [
-            {
-              "refId": "A",
-              "expr": "sum by (rule_name, type) (cs_appsec_rule_hits{job=\"crowdsec-srv-n2\"})",
-              "format": "table",
-              "instant": true
-            }
-          ]
-        }
-      ]
     },
     {
       "type": "row",
