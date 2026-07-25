@@ -16,6 +16,6 @@
     ./uptime-kuma.nix
     ./searxng.nix
     ./obsidian.nix
-    ./owntracks.nix
+   # ./owntracks.nix
   ];
 }

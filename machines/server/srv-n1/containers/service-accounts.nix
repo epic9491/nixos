@@ -16,7 +16,7 @@ let
     "caddy"
     "searxng"
     "obsidian"
-    "owntracks"
+  #  "owntracks"
   ];
 in
 {
