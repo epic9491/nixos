@@ -7,13 +7,15 @@ import time
 import urllib.error
 import urllib.request
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from urllib.parse import parse_qs, urlparse
 
 CREDENTIALS_PATH = os.environ.get("LAPI_CREDENTIALS_PATH", "/etc/crowdsec/local_api_credentials.yaml")
 LAPI_URL = os.environ.get("LAPI_URL", "")
 LISTEN_PORT = int(os.environ.get("LISTEN_PORT", "6061"))
 CACHE_TTL = int(os.environ.get("CACHE_TTL", "30"))
 ALERTS_SINCE = os.environ.get("ALERTS_SINCE", "24h")
-ALERTS_LIMIT = int(os.environ.get("ALERTS_LIMIT", "1000"))
+ALERTS_LIMIT = int(os.environ.get("ALERTS_LIMIT", "5000"))
+SINCE_RE = re.compile(r"(?:\d+(?:\.\d+)?(?:ns|us|µs|ms|s|m|h))+")
 
 _lock = threading.Lock()
 _token = None
@@ -114,9 +116,9 @@ def flatten_bans():
     return rows
 
 
-def flatten_alerts():
+def flatten_alerts(since):
     rows = []
-    for alert in lapi_get(f"/v1/alerts?since={ALERTS_SINCE}&include_capi=false&limit={ALERTS_LIMIT}") or []:
+    for alert in lapi_get(f"/v1/alerts?since={since}&include_capi=false&limit={ALERTS_LIMIT}") or []:
         source = alert.get("source") or {}
         last_path, paths = event_paths(alert)
         country = source.get("cn", "")
@@ -150,16 +152,22 @@ def cached(name, fn):
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
-        route = self.path.split("?")[0].rstrip("/")
+        parsed = urlparse(self.path)
+        route = parsed.path.rstrip("/")
+        since = (parse_qs(parsed.query).get("since") or [ALERTS_SINCE])[0]
+        if not SINCE_RE.fullmatch(since):
+            since = ALERTS_SINCE
         try:
             if route == "/bans":
                 body = json.dumps(cached("bans", flatten_bans))
             elif route == "/alerts":
-                body = json.dumps(cached("alerts", flatten_alerts))
+                body = json.dumps(cached("alerts:" + since, lambda: flatten_alerts(since)))
             elif route == "/stats":
+                bans = cached("bans", flatten_bans)
                 body = json.dumps({
-                    "active_bans": len(cached("bans", flatten_bans)),
-                    "alerts_24h": len(cached("alerts", flatten_alerts)),
+                    "active_bans": len(bans),
+                    "banned_ips": len({row["ip"] for row in bans}),
+                    "alerts": len(cached("alerts:" + since, lambda: flatten_alerts(since))),
                 })
             elif route == "/healthz":
                 lapi_get("/v1/heartbeat")
