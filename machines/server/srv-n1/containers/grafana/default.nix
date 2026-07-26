@@ -22,6 +22,22 @@
                 labels:
                   host: srv-n2
 
+          - job_name: anubis-libresearch
+            static_configs:
+              - targets:
+                  - 100.69.69.215:9084
+                labels:
+                  host: srv-n2
+                  site: libresearch.space
+
+          - job_name: anubis-pasted
+            static_configs:
+              - targets:
+                  - 100.69.69.215:9085
+                labels:
+                  host: srv-n2
+                  site: pasted.space
+
           - job_name: harmonia
             static_configs:
               - targets:
