@@ -571,7 +571,7 @@
     {
       "id": 10,
       "type": "row",
-      "title": "Active bans",
+      "title": "Anubis — proof of work",
       "collapsed": false,
       "gridPos": {
         "h": 1,
@@ -583,6 +583,766 @@
     },
     {
       "id": 11,
+      "type": "stat",
+      "title": "Requests proxied",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 6
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum(increase(anubis_proxied_requests_total{job=~\"anubis-.*\"}[$__range]))",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "description": "Reached SearXNG or PrivateBin; challenged requests are not counted"
+    },
+    {
+      "id": 12,
+      "type": "stat",
+      "title": "Challenges issued",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 6
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum(increase(anubis_challenges_issued{job=~\"anubis-.*\"}[$__range]))",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      }
+    },
+    {
+      "id": 13,
+      "type": "stat",
+      "title": "Solve rate",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 12,
+        "y": 6
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum(increase(anubis_challenges_validated{job=~\"anubis-.*\"}[$__range])) / sum(increase(anubis_challenges_issued{job=~\"anubis-.*\"}[$__range]))",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "description": "Low is the point — crawlers abandon the challenge, humans do not"
+    },
+    {
+      "id": 14,
+      "type": "stat",
+      "title": "Median solve time",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 6
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "histogram_quantile(0.5, sum by (le) (rate(anubis_time_taken_bucket{job=~\"anubis-.*\"}[$__range])))",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "none",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "description": "Browser time to compute the proof of work"
+    },
+    {
+      "id": 15,
+      "type": "timeseries",
+      "title": "Requests proxied by site",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 10
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum by (site) (rate(anubis_proxied_requests_total{job=~\"anubis-.*\"}[$__rate_interval]))",
+          "refId": "A",
+          "legendFormat": "{{site}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "axisPlacement": "auto",
+            "axisBorderShow": false,
+            "barAlignment": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "unit": "reqps",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        }
+      }
+    },
+    {
+      "id": 16,
+      "type": "timeseries",
+      "title": "Policy decisions",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 10
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum by (action) (rate(anubis_policy_results{job=~\"anubis-.*\"}[$__rate_interval]))",
+          "refId": "A",
+          "legendFormat": "{{action}}"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "fillOpacity": 25,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "axisPlacement": "auto",
+            "axisBorderShow": false,
+            "barAlignment": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "stacking": {
+              "mode": "normal",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "unit": "reqps",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        }
+      },
+      "description": "WEIGH scores a client without deciding; DENY refuses outright"
+    },
+    {
+      "id": 17,
+      "type": "timeseries",
+      "title": "Challenges issued vs solved",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 10
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum by (site) (rate(anubis_challenges_issued{job=~\"anubis-.*\"}[$__rate_interval]))",
+          "refId": "A",
+          "legendFormat": "{{site}} issued"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum by (site) (rate(anubis_challenges_validated{job=~\"anubis-.*\"}[$__rate_interval]))",
+          "refId": "B",
+          "legendFormat": "{{site}} solved"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "axisPlacement": "auto",
+            "axisBorderShow": false,
+            "barAlignment": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "unit": "reqps",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        }
+      }
+    },
+    {
+      "id": 18,
+      "type": "timeseries",
+      "title": "Browser solve time",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "histogram_quantile(0.5, sum by (le) (rate(anubis_time_taken_bucket{job=~\"anubis-.*\"}[$__rate_interval])))",
+          "refId": "A",
+          "legendFormat": "p50"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "histogram_quantile(0.95, sum by (le) (rate(anubis_time_taken_bucket{job=~\"anubis-.*\"}[$__rate_interval])))",
+          "refId": "B",
+          "legendFormat": "p95"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "histogram_quantile(0.99, sum by (le) (rate(anubis_time_taken_bucket{job=~\"anubis-.*\"}[$__rate_interval])))",
+          "refId": "C",
+          "legendFormat": "p99"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "drawStyle": "line",
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "spanNulls": false,
+            "showPoints": "never",
+            "pointSize": 5,
+            "axisPlacement": "auto",
+            "axisBorderShow": false,
+            "barAlignment": 0,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "insertNulls": false,
+            "stacking": {
+              "mode": "none",
+              "group": "A"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms",
+          "min": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "tooltip": {
+          "mode": "multi",
+          "sort": "desc"
+        },
+        "legend": {
+          "showLegend": true,
+          "displayMode": "list",
+          "placement": "bottom",
+          "calcs": []
+        }
+      }
+    },
+    {
+      "id": 19,
+      "type": "table",
+      "title": "Policy rule hits",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum by (site, rule, action) (anubis_policy_results{job=~\"anubis-.*\"})",
+          "refId": "A",
+          "instant": true,
+          "range": false,
+          "format": "table"
+        }
+      ],
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "mode": "columns"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "job": true,
+              "instance": true,
+              "host": true,
+              "__name__": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Value": "Count",
+              "site": "Site",
+              "rule": "Rule",
+              "action": "Action"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "Count",
+                "desc": true
+              }
+            ]
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Count"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "gauge",
+                  "mode": "basic",
+                  "valueDisplayMode": "text"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-BlPu"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false,
+          "reducer": [
+            "sum"
+          ],
+          "countRows": false,
+          "fields": ""
+        },
+        "sortBy": []
+      },
+      "description": "libresearch runs the custom policy, pasted runs Anubis defaults"
+    },
+    {
+      "id": 20,
+      "type": "row",
+      "title": "Active bans",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "panels": []
+    },
+    {
+      "id": 21,
       "type": "table",
       "title": "Active bans (local decisions)",
       "datasource": {
@@ -593,7 +1353,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 6
+        "y": 27
       },
       "targets": [
         {
@@ -817,7 +1577,7 @@
       "description": "This engine's own bans; blocklist bans are counted under Decisions"
     },
     {
-      "id": 12,
+      "id": 22,
       "type": "row",
       "title": "Alerts & scenarios",
       "collapsed": false,
@@ -825,12 +1585,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 14
+        "y": 35
       },
       "panels": []
     },
     {
-      "id": 13,
+      "id": 23,
       "type": "bargauge",
       "title": "Alerts by scenario (stored)",
       "datasource": {
@@ -841,7 +1601,7 @@
         "h": 10,
         "w": 10,
         "x": 0,
-        "y": 15
+        "y": 36
       },
       "targets": [
         {
@@ -896,7 +1656,7 @@
       "description": "Stored in the local database, a gauge not a counter"
     },
     {
-      "id": 14,
+      "id": 24,
       "type": "timeseries",
       "title": "Alert activity",
       "datasource": {
@@ -907,7 +1667,7 @@
         "h": 5,
         "w": 14,
         "x": 10,
-        "y": 15
+        "y": 36
       },
       "targets": [
         {
@@ -983,7 +1743,7 @@
       }
     },
     {
-      "id": 15,
+      "id": 25,
       "type": "timeseries",
       "title": "Alert activity by scenario",
       "datasource": {
@@ -994,7 +1754,7 @@
         "h": 5,
         "w": 14,
         "x": 10,
-        "y": 20
+        "y": 41
       },
       "targets": [
         {
@@ -1070,7 +1830,7 @@
       }
     },
     {
-      "id": 16,
+      "id": 26,
       "type": "table",
       "title": "Recent alerts",
       "datasource": {
@@ -1081,7 +1841,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 46
       },
       "targets": [
         {
@@ -1308,7 +2068,7 @@
       "description": "With the request path that triggered them"
     },
     {
-      "id": 17,
+      "id": 27,
       "type": "row",
       "title": "AppSec / WAF",
       "collapsed": false,
@@ -1316,12 +2076,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 55
       },
       "panels": []
     },
     {
-      "id": 18,
+      "id": 28,
       "type": "timeseries",
       "title": "AppSec activity",
       "datasource": {
@@ -1332,7 +2092,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 35
+        "y": 56
       },
       "targets": [
         {
@@ -1417,7 +2177,7 @@
       }
     },
     {
-      "id": 19,
+      "id": 29,
       "type": "timeseries",
       "title": "Inband inspection latency",
       "datasource": {
@@ -1428,7 +2188,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 35
+        "y": 56
       },
       "targets": [
         {
@@ -1523,7 +2283,7 @@
       "description": "Added inline to every public request"
     },
     {
-      "id": 20,
+      "id": 30,
       "type": "table",
       "title": "AppSec rule hits",
       "datasource": {
@@ -1534,7 +2294,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 35
+        "y": 56
       },
       "targets": [
         {
@@ -1650,7 +2410,7 @@
       "description": "inband rules block inline, outofband rules only alert"
     },
     {
-      "id": 21,
+      "id": 31,
       "type": "row",
       "title": "Decisions & blocklists",
       "collapsed": false,
@@ -1658,12 +2418,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 64
       },
       "panels": []
     },
     {
-      "id": 22,
+      "id": 32,
       "type": "stat",
       "title": "Banned IPs (total)",
       "datasource": {
@@ -1674,7 +2434,7 @@
         "h": 4,
         "w": 8,
         "x": 0,
-        "y": 44
+        "y": 65
       },
       "targets": [
         {
@@ -1723,7 +2483,7 @@
       }
     },
     {
-      "id": 23,
+      "id": 33,
       "type": "stat",
       "title": "Blocklist IPs",
       "datasource": {
@@ -1734,7 +2494,7 @@
         "h": 4,
         "w": 8,
         "x": 8,
-        "y": 44
+        "y": 65
       },
       "targets": [
         {
@@ -1784,7 +2544,7 @@
       "description": "From subscribed third-party blocklists"
     },
     {
-      "id": 24,
+      "id": 34,
       "type": "stat",
       "title": "Community bans",
       "datasource": {
@@ -1795,7 +2555,7 @@
         "h": 4,
         "w": 8,
         "x": 16,
-        "y": 44
+        "y": 65
       },
       "targets": [
         {
@@ -1845,7 +2605,7 @@
       "description": "From the CrowdSec community blocklist"
     },
     {
-      "id": 25,
+      "id": 35,
       "type": "timeseries",
       "title": "Active decisions by origin",
       "datasource": {
@@ -1856,7 +2616,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 48
+        "y": 69
       },
       "targets": [
         {
@@ -1933,7 +2693,7 @@
       "description": "crowdsec = local scenarios, CAPI = community blocklist, lists = subscribed blocklists"
     },
     {
-      "id": 26,
+      "id": 36,
       "type": "table",
       "title": "Blocklists",
       "datasource": {
@@ -1944,7 +2704,7 @@
         "h": 9,
         "w": 6,
         "x": 12,
-        "y": 48
+        "y": 69
       },
       "targets": [
         {
@@ -2058,7 +2818,7 @@
       }
     },
     {
-      "id": 27,
+      "id": 37,
       "type": "table",
       "title": "Community blocklist by attack type",
       "datasource": {
@@ -2069,7 +2829,7 @@
         "h": 9,
         "w": 6,
         "x": 18,
-        "y": 48
+        "y": 69
       },
       "targets": [
         {
@@ -2183,7 +2943,7 @@
       }
     },
     {
-      "id": 28,
+      "id": 38,
       "type": "row",
       "title": "Traefik acquisition & parsing",
       "collapsed": false,
@@ -2191,12 +2951,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 57
+        "y": 78
       },
       "panels": []
     },
     {
-      "id": 29,
+      "id": 39,
       "type": "timeseries",
       "title": "Access log lines read",
       "datasource": {
@@ -2207,7 +2967,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 58
+        "y": 79
       },
       "targets": [
         {
@@ -2281,10 +3041,10 @@
           "calcs": []
         }
       },
-      "description": "Closest available proxy for public request volume"
+      "description": "Every request at the edge, including those the bouncer 403s before Anubis sees them"
     },
     {
-      "id": 30,
+      "id": 40,
       "type": "timeseries",
       "title": "Parser results",
       "datasource": {
@@ -2295,7 +3055,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 58
+        "y": 79
       },
       "targets": [
         {
@@ -2381,7 +3141,7 @@
       "description": "Unparsed means the traefik collection no longer matches the log format"
     },
     {
-      "id": 31,
+      "id": 41,
       "type": "timeseries",
       "title": "Whitelisted events",
       "datasource": {
@@ -2392,7 +3152,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 58
+        "y": 79
       },
       "targets": [
         {
@@ -2469,7 +3229,7 @@
       "description": "Events a whitelist dropped; empty until one matches"
     },
     {
-      "id": 32,
+      "id": 42,
       "type": "row",
       "title": "Scenario buckets",
       "collapsed": false,
@@ -2477,12 +3237,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 66
+        "y": 87
       },
       "panels": []
     },
     {
-      "id": 33,
+      "id": 43,
       "type": "timeseries",
       "title": "Live buckets by scenario",
       "datasource": {
@@ -2493,7 +3253,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 67
+        "y": 88
       },
       "targets": [
         {
@@ -2570,7 +3330,7 @@
       "description": "A bucket that overflows raises an alert"
     },
     {
-      "id": 34,
+      "id": 44,
       "type": "timeseries",
       "title": "Bucket lifecycle",
       "datasource": {
@@ -2581,7 +3341,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 67
+        "y": 88
       },
       "targets": [
         {
@@ -2684,7 +3444,7 @@
       }
     },
     {
-      "id": 35,
+      "id": 45,
       "type": "row",
       "title": "Local API & bouncer",
       "collapsed": false,
@@ -2692,12 +3452,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 75
+        "y": 96
       },
       "panels": []
     },
     {
-      "id": 36,
+      "id": 46,
       "type": "timeseries",
       "title": "Bouncer requests",
       "datasource": {
@@ -2708,7 +3468,7 @@
         "h": 8,
         "w": 8,
         "x": 0,
-        "y": 76
+        "y": 97
       },
       "targets": [
         {
@@ -2785,7 +3545,7 @@
       "description": "A flatline means bans stop reaching the edge"
     },
     {
-      "id": 37,
+      "id": 47,
       "type": "timeseries",
       "title": "LAPI requests by route",
       "datasource": {
@@ -2796,7 +3556,7 @@
         "h": 8,
         "w": 8,
         "x": 8,
-        "y": 76
+        "y": 97
       },
       "targets": [
         {
@@ -2872,7 +3632,7 @@
       }
     },
     {
-      "id": 38,
+      "id": 48,
       "type": "timeseries",
       "title": "LAPI p95 latency by endpoint",
       "datasource": {
@@ -2883,7 +3643,7 @@
         "h": 8,
         "w": 8,
         "x": 16,
-        "y": 76
+        "y": 97
       },
       "targets": [
         {
@@ -2959,7 +3719,7 @@
       }
     },
     {
-      "id": 39,
+      "id": 49,
       "type": "row",
       "title": "Engine process",
       "collapsed": false,
@@ -2967,12 +3727,12 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 84
+        "y": 105
       },
       "panels": []
     },
     {
-      "id": 40,
+      "id": 50,
       "type": "timeseries",
       "title": "CPU usage",
       "datasource": {
@@ -2983,7 +3743,7 @@
         "h": 6,
         "w": 6,
         "x": 0,
-        "y": 85
+        "y": 106
       },
       "targets": [
         {
@@ -3059,7 +3819,7 @@
       }
     },
     {
-      "id": 41,
+      "id": 51,
       "type": "timeseries",
       "title": "Resident memory",
       "datasource": {
@@ -3070,7 +3830,7 @@
         "h": 6,
         "w": 6,
         "x": 6,
-        "y": 85
+        "y": 106
       },
       "targets": [
         {
@@ -3146,7 +3906,7 @@
       }
     },
     {
-      "id": 42,
+      "id": 52,
       "type": "timeseries",
       "title": "Goroutines",
       "datasource": {
@@ -3157,7 +3917,7 @@
         "h": 6,
         "w": 6,
         "x": 12,
-        "y": 85
+        "y": 106
       },
       "targets": [
         {
@@ -3233,7 +3993,7 @@
       }
     },
     {
-      "id": 43,
+      "id": 53,
       "type": "timeseries",
       "title": "File descriptor usage",
       "datasource": {
@@ -3244,7 +4004,7 @@
         "h": 6,
         "w": 6,
         "x": 18,
-        "y": 85
+        "y": 106
       },
       "targets": [
         {
@@ -3318,7 +4078,7 @@
           "calcs": []
         }
       },
-      "description": "Share of the process limit"
+      "description": "Open file descriptors as a share of the process limit"
     }
   ],
   "preload": false,
