@@ -50,6 +50,9 @@
         accessLog:
           filePath: /var/log/traefik/access.log
           format: json
+          fields:
+            queryParameters:
+              defaultMode: drop
 
         log:
           level: ERROR
