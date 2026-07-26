@@ -42,7 +42,10 @@
         containers.anubis-libresearch = {
           inherit image;
           autoStart = true;
-          ports = [ "127.0.0.1:8084:8080" ];
+          ports = [
+            "127.0.0.1:8084:8080"
+            "9084:9090"
+          ];
           extraPodmanArgs = [ "--network=pasta:--map-host-loopback,169.254.1.2" ];
           volumes = [ "${policy}:/data/cfg:ro" ];
           environment = {
@@ -59,7 +62,10 @@
         containers.anubis-pasted = {
           inherit image;
           autoStart = true;
-          ports = [ "127.0.0.1:8085:8080" ];
+          ports = [
+            "127.0.0.1:8085:8080"
+            "9085:9090"
+          ];
           extraPodmanArgs = [ "--network=pasta:--map-host-loopback,169.254.1.2" ];
           environment = {
             BIND = ":8080";
@@ -72,4 +78,9 @@
         };
       };
     };
+
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
+    9084
+    9085
+  ];
 }
