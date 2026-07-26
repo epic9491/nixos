@@ -591,7 +591,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
+        "w": 4,
         "x": 0,
         "y": 6
       },
@@ -652,8 +652,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
-        "x": 6,
+        "w": 4,
+        "x": 4,
         "y": 6
       },
       "targets": [
@@ -705,6 +705,67 @@
     {
       "id": 13,
       "type": "stat",
+      "title": "Challenges solved",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 6
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum(increase(anubis_challenges_validated{job=~\"anubis-.*\"}[$__range]))",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "description": "Counts solves observed in this window, not the lifetime counter"
+    },
+    {
+      "id": 14,
+      "type": "stat",
       "title": "Solve rate",
       "datasource": {
         "type": "prometheus",
@@ -712,7 +773,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
+        "w": 4,
         "x": 12,
         "y": 6
       },
@@ -761,10 +822,10 @@
         "graphMode": "none",
         "justifyMode": "auto"
       },
-      "description": "Low is the point — crawlers abandon the challenge, humans do not"
+      "description": "Solved over issued; low is the point — crawlers abandon, humans do not"
     },
     {
-      "id": 14,
+      "id": 15,
       "type": "stat",
       "title": "Median solve time",
       "datasource": {
@@ -773,8 +834,8 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 6,
-        "x": 18,
+        "w": 4,
+        "x": 16,
         "y": 6
       },
       "targets": [
@@ -825,7 +886,68 @@
       "description": "Browser time to compute the proof of work"
     },
     {
-      "id": 15,
+      "id": 16,
+      "type": "stat",
+      "title": "Denied",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "prometheus"
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 20,
+        "y": 6
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "prometheus"
+          },
+          "expr": "sum(increase(anubis_policy_results{job=~\"anubis-.*\", action=\"DENY\"}[$__range]))",
+          "refId": "A",
+          "instant": true,
+          "range": false
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "text",
+                "value": null
+              }
+            ]
+          },
+          "decimals": 0
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "orientation": "auto",
+        "textMode": "auto",
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto"
+      },
+      "description": "Refused outright by policy, no challenge offered"
+    },
+    {
+      "id": 17,
       "type": "timeseries",
       "title": "Requests proxied by site",
       "datasource": {
@@ -912,7 +1034,7 @@
       }
     },
     {
-      "id": 16,
+      "id": 18,
       "type": "timeseries",
       "title": "Policy decisions",
       "datasource": {
@@ -1000,7 +1122,7 @@
       "description": "WEIGH scores a client without deciding; DENY refuses outright"
     },
     {
-      "id": 17,
+      "id": 19,
       "type": "timeseries",
       "title": "Challenges issued vs solved",
       "datasource": {
@@ -1096,7 +1218,7 @@
       }
     },
     {
-      "id": 18,
+      "id": 20,
       "type": "timeseries",
       "title": "Browser solve time",
       "datasource": {
@@ -1201,7 +1323,7 @@
       }
     },
     {
-      "id": 19,
+      "id": 21,
       "type": "table",
       "title": "Policy rule hits",
       "datasource": {
@@ -1329,7 +1451,7 @@
       "description": "libresearch runs the custom policy, pasted runs Anubis defaults"
     },
     {
-      "id": 20,
+      "id": 22,
       "type": "row",
       "title": "Active bans",
       "collapsed": false,
@@ -1342,7 +1464,7 @@
       "panels": []
     },
     {
-      "id": 21,
+      "id": 23,
       "type": "table",
       "title": "Active bans (local decisions)",
       "datasource": {
@@ -1577,7 +1699,7 @@
       "description": "This engine's own bans; blocklist bans are counted under Decisions"
     },
     {
-      "id": 22,
+      "id": 24,
       "type": "row",
       "title": "Alerts & scenarios",
       "collapsed": false,
@@ -1590,7 +1712,7 @@
       "panels": []
     },
     {
-      "id": 23,
+      "id": 25,
       "type": "bargauge",
       "title": "Alerts by scenario (stored)",
       "datasource": {
@@ -1656,7 +1778,7 @@
       "description": "Stored in the local database, a gauge not a counter"
     },
     {
-      "id": 24,
+      "id": 26,
       "type": "timeseries",
       "title": "Alert activity",
       "datasource": {
@@ -1743,7 +1865,7 @@
       }
     },
     {
-      "id": 25,
+      "id": 27,
       "type": "timeseries",
       "title": "Alert activity by scenario",
       "datasource": {
@@ -1830,7 +1952,7 @@
       }
     },
     {
-      "id": 26,
+      "id": 28,
       "type": "table",
       "title": "Recent alerts",
       "datasource": {
@@ -2068,7 +2190,7 @@
       "description": "With the request path that triggered them"
     },
     {
-      "id": 27,
+      "id": 29,
       "type": "row",
       "title": "AppSec / WAF",
       "collapsed": false,
@@ -2081,7 +2203,7 @@
       "panels": []
     },
     {
-      "id": 28,
+      "id": 30,
       "type": "timeseries",
       "title": "AppSec activity",
       "datasource": {
@@ -2177,7 +2299,7 @@
       }
     },
     {
-      "id": 29,
+      "id": 31,
       "type": "timeseries",
       "title": "Inband inspection latency",
       "datasource": {
@@ -2283,7 +2405,7 @@
       "description": "Added inline to every public request"
     },
     {
-      "id": 30,
+      "id": 32,
       "type": "table",
       "title": "AppSec rule hits",
       "datasource": {
@@ -2410,7 +2532,7 @@
       "description": "inband rules block inline, outofband rules only alert"
     },
     {
-      "id": 31,
+      "id": 33,
       "type": "row",
       "title": "Decisions & blocklists",
       "collapsed": false,
@@ -2423,7 +2545,7 @@
       "panels": []
     },
     {
-      "id": 32,
+      "id": 34,
       "type": "stat",
       "title": "Banned IPs (total)",
       "datasource": {
@@ -2483,7 +2605,7 @@
       }
     },
     {
-      "id": 33,
+      "id": 35,
       "type": "stat",
       "title": "Blocklist IPs",
       "datasource": {
@@ -2544,7 +2666,7 @@
       "description": "From subscribed third-party blocklists"
     },
     {
-      "id": 34,
+      "id": 36,
       "type": "stat",
       "title": "Community bans",
       "datasource": {
@@ -2605,7 +2727,7 @@
       "description": "From the CrowdSec community blocklist"
     },
     {
-      "id": 35,
+      "id": 37,
       "type": "timeseries",
       "title": "Active decisions by origin",
       "datasource": {
@@ -2693,7 +2815,7 @@
       "description": "crowdsec = local scenarios, CAPI = community blocklist, lists = subscribed blocklists"
     },
     {
-      "id": 36,
+      "id": 38,
       "type": "table",
       "title": "Blocklists",
       "datasource": {
@@ -2818,7 +2940,7 @@
       }
     },
     {
-      "id": 37,
+      "id": 39,
       "type": "table",
       "title": "Community blocklist by attack type",
       "datasource": {
@@ -2943,7 +3065,7 @@
       }
     },
     {
-      "id": 38,
+      "id": 40,
       "type": "row",
       "title": "Traefik acquisition & parsing",
       "collapsed": false,
@@ -2956,7 +3078,7 @@
       "panels": []
     },
     {
-      "id": 39,
+      "id": 41,
       "type": "timeseries",
       "title": "Access log lines read",
       "datasource": {
@@ -3044,7 +3166,7 @@
       "description": "Every request at the edge, including those the bouncer 403s before Anubis sees them"
     },
     {
-      "id": 40,
+      "id": 42,
       "type": "timeseries",
       "title": "Parser results",
       "datasource": {
@@ -3141,7 +3263,7 @@
       "description": "Unparsed means the traefik collection no longer matches the log format"
     },
     {
-      "id": 41,
+      "id": 43,
       "type": "timeseries",
       "title": "Whitelisted events",
       "datasource": {
@@ -3229,7 +3351,7 @@
       "description": "Events a whitelist dropped; empty until one matches"
     },
     {
-      "id": 42,
+      "id": 44,
       "type": "row",
       "title": "Scenario buckets",
       "collapsed": false,
@@ -3242,7 +3364,7 @@
       "panels": []
     },
     {
-      "id": 43,
+      "id": 45,
       "type": "timeseries",
       "title": "Live buckets by scenario",
       "datasource": {
@@ -3330,7 +3452,7 @@
       "description": "A bucket that overflows raises an alert"
     },
     {
-      "id": 44,
+      "id": 46,
       "type": "timeseries",
       "title": "Bucket lifecycle",
       "datasource": {
@@ -3444,7 +3566,7 @@
       }
     },
     {
-      "id": 45,
+      "id": 47,
       "type": "row",
       "title": "Local API & bouncer",
       "collapsed": false,
@@ -3457,7 +3579,7 @@
       "panels": []
     },
     {
-      "id": 46,
+      "id": 48,
       "type": "timeseries",
       "title": "Bouncer requests",
       "datasource": {
@@ -3545,7 +3667,7 @@
       "description": "A flatline means bans stop reaching the edge"
     },
     {
-      "id": 47,
+      "id": 49,
       "type": "timeseries",
       "title": "LAPI requests by route",
       "datasource": {
@@ -3632,7 +3754,7 @@
       }
     },
     {
-      "id": 48,
+      "id": 50,
       "type": "timeseries",
       "title": "LAPI p95 latency by endpoint",
       "datasource": {
@@ -3719,7 +3841,7 @@
       }
     },
     {
-      "id": 49,
+      "id": 51,
       "type": "row",
       "title": "Engine process",
       "collapsed": false,
@@ -3732,7 +3854,7 @@
       "panels": []
     },
     {
-      "id": 50,
+      "id": 52,
       "type": "timeseries",
       "title": "CPU usage",
       "datasource": {
@@ -3819,7 +3941,7 @@
       }
     },
     {
-      "id": 51,
+      "id": 53,
       "type": "timeseries",
       "title": "Resident memory",
       "datasource": {
@@ -3906,7 +4028,7 @@
       }
     },
     {
-      "id": 52,
+      "id": 54,
       "type": "timeseries",
       "title": "Goroutines",
       "datasource": {
@@ -3993,7 +4115,7 @@
       }
     },
     {
-      "id": 53,
+      "id": 55,
       "type": "timeseries",
       "title": "File descriptor usage",
       "datasource": {
