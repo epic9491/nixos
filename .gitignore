@@ -5,6 +5,3 @@ terra/terraform.tfstate.backup
 terra/.terraform.tfstate.lock.info
 __pycache__/
 *.pyc
-workers/srv-n2-monitor/.wrangler
-workers/srv-n2-monitor/.wrangler/cache
-.wrangler/cache

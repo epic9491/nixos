@@ -1,7 +1,8 @@
 { lib, ... }:
 let
   containerUsers = [
-    "caddy"
+    "traefik"
+    "anubis"
     "searxng"
     "privatebin"
     "crowdsec"
@@ -21,7 +22,7 @@ in
 
   users.groups = lib.genAttrs containerUsers (_: { }) // {
     weblogs.members = [
-      "caddy"
+      "traefik"
       "crowdsec"
     ];
   };
