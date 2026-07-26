@@ -20,7 +20,7 @@ This configuration is specific to one environment. Hostnames, usernames, disk la
 
 ## Repo structure
 
-- `/.forgejo`: CI workflows. Host builds, deploy gating, Renovate, and a daily Cloudflare IP range refresh.
+- `/.forgejo`: CI workflows. Host builds, deploy gating, and Renovate.
 - `/config`: application configuration files (ghostty, niri, waybar, etc.), deployed to `~/.config` through Home Manager.
 - `/home`: Home Manager configurations. `common.nix` is the workstation baseline, `server.nix` the server baseline, plus per-environment and per-shell files.
 - `/machines`: per-host configuration, grouped into `desktop`, `laptop`, `lxc`, and `server`. Each host directory holds its `default.nix`, `hardware-configuration.nix`, disko layout, and any host-specific services. Server hosts define their OCI containers under `containers/`. Retired hosts are preserved on the `legacy` branch.
@@ -28,7 +28,6 @@ This configuration is specific to one environment. Hostnames, usernames, disk la
 - `/pkgs`: package derivations not available in nixpkgs.
 - `/secrets`: sops-encrypted secrets. `/.sops.yaml` at the repo root defines which host keys can decrypt each secret.
 - `/terra`: Terraform + nixos-anywhere provisioning, one file per machine.
-- `/workers`: Cloudflare Workers. `srv-n2-monitor` polls srv-n2 on a five-minute cron.
 
 ## Hosts
 
@@ -40,7 +39,7 @@ Current outputs:
 |---|---|---|
 | `console` | workstation | living-room KDE build with controller support |
 | `srv-n1` | server | primary server; runs most services as rootless Quadlets |
-| `srv-n2` | server | public-facing edge; Caddy, CrowdSec, Cloudflare-restricted ingress |
+| `srv-n2` | server | public-facing edge; Traefik, Anubis, CrowdSec, self-hosted ingress |
 | `git` | server | Forgejo host |
 | `mongoose` | server | qBittorrent host |
 | `pangolin` | server | Pangolin tunnel/ingress node |
@@ -75,8 +74,6 @@ Servers are usually not rebuilt by hand.
 3. A daily gate job (`deploy-gate.yaml`) rebuilds all comin-enabled hosts from `main` and force-pushes the result to `deploy-candidate`.
 4. A follow-up job (`deploy-release.yaml`) promotes `deploy-candidate` to `deploy`.
 5. [comin](https://github.com/nlewo/comin) on each server polls the `deploy` branch, verifies the tip commit is signed by a trusted key (hardware security key or the Forgejo instance signing key, which signs all PR merges), and applies it. Unsigned tips are refused, and `deploy` only ever moves fast-forward.
-
-A scheduled workflow also refreshes the Cloudflare IP allowlist consumed by srv-n2.
 
 ## Build commands
 

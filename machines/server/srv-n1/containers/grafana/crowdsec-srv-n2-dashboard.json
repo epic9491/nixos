@@ -203,7 +203,7 @@
     },
     {
       "type": "stat",
-      "title": "Active captcha decisions",
+      "title": "Active ban decisions",
       "description": "Expected remediation type for this host.",
       "datasource": {
         "type": "prometheus",
@@ -218,7 +218,7 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(cs_active_decisions{job=\"crowdsec-srv-n2\", action=\"captcha\"}) or vector(0)"
+          "expr": "sum(cs_active_decisions{job=\"crowdsec-srv-n2\", action=\"ban\", origin!~\"CAPI|lists\"}) or vector(0)"
         }
       ],
       "options": {
@@ -233,8 +233,8 @@
     },
     {
       "type": "stat",
-      "title": "LOCAL ban decisions (should be 0)",
-      "description": "profiles.yaml emits captcha only. CAPI community bans excluded.",
+      "title": "AppSec blocks",
+      "description": "Requests the WAF refused inline, before they reached SearXNG or PrivateBin.",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -248,29 +248,17 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "sum(cs_active_decisions{job=\"crowdsec-srv-n2\", action=\"ban\", origin!~\"CAPI|lists\"}) or vector(0)"
+          "expr": "sum(rate(cs_appsec_block_total{job=\"crowdsec-srv-n2\"}[$__rate_interval])) or vector(0)"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 1
-              }
-            ]
-          }
+          "unit": "reqps"
         }
       },
       "options": {
-        "colorMode": "background",
-        "graphMode": "none",
+        "colorMode": "value",
+        "graphMode": "area",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -309,7 +297,7 @@
     },
     {
       "type": "row",
-      "title": "Acquisition & the Cloudflare whitelist canary",
+      "title": "Acquisition & parsing",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -319,9 +307,9 @@
       "collapsed": false
     },
     {
-      "type": "stat",
-      "title": "Whitelist ratio (BLIND if ≈100%)",
-      "description": "Lines matched by the Cloudflare whitelist. 0 is healthy; near 1 means trusted_proxies broke and CrowdSec is blind.",
+      "type": "timeseries",
+      "title": "AppSec rule hits",
+      "description": "Which WAF rules are firing. Empty is normal until someone probes the edge.",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -335,40 +323,16 @@
       "targets": [
         {
           "refId": "A",
-          "expr": "(sum(rate(cs_node_wl_hits_ok_total{job=\"crowdsec-srv-n2\", name=\"srv-n2/cloudflare-whitelist\"}[$__rate_interval])) or vector(0)) / clamp_min(sum(rate(cs_filesource_hits_total{job=\"crowdsec-srv-n2\"}[$__rate_interval])), 0.0001)"
+          "expr": "topk(10, sum by (rule_name) (rate(cs_appsec_rule_hits{job=\"crowdsec-srv-n2\"}[$__rate_interval])))",
+          "legendFormat": "{{rule_name}}"
         }
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "percentunit",
-          "min": 0,
-          "max": 1,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 0.5
-              },
-              {
-                "color": "red",
-                "value": 0.9
-              }
-            ]
+          "unit": "reqps",
+          "custom": {
+            "fillOpacity": 10
           }
-        }
-      },
-      "options": {
-        "colorMode": "background",
-        "graphMode": "area",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
         }
       }
     },
@@ -472,7 +436,7 @@
     },
     {
       "type": "row",
-      "title": "Remediation — Cloudflare Turnstile worker",
+      "title": "Remediation — Caddy bouncer",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -484,7 +448,7 @@
     {
       "type": "timeseries",
       "title": "Bouncer decision pulls",
-      "description": "Flat zero means the bouncer is down and captchas never reach the edge.",
+      "description": "Flat zero means the bouncer is down and bans never reach the edge.",
       "datasource": {
         "type": "prometheus",
         "uid": "prometheus"
@@ -544,7 +508,7 @@
     },
     {
       "type": "table",
-      "title": "Active decisions (challenged IPs)",
+      "title": "Active decisions (banned IPs)",
       "datasource": {
         "type": "yesoreyeram-infinity-datasource",
         "uid": "crowdsec-lapi-srv-n2"

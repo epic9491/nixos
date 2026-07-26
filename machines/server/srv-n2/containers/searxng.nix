@@ -16,7 +16,14 @@
           "/var/lib/searxng/config:/etc/searxng:rw"
           "/var/lib/searxng/cache:/var/cache/searxng:rw"
         ];
-        environment.SEARXNG_BASE_URL = "https://libresearch.space/";
+        environment = {
+          SEARXNG_BASE_URL = "https://libresearch.space/";
+          SEARXNG_LIMITER = "true";
+          SEARXNG_PUBLIC_INSTANCE = "true";
+          SEARXNG_VALKEY_URL = "valkey://redis:6379/0";
+          # a solved anubis challenge only replays a GET
+          SEARXNG_METHOD = "GET";
+        };
         environmentFile = [ "/run/secrets/searxng.env" ];
         extraConfig = {
           Container = {

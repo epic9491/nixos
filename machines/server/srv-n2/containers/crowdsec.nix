@@ -1,36 +1,48 @@
-{ lib, ... }:
-let
-  cloudflareIPs = import ../cloudflare-ips.nix;
-in
 {
   home-manager.users.crowdsec =
     { pkgs, ... }:
     let
-      acquis = pkgs.writeText "caddy.yaml" ''
+      acquis = pkgs.writeText "traefik.yaml" ''
         filenames:
-          - /var/log/caddy/access.log
+          - /var/log/traefik/access.log
         labels:
-          type: caddy
+          type: traefik
       '';
 
-      # cloudflare serves a managed challenge, false positives stay solvable
+      appsecAcquis = pkgs.writeText "appsec.yaml" ''
+        source: appsec
+        listen_addr: 0.0.0.0:7422
+        appsec_config: crowdsecurity/appsec-default
+        labels:
+          type: appsec
+      '';
+
+      whitelist = pkgs.writeText "searx-space-whitelist.yaml" ''
+        name: srv-n2/searx-space-checker
+        description: "never ban the searx.space checker"
+        whitelist:
+          reason: "searx.space checker"
+          cidr:
+            - "167.235.158.251/32"
+            - "2a01:4f8:1c1c:8fc2::/64"
+      '';
+
       profiles = pkgs.writeText "profiles.yaml" ''
-        name: cloudflare_captcha
+        name: default_ip_remediation
         filters:
           - Alert.Remediation == true && Alert.GetScope() == "Ip"
         decisions:
-          - type: captcha
+          - type: ban
             duration: 4h
         on_success: break
-      '';
-
-      whitelist = pkgs.writeText "cloudflare-whitelist.yaml" ''
-        name: srv-n2/cloudflare-whitelist
-        description: "Never act on Cloudflare edge addresses"
-        whitelist:
-          reason: "cloudflare edge"
-          cidr:
-        ${lib.concatMapStringsSep "\n" (r: "    - \"${r}\"") cloudflareIPs}
+        ---
+        name: default_range_remediation
+        filters:
+          - Alert.Remediation == true && Alert.GetScope() == "Range"
+        decisions:
+          - type: ban
+            duration: 4h
+        on_success: break
       '';
     in
     {
@@ -46,25 +58,30 @@ in
           autoStart = true;
           network = "crowdsec.network";
           networkAlias = [ "crowdsec" ];
-          ports = [ "6060:6060" ];
+          ports = [
+            "6060:6060"
+            "127.0.0.1:8080:8080"
+            "127.0.0.1:7422:7422"
+          ];
           volumes = [
             "/var/lib/crowdsec/etc:/etc/crowdsec"
             "/var/lib/crowdsec/data:/var/lib/crowdsec/data"
-            "/var/log/caddy:/var/log/caddy:ro"
-            "${acquis}:/etc/crowdsec/acquis.d/caddy.yaml:ro"
+            "/var/log/traefik:/var/log/traefik:ro"
+            "${acquis}:/etc/crowdsec/acquis.d/traefik.yaml:ro"
+            "${appsecAcquis}:/etc/crowdsec/acquis.d/appsec.yaml:ro"
             "${profiles}:/etc/crowdsec/profiles.yaml:ro"
-            "${whitelist}:/etc/crowdsec/parsers/s02-enrich/cloudflare-whitelist.yaml:ro"
+            "${whitelist}:/etc/crowdsec/parsers/s02-enrich/searx-space-whitelist.yaml:ro"
           ];
           environment = {
-            COLLECTIONS = "crowdsecurity/caddy";
+            COLLECTIONS = "crowdsecurity/traefik crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules";
             DISABLE_ONLINE_API = "false";
             ENROLL_INSTANCE_NAME = "srv-n2-crowdsec";
-            ENROLL_TAGS = "public caddy searxng privatebin";
+            ENROLL_TAGS = "public traefik anubis searxng privatebin";
           };
           environmentFile = [ "/run/secrets/crowdsec.env" ];
           extraConfig = {
             Container = {
-              # carries weblogs membership into the userns to read caddy's log
+              # carries weblogs membership into the userns to read traefik's log
               GroupAdd = "keep-groups";
               DropCapability = "ALL";
               AddCapability = [
@@ -118,33 +135,6 @@ in
             };
           };
         };
-
-        containers.crowdsec-cloudflare = {
-          image = "docker.io/crowdsecurity/cloudflare-worker-bouncer:latest@sha256:5a736b48156c0b75f900f0e6cc937b6d74b2015fe8ab240154b7059531637c9a";
-          autoStart = true;
-          network = "crowdsec.network";
-          volumes = [
-            "/run/secrets/crowdsec-cloudflare-worker.yaml:/etc/crowdsec/bouncers/crowdsec-cloudflare-worker-bouncer.yaml:ro"
-          ];
-          extraConfig = {
-            Container = {
-              DropCapability = "ALL";
-              NoNewPrivileges = true;
-              ReadOnly = true;
-            };
-            Service = {
-              Restart = "always";
-              # helps prevent cloudflare ratelimit
-              RestartSec = 120;
-            };
-            Unit = {
-              After = [ "podman-crowdsec.service" ];
-              Wants = [ "podman-crowdsec.service" ];
-              StartLimitIntervalSec = 1800;
-              StartLimitBurst = 3;
-            };
-          };
-        };
       };
     };
 
@@ -155,14 +145,6 @@ in
 
   sops.secrets."crowdsec.env" = {
     sopsFile = ../../../../secrets/srv-n2.crowdsec.env;
-    format = "binary";
-    owner = "crowdsec";
-    group = "crowdsec";
-    mode = "0400";
-  };
-
-  sops.secrets."crowdsec-cloudflare-worker.yaml" = {
-    sopsFile = ../../../../secrets/srv-n2.crowdsec-cloudflare-worker.yaml;
     format = "binary";
     owner = "crowdsec";
     group = "crowdsec";

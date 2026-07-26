@@ -1,7 +1,8 @@
 {
   imports = [
     ./service-accounts.nix
-    ./caddy.nix
+    ./traefik.nix
+    ./anubis.nix
     ./searxng.nix
     ./privatebin.nix
     ./crowdsec.nix
