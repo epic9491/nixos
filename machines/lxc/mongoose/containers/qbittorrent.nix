@@ -1,12 +1,11 @@
 {
   users.manageLingering = true;
-  users.users.gumbo.linger = true;
 
-  systemd.tmpfiles.rules = [
-    "Z /var/lib/qbittorrent 0755 gumbo users -"
-    "Z /mnt/data/downloads 0755 gumbo users -"
-    "Z /mnt/data/seeds 0755 gumbo users -"
-  ];
+  # pinned, the host-side idmap chown on mediapool/p2p depends on it
+  users.users.gumbo = {
+    uid = 1000;
+    linger = true;
+  };
 
   home-manager.users.gumbo = { ... }: {
     services.podman = {
@@ -18,14 +17,20 @@
         userNS = "keep-id";
         volumes = [
           "/var/lib/qbittorrent/config:/config:Z"
-          "/mnt/data/downloads:/downloads:Z"
-          "/mnt/data/seeds:/seeds:Z"
+          "/srv/p2p/downloads:/downloads"
+          "/srv/p2p/seeds:/seeds"
         ];
         environment = {
           PUID = 1000;
-          PGID = 1000;
+          PGID = 100;
           TZ = "America/Chicago";
           WEBUI_PORT = 8080;
+        };
+        extraConfig.Container = {
+          DropCapability = "ALL";
+          NoNewPrivileges = true;
+          # s6 preinit aborts unless /run is owned by the keep-id uid
+          Tmpfs = "/run:uid=1000,gid=100,mode=0755";
         };
         extraConfig.Service.Restart = "always";
       };

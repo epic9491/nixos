@@ -10,12 +10,12 @@
   ];
 
   sops.secrets."wg0.conf" = {
-    sopsFile = ../../../secrets/wg0;
+    sopsFile = ../../../secrets/mongoose.wg0;
     format = "binary";
-    owner = "gumbo";
-    group = "users";
+    owner = "root";
+    group = "root";
     mode = "0400";
   };
 
-  networking.firewall.interfaces.ens18.allowedTCPPorts = [ 8080 ];
+  networking.firewall.interfaces.eth0.allowedTCPPorts = [ 8080 ];
 }

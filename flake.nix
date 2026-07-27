@@ -192,8 +192,8 @@
           deviceModule = ./machines/server/git/default.nix;
         };
 
-        mongoose = mkServer {
-          deviceModule = ./machines/server/mongoose/default.nix;
+        pangolin = mkServer {
+          deviceModule = ./machines/server/pangolin/default.nix;
         };
 
         # k3s-a1 = mkServer {
@@ -216,10 +216,6 @@
         #   deviceModule = ./machines/server/k3s/k3s-s1/default.nix;
         # };
 
-        pangolin = mkServer {
-          deviceModule = ./machines/server/pangolin/default.nix;
-        };
-
         jellyfin = mkServer {
           deviceModule = ./machines/lxc/jellyfin/default.nix;
         };
@@ -230,6 +226,10 @@
 
         second-brain = mkServer {
           deviceModule = ./machines/lxc/second-brain/default.nix;
+        };
+
+        mongoose = mkServer {
+          deviceModule = ./machines/lxc/mongoose/default.nix;
         };
       };
     };

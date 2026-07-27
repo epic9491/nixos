@@ -9,6 +9,7 @@ keys:
   - &pangolin age1n7luzkfg2t0a44uqsz97f2gvjhk3fys908skpd8uzkg98ah3fyashcc5ms
   - &jellyfin age14z74sl0u6el5krjlp335zeg8uaeerlnt9yhxlu6zrjt723m24peqh4r9jc
   - &runner age1aw5yu9dwdv97d0kpwlt949wq0u7t5q3mk3alrvg02rp60w5whu2sz80pgx
+  - &mongoose age18sldhysg5dyzm6fr6c00ef5nsyh5np5rm5tf88lupd5z66zeeppqy8yutj
 
 creation_rules:
   # sops matches top to bottom, secrets always start with "host."
@@ -34,6 +35,9 @@ creation_rules:
   - path_regex: secrets/runner\.
     key_groups:
       - age: [*yubi-master1, *yubi-master2, *yubi-master3, *runner]
+  - path_regex: secrets/mongoose\.
+    key_groups:
+      - age: [*yubi-master1, *yubi-master2, *yubi-master3, *mongoose]
 
   - path_regex: secrets/.*
     key_groups:

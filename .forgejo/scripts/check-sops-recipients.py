@@ -12,9 +12,7 @@ REPO = Path(__file__).resolve().parents[2]
 SECRETS = REPO / "secrets"
 
 # reported, not fatal; drop an entry once its key lands
-WAIVED_HOSTS = {
-    "mongoose": "pending re-provision"
-}
+WAIVED_HOSTS = {}
 
 
 def nix_json(*args):
