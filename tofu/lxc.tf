@@ -3,8 +3,8 @@
 #
 # 1. cp lxc.tf <host>.tf
 # 2. uncomment, replace HOST and the ipv4
-# 3. nix run nixpkgs#opentofu -- init && nix run nixpkgs#opentofu -- apply
-# 4. rm <host>.tf before staging anything
+# 3. tofu init && tofu apply
+# 4. rm <host>.tf before staging
 #
 # Host prep first: nesting on, subuid/subgid width for the idmap, and any
 # kernel module the guest needs loaded on the Proxmox node.
