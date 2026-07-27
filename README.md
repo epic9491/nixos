@@ -11,6 +11,7 @@ This configuration is specific to one environment. Hostnames, usernames, disk la
 - [Repo structure](#repo-structure)
 - [Hosts](#hosts)
 - [Modules](#modules)
+- [Why Quadlets](#why-quadlets)
 - [Deployment pipeline](#deployment-pipeline)
 - [Build commands](#build-commands)
 - [Showcase](#showcase)
@@ -64,6 +65,15 @@ Notes:
 - The user is created with an `initialPassword`, and SSH is key-only. Set a real password on first boot.
 - All builds default to zsh. A bash Home Manager file exists; swap the shell import in `flake.nix`.
 - Desktop environments use their stock display managers (GDM, SDDM, LightDM). Window managers use `tuigreet` with autologin. Niri (with Noctalia Shell) is the most actively maintained environment; GNOME, KDE, and XFCE are stable; Hyprland lags upstream.
+
+## Why Quadlets
+
+Services run as rootless Quadlets, not as native services. Nearly all of them have a NixOS module or a community equivalent, and NixOS has abundant container tooling. I stuck with Quadlets because:
+
+- Declarative by nature. A Quadlet unit is a systemd unit; there is no second mechanism to reconcile.
+- Documentation & familiarity. OCI containers have extensive documentation between Docker/Podman. It's also what I'm most familiar with.
+- Readability. Nix is dense with poor documentation. This can be a problem for someone outside the Nix community. The Quadlet configs are written to be read on their own, so a container definition ports to any environment that runs Podman or Docker.
+- Data. Container state is easier to locate, move, and back up than the state of a native service, or of a NixOS container, which is a wrapper around systemd-nspawn.
 
 ## Deployment pipeline
 
