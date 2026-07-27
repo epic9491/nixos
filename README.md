@@ -41,11 +41,11 @@ Current outputs:
 | `srv-n1` | server | primary server; runs most services as rootless Quadlets |
 | `srv-n2` | server | public-facing edge; Traefik, Anubis, CrowdSec, self-hosted ingress |
 | `git` | server | Forgejo host |
-| `mongoose` | server | qBittorrent host |
 | `pangolin` | server | Pangolin tunnel/ingress node |
 | `jellyfin` | LXC | media server |
 | `runner` | LXC | Forgejo Actions runner and Harmonia binary cache |
 | `second-brain` | LXC | second-brain service, consumed as a flake input |
+| `mongoose` | LXC | qBittorrent behind WireGuard, ZFS dataset passed through from the host |
 
 `erebos` (desktop) and `prometheus` (laptop) are defined but currently commented out, as is a five-node k3s cluster. Anything commented out is not being actively developed or maintained.
 
