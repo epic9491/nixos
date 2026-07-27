@@ -21,16 +21,14 @@
           "/srv/p2p/seeds:/seeds"
         ];
         environment = {
-          PUID = 1000;
-          PGID = 100;
           TZ = "America/Chicago";
           WEBUI_PORT = 8080;
         };
         extraConfig.Container = {
           DropCapability = "ALL";
           NoNewPrivileges = true;
-          # s6 preinit aborts unless /run is owned by the keep-id uid
-          Tmpfs = "/run:uid=1000,gid=100,mode=0755";
+          # s6 preinit needs /run owned by the keep-id uid, only --mount can chown it
+          Mount = "type=tmpfs,destination=/run,chown=true";
         };
         extraConfig.Service.Restart = "always";
       };
