@@ -1,7 +1,8 @@
-terra/.terraform.lock.hcl
-terra/.terraform/
-terra/terraform.tfstate
-terra/terraform.tfstate.backup
-terra/.terraform.tfstate.lock.info
+tofu/.terraform.lock.hcl
+tofu/.terraform/
+tofu/terraform.tfstate
+tofu/terraform.tfstate.backup
+tofu/terraform.tfstate.*
+tofu/.terraform.tfstate.lock.info
 __pycache__/
 *.pyc

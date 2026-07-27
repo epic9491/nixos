@@ -27,7 +27,7 @@ This configuration is specific to one environment. Hostnames, usernames, disk la
 - `/modules`: shared NixOS modules, exposed as options under the `workstation.*` and `server.*` namespaces.
 - `/pkgs`: package derivations not available in nixpkgs.
 - `/secrets`: sops-encrypted secrets. `/.sops.yaml` at the repo root defines which host keys can decrypt each secret.
-- `/terra`: Terraform + nixos-anywhere provisioning, one file per machine.
+- `/tofu`: OpenTofu + nixos-anywhere provisioning. `vm.tf` and `lxc.tf` are templates, copied to a throwaway per-host file for the install and deleted afterwards.
 
 ## Hosts
 
