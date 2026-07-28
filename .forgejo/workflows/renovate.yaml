@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron: 'CRON_TZ=America/Chicago 0 4 * * *'
+    - cron: 'CRON_TZ=America/Chicago 0 */6 * * *'
   workflow_dispatch:
 
 jobs:

@@ -4,7 +4,8 @@
   "nix": { "enabled": true },
   "timezone": "America/Chicago",
   "dependencyDashboard": true,
-  "prConcurrentLimit": 5,
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 0,
   "baseBranchPatterns": ["main"],
   "lockFileMaintenance": {
     "enabled": true,
