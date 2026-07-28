@@ -5,7 +5,7 @@
     services.podman = {
       enable = true;
       containers.mealie = {
-        image = "ghcr.io/mealie-recipes/mealie:latest@sha256:4e1e8d98b883009cb849851857e277109c21db1c2d857ae61e14de894f2169ff";
+        image = "ghcr.io/mealie-recipes/mealie:latest@sha256:36c28f0642fb6c75fae8997a2d55994631b9b4bcffba3016c208fc132a4c1e69";
         autoStart = true;
         ports = [ "127.0.0.1:9000:9000" ];
         volumes = [ "/var/lib/mealie/data:/app/data:Z" ];
