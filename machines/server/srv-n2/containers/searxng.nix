@@ -8,7 +8,7 @@
       networks.searxng = { };
 
       containers.searxng = {
-        image = "docker.io/searxng/searxng:latest@sha256:d0aaeb14880e6e92bde1518fcc7261e995783367d63d95203383607bef9c6516";
+        image = "docker.io/searxng/searxng:latest@sha256:5dd626fecd8127857437b3ba11d9e8d8380dd74d8b3773129ccf68b839eadb85";
         autoStart = true;
         network = "searxng.network";
         ports = [ "127.0.0.1:8082:8080" ];
