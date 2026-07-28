@@ -2,7 +2,7 @@
   home-manager.users.anubis =
     { pkgs, ... }:
     let
-      image = "ghcr.io/techarohq/anubis:v1.26.0@sha256:c23e455dea15bbd90b512f30aeaa45d76bfe492e001339433ce908dee2e311f8";
+      image = "ghcr.io/techarohq/anubis:v1.26.2@sha256:f7af22049b33ce1cdefa903f0920f8306aaf61c10e85c03dda708f264e163d51";
 
       # the searx.space checker runs a plain firefox UA, so it only passes by address
       policy = pkgs.writeTextDir "botPolicies.yaml" ''
