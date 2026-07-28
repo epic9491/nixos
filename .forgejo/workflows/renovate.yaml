@@ -15,5 +15,5 @@ jobs:
           RENOVATE_REPOSITORIES: sensei/nixos
           RENOVATE_ONBOARDING: 'false'
           RENOVATE_GIT_AUTHOR: 'Renovate Bot <renovate@gaialabs.space>'
-          GITHUB_COM_TOKEN: ${{ secrets.RENOVATE_GITHUB_TOKEN }}
+          RENOVATE_GITHUB_COM_TOKEN: ${{ secrets.RENOVATE_GITHUB_TOKEN }}
           LOG_LEVEL: info
