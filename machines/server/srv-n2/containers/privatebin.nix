@@ -19,6 +19,7 @@
         icon = none
         httpwarning = false
         compression = zlib
+        info = "More information on the <a href='https://privatebin.info/'>project page</a>. Maintained with ❤️ at <a href='https://codeberg.org/sensei/nixos'>codeberg.org/sensei/nixos</a>."
 
         [expire]
         default = 1month
