@@ -27,6 +27,16 @@
             - "2a01:4f8:1c1c:8fc2::/64"
       '';
 
+      # dont ban matrix traffic
+      matrixWhitelist = pkgs.writeText "matrix-whitelist.yaml" ''
+        name: srv-n2/matrix-api
+        description: "never ban on matrix client or federation API traffic"
+        whitelist:
+          reason: "matrix api"
+          expression:
+            - "evt.Parsed.request startsWith '/_matrix/'"
+      '';
+
       profiles = pkgs.writeText "profiles.yaml" ''
         name: default_ip_remediation
         filters:
@@ -71,6 +81,7 @@
             "${appsecAcquis}:/etc/crowdsec/acquis.d/appsec.yaml:ro"
             "${profiles}:/etc/crowdsec/profiles.yaml:ro"
             "${whitelist}:/etc/crowdsec/parsers/s02-enrich/searx-space-whitelist.yaml:ro"
+            "${matrixWhitelist}:/etc/crowdsec/parsers/s02-enrich/matrix-whitelist.yaml:ro"
           ];
           environment = {
             COLLECTIONS = "crowdsecurity/traefik crowdsecurity/appsec-virtual-patching crowdsecurity/appsec-generic-rules";
