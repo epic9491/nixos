@@ -6,5 +6,6 @@
     ./searxng.nix
     ./privatebin.nix
     ./crowdsec.nix
+    ./tuwunel.nix
   ];
 }

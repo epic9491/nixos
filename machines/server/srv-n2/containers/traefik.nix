@@ -91,6 +91,11 @@
                 customFrameOptionsValue: SAMEORIGIN
                 contentSecurityPolicy: "${pastedCsp}"
 
+            matrix-ratelimit:
+              rateLimit:
+                average: 50
+                burst: 100
+
           routers:
             libresearch:
               rule: "Host(`libresearch.space`) || Host(`www.libresearch.space`)"
@@ -146,6 +151,7 @@
             "${static}:/etc/traefik/traefik.yml:ro"
             "${dynamic}/routers.yml:/etc/traefik/dynamic/routers.yml:ro"
             "/run/secrets/traefik-crowdsec.yml:/etc/traefik/dynamic/crowdsec.yml:ro"
+            "/run/secrets/traefik-tuwunel.yml:/etc/traefik/dynamic/tuwunel.yml:ro"
             "${bouncer}:/plugins-local/src/github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin:ro"
             "/var/lib/traefik/acme:/acme"
             "/var/log/traefik:/var/log/traefik"
@@ -183,6 +189,14 @@
 
   sops.secrets."traefik-crowdsec.yml" = {
     sopsFile = ../../../../secrets/srv-n2.traefik-crowdsec.yml;
+    format = "binary";
+    owner = "traefik";
+    group = "traefik";
+    mode = "0400";
+  };
+
+  sops.secrets."traefik-tuwunel.yml" = {
+    sopsFile = ../../../../secrets/srv-n2.traefik-tuwunel.yml;
     format = "binary";
     owner = "traefik";
     group = "traefik";

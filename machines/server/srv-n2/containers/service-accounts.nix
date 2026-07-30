@@ -6,6 +6,7 @@ let
     "searxng"
     "privatebin"
     "crowdsec"
+    "tuwunel"
   ];
 in
 {
