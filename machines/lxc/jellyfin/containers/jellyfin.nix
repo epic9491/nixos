@@ -9,7 +9,7 @@
     services.podman = {
       enable = true;
       containers.jellyfin = {
-        image = "docker.io/jellyfin/jellyfin:latest@sha256:aefb67e6a7ff1debdd154a78a7bbb780fd0c873d8639210a7f6a2016ad2b35db";
+        image = "docker.io/jellyfin/jellyfin:10.11@sha256:aefb67e6a7ff1debdd154a78a7bbb780fd0c873d8639210a7f6a2016ad2b35db";
         autoStart = true;
         ports = [ "8096:8096" ];
         volumes = [
