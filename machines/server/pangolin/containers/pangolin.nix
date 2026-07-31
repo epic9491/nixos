@@ -1,7 +1,75 @@
 {
   home-manager.users.pangolin =
-    { ... }:
+    { pkgs, ... }:
     let
+      ratelimit = pkgs.writeText "ratelimit.yml" ''
+        http:
+          middlewares:
+            public-ratelimit:
+              rateLimit:
+                average: 100
+                burst: 200
+      '';
+
+      traefikConfig = pkgs.writeText "traefik_config.yml" ''
+        api:
+          insecure: false
+          dashboard: false
+        providers:
+          http:
+            endpoint: http://pangolin:3001/api/v1/traefik-config
+            pollInterval: 5s
+          file:
+            directory: /rules
+            watch: true
+        experimental:
+          plugins:
+            badger:
+              moduleName: github.com/fosrl/badger
+              version: v1.5.0
+            crowdsec-bouncer-traefik:
+              moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+              version: v1.4.6
+        log:
+          level: INFO
+          format: json
+          maxSize: 100
+          maxBackups: 3
+          maxAge: 3
+          compress: true
+        accessLog:
+          filePath: /var/log/traefik/access.log
+          format: json
+        certificatesResolvers:
+          letsencrypt:
+            acme:
+              httpChallenge:
+                entryPoint: web
+              email: acme@gaialabs.space 
+              storage: /letsencrypt/acme.json
+              caServer: https://acme-v02.api.letsencrypt.org/directory
+        entryPoints:
+          web:
+            address: ':80'
+          websecure:
+            address: ':443'
+            transport:
+              respondingTimeouts:
+                readTimeout: 30m
+            http:
+              middlewares:
+                - public-ratelimit@file
+              tls:
+                certResolver: letsencrypt
+              encodedCharacters:
+                allowEncodedSlash: true
+                allowEncodedHash: true
+        serversTransport:
+          insecureSkipVerify: true
+        ping:
+          entryPoint: web
+      '';
+
       netnsAliases = [
         "pangolin:127.0.0.1"
         "gerbil:127.0.0.1"
@@ -81,6 +149,8 @@
           exec = "--configFile=/etc/traefik/traefik_config.yml";
           volumes = [
             "/var/lib/pangolin/config/traefik:/etc/traefik:ro"
+            "${traefikConfig}:/etc/traefik/traefik_config.yml:ro"
+            "${ratelimit}:/rules/ratelimit.yml:ro"
             "/var/lib/pangolin/config/letsencrypt:/letsencrypt"
             "/var/lib/pangolin/config/traefik/logs:/var/log/traefik"
             "/var/lib/pangolin/config/traefik/rules:/rules"
