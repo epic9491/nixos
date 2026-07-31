@@ -16,8 +16,8 @@
     enable = true;
     gtk4.theme = config.gtk.theme;
     theme = {
-      name = "Graphite-Dark";
-      package = pkgs.graphite-gtk-theme;
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
     };
 
     iconTheme = {

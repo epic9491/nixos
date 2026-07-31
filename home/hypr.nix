@@ -26,8 +26,8 @@
     enable = true;
 
     theme = {
-      name = "Graphite-Dark";
-      package = pkgs.graphite-gtk-theme;
+      name = "Adwaita-dark";
+      package = pkgs.gnome-themes-extra;
     };
 
     iconTheme = {
@@ -47,7 +47,7 @@
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
-      gtk-theme = "Graphite-Dark";
+      gtk-theme = "Adwaita-dark";
       icon-theme = "Papirus";
     };
   };
