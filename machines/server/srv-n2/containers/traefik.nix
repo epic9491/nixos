@@ -96,16 +96,28 @@
                 average: 50
                 burst: 100
 
+            outage-libresearch:
+              errors:
+                status: [ "500-599" ]
+                service: outage
+                query: "/libresearch.html"
+
+            outage-pasted:
+              errors:
+                status: [ "500-599" ]
+                service: outage
+                query: "/pasted.html"
+
           routers:
             libresearch:
               rule: "Host(`libresearch.space`) || Host(`www.libresearch.space`)"
               entryPoints: [ websecure ]
-              middlewares: [ crowdsec, hardening, libresearch-headers ]
+              middlewares: [ crowdsec, hardening, libresearch-headers, outage-libresearch ]
               service: libresearch
             pasted:
               rule: "Host(`pasted.space`) || Host(`www.pasted.space`)"
               entryPoints: [ websecure ]
-              middlewares: [ crowdsec, hardening, pasted-headers ]
+              middlewares: [ crowdsec, hardening, pasted-headers, outage-pasted ]
               service: pasted
 
           services:
@@ -117,6 +129,10 @@
               loadBalancer:
                 servers:
                   - url: "http://169.254.1.2:8085"
+            outage:
+              loadBalancer:
+                servers:
+                  - url: "http://169.254.1.2:8087"
 
         tls:
           options:

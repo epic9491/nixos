@@ -7,5 +7,6 @@
     ./privatebin.nix
     ./crowdsec.nix
     ./tuwunel.nix
+    ./outage.nix
   ];
 }

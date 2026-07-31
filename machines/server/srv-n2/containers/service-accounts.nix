@@ -7,6 +7,7 @@ let
     "privatebin"
     "crowdsec"
     "tuwunel"
+    "outage"
   ];
 in
 {
