@@ -26,8 +26,8 @@
     enable = true;
 
     theme = {
-      name = "Tokyonight-Dark";
-      package = pkgs.tokyonight-gtk-theme;
+      name = "Graphite-Dark";
+      package = pkgs.graphite-gtk-theme;
     };
 
     iconTheme = {
@@ -47,7 +47,7 @@
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
-      gtk-theme = "Tokyonight-Dark";
+      gtk-theme = "Graphite-Dark";
       icon-theme = "Papirus";
     };
   };
