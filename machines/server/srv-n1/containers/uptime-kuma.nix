@@ -5,13 +5,13 @@
     services.podman = {
       enable = true;
       containers.uptime-kuma = {
-        image = "docker.io/louislam/uptime-kuma:1.23.17@sha256:3d632903e6af34139a37f18055c4f1bfd9b7205ae1138f1e5e8940ddc1d176f9";
+        image = "docker.io/louislam/uptime-kuma:2.4.0@sha256:91e963bfda569ba115206e843febb446f473ab525add4e08b2b9e3beffa16985";
         autoStart = true;
         ports = [
-          "127.0.0.1:3001:3001"   # private
-          "127.0.0.1:3002:3001"   # senseii
-          "127.0.0.1:3003:3001"   # libresearch
-          "127.0.0.1:3004:3001"   # pasted
+          "127.0.0.1:3001:3001" # private
+          "127.0.0.1:3002:3001" # senseii
+          "127.0.0.1:3003:3001" # libresearch
+          "127.0.0.1:3004:3001" # pasted
         ];
         volumes = [ "/var/lib/uptime-kuma/data:/app/data:Z" ];
         extraConfig = {
