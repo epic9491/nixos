@@ -39,7 +39,7 @@ in
       inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
       hyprpaper
       fuzzel
-      tokyonight-gtk-theme
+      gnome-themes-extra
       brightnessctl
       pamixer
       grim

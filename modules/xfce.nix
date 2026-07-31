@@ -32,8 +32,8 @@ in
         greeters.gtk = {
           enable = true;
           theme = {
-            name = "Graphite-Dark";
-            package = pkgs.graphite-gtk-theme;
+            name = "Adwaita-dark";
+            package = pkgs.gnome-themes-extra;
           };
           extraConfig = ''
             default-user-image=/usr/share/pixmaps/gumbo-face.png

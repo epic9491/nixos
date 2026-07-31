@@ -24,7 +24,7 @@ in
     services.sysprof.enable = true;
 
     environment.systemPackages = with pkgs; [
-      tokyonight-gtk-theme
+      gnome-themes-extra
       papirus-icon-theme
       rose-pine-cursor
       gnomeExtensions.blur-my-shell

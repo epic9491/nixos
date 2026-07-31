@@ -48,7 +48,7 @@ in
       enable = true;
     };
     environment.systemPackages = with pkgs; [
-      tokyonight-gtk-theme
+      gnome-themes-extra
       rose-pine-cursor
       (pkgs.writeTextDir "share/sddm/themes/breeze/theme.conf.user" ''
         [General]
