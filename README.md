@@ -2,7 +2,9 @@
 
 Flake-based NixOS configurations for a fleet of servers, LXC containers, and workstations, with CI-gated, signature-verified GitOps deployment. Servers track the stable channel (26.05); workstations track unstable. All hosts build as `.#hostname`.
 
-The primary host is **srv-n1**. Its configuration and the security layers behind it are documented at https://codeberg.org/sensei/nixos/wiki/srv-n1
+My primary private server is **srv-n1**. Its configuration and the security layers behind it are documented at https://codeberg.org/sensei/nixos/wiki/srv-n1
+
+My public server is **srv-n2**. It hosts https://libresearch.space and https://pasted.space, as well as a Matrix homeserver. More information on it's configuration can be found at https://codeberg.org/sensei/nixos/wiki/srv-n2
 
 This configuration is specific to one environment. Hostnames, usernames, disk layouts, mounts, and secrets will not transfer directly. Review every file before reusing any part of it.
 
