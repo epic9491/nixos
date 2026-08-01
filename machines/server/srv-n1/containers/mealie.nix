@@ -9,6 +9,7 @@
         autoStart = true;
         ports = [ "127.0.0.1:9000:9000" ];
         volumes = [ "/var/lib/mealie/data:/app/data:Z" ];
+        environmentFile = [ "/run/secrets/mealie.env" ];
         environment = {
           ALLOW_SIGNUP = "false";
           PUID = 1000;
@@ -26,5 +27,13 @@
         };
       };
     };
+  };
+
+  sops.secrets."mealie.env" = {
+    sopsFile = ../../../../secrets/srv-n1.mealie.env;
+    format = "binary";
+    owner = "mealie";
+    group = "mealie";
+    mode = "0400";
   };
 }
