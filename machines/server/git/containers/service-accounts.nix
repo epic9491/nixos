@@ -2,6 +2,8 @@
 let
   containerUsers = [
     "forgejo"
+    "pocket-id"
+    "newt"
   ];
 in
 {
