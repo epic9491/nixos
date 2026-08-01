@@ -151,6 +151,7 @@
             GF_ANALYTICS_CHECK_FOR_UPDATES = "false";
             GF_SECURITY_DISABLE_GRAVATAR = "true";
             GF_USERS_ALLOW_SIGN_UP = "false";
+            GF_AUTH_OAUTH_ALLOW_INSECURE_EMAIL_LOOKUP = "true";
           };
           environmentFile = [ "/run/secrets/grafana.env" ];
           extraConfig = {
