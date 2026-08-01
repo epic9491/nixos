@@ -5,7 +5,7 @@
     services.podman = {
       enable = true;
       containers.uptime-kuma = {
-        image = "docker.io/louislam/uptime-kuma:2.4.0@sha256:91e963bfda569ba115206e843febb446f473ab525add4e08b2b9e3beffa16985";
+        image = "docker.io/louislam/uptime-kuma:2.5.0@sha256:a8610b3b4c38077922ba51b036691e06887d7cefd91fe620fd3d6d23d03dc240";
         autoStart = true;
         ports = [
           "127.0.0.1:3001:3001" # private
