@@ -155,7 +155,7 @@
         enable = true;
 
         containers.traefik = {
-          image = "docker.io/library/traefik:v3.7@sha256:5ab7593ef9bbd1e8964bca81792104130f2d9b814ae12d594cc24b90a09c25cc";
+          image = "docker.io/library/traefik:v3.7@sha256:9c3b91d5fb7770853ca5c1124a23c34bf2d9b47ffaebeab2614cbaf410dcb2ac";
           autoStart = true;
           ports = [
             "80:80"
