@@ -14,6 +14,7 @@
     ./immich.nix
     ./immich-public.nix
     ./uptime-kuma.nix
+    ./anubis.nix
     ./searxng.nix
     ./obsidian.nix
    # ./owntracks.nix

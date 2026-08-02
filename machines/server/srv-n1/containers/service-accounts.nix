@@ -13,6 +13,7 @@ let
     "immich"
     "immich-public"
     "uptime-kuma"
+    "anubis"
     "caddy"
     "searxng"
     "obsidian"
