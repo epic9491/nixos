@@ -4,6 +4,9 @@
     let
       image = "ghcr.io/techarohq/anubis:v1.26.2@sha256:f7af22049b33ce1cdefa903f0920f8306aaf61c10e85c03dda708f264e163d51";
 
+      # srv-n2's apex-scoped cookie collides with the default name
+      cookiePrefix = "anubis-status";
+
       # challenge the page only
       policy = pkgs.writeTextDir "botPolicies.yaml" ''
         bots:
@@ -48,6 +51,7 @@
             BIND = ":8080";
             TARGET = "http://169.254.1.2:3003";
             POLICY_FNAME = "/data/cfg/botPolicies.yaml";
+            COOKIE_PREFIX = cookiePrefix;
             DIFFICULTY = 4;
           };
           extraConfig = hardening;
@@ -63,6 +67,7 @@
             BIND = ":8080";
             TARGET = "http://169.254.1.2:3004";
             POLICY_FNAME = "/data/cfg/botPolicies.yaml";
+            COOKIE_PREFIX = cookiePrefix;
             DIFFICULTY = 4;
           };
           extraConfig = hardening;
