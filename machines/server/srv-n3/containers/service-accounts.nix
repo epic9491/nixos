@@ -4,6 +4,7 @@ let
     "forgejo"
     "pocket-id"
     "newt"
+    "technitium"
   ];
 in
 {

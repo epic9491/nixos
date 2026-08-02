@@ -4,5 +4,6 @@
     ./forgejo.nix
     ./pocket-id.nix
     ./newt.nix
+    ./technitium.nix
   ];
 }
