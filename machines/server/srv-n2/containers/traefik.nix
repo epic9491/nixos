@@ -158,9 +158,9 @@
           image = "docker.io/library/traefik:v3.7@sha256:9c3b91d5fb7770853ca5c1124a23c34bf2d9b47ffaebeab2614cbaf410dcb2ac";
           autoStart = true;
           ports = [
-            "80:80"
-            "443:443"
-            "443:443/udp"
+            "8081:80"
+            "8443:443"
+            "8443:443/udp"
           ];
           extraPodmanArgs = [ "--network=pasta:--map-host-loopback,169.254.1.2" ];
           volumes = [
@@ -186,9 +186,6 @@
       };
     };
 
-  # rootless podman cannot publish 80/443 otherwise
-  boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 80;
-
   services.logrotate.settings."/var/log/traefik/access.log" = {
     size = "50M";
     rotate = 5;
@@ -198,10 +195,27 @@
   };
 
   networking.firewall.allowedTCPPorts = [
-    80
-    443
+    8081
+    8443
   ];
-  networking.firewall.allowedUDPPorts = [ 443 ];
+  networking.firewall.allowedUDPPorts = [ 8443 ];
+
+  networking.firewall.extraCommands = ''
+    iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8081
+    iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8443
+    iptables -t nat -A PREROUTING -p udp --dport 443 -j REDIRECT --to-port 8443
+    ip6tables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8081
+    ip6tables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8443
+    ip6tables -t nat -A PREROUTING -p udp --dport 443 -j REDIRECT --to-port 8443
+  '';
+  networking.firewall.extraStopCommands = ''
+    iptables -t nat -D PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8081 || true
+    iptables -t nat -D PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8443 || true
+    iptables -t nat -D PREROUTING -p udp --dport 443 -j REDIRECT --to-port 8443 || true
+    ip6tables -t nat -D PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8081 || true
+    ip6tables -t nat -D PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8443 || true
+    ip6tables -t nat -D PREROUTING -p udp --dport 443 -j REDIRECT --to-port 8443 || true
+  '';
 
   sops.secrets."traefik-crowdsec.yml" = {
     sopsFile = ../../../../secrets/srv-n2.traefik-crowdsec.yml;
