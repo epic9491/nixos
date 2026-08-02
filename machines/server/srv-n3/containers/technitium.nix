@@ -59,7 +59,9 @@
             "/var/lib/technitium/config:/etc/dns:Z"
             "/var/lib/technitium/logs:/var/log/technitium/dns:Z"
             "/run/secrets/technitium-admin:/run/secrets/admin:ro"
+            "/run/secrets/technitium-sso:/run/secrets/sso:ro"
           ];
+          environmentFile = [ "/run/secrets/technitium.env" ];
           environment = {
             DNS_SERVER_DOMAIN = "dns";
             DNS_SERVER_ADMIN_PASSWORD_FILE = "/run/secrets/admin";
@@ -100,6 +102,20 @@
     };
     "technitium-admin" = {
       sopsFile = ../../../../secrets/srv-n3.technitium-admin;
+      format = "binary";
+      owner = "technitium";
+      group = "technitium";
+      mode = "0400";
+    };
+    "technitium-sso" = {
+      sopsFile = ../../../../secrets/srv-n3.technitium-sso;
+      format = "binary";
+      owner = "technitium";
+      group = "technitium";
+      mode = "0400";
+    };
+    "technitium.env" = {
+      sopsFile = ../../../../secrets/srv-n3.technitium.env;
       format = "binary";
       owner = "technitium";
       group = "technitium";
