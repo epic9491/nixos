@@ -1,0 +1,109 @@
+{
+  home-manager.users.technitium =
+    { pkgs, ... }:
+    let
+      serve = pkgs.writeText "serve.json" (
+        builtins.toJSON {
+          TCP."443".HTTPS = true;
+          Web."\${TS_CERT_DOMAIN}:443".Handlers."/".Proxy = "http://127.0.0.1:5380";
+        }
+      );
+
+      netnsOwner = {
+        After = [ "podman-technitium-ts.service" ];
+        Requires = [ "podman-technitium-ts.service" ];
+        PartOf = [ "podman-technitium-ts.service" ];
+      };
+    in
+    {
+      home.stateVersion = "25.05";
+
+      services.podman = {
+        enable = true;
+
+        containers.technitium-ts = {
+          image = "docker.io/tailscale/tailscale:v1.98.10@sha256:cdf5612ded5be1344f1a704b8c5e53496db97376bb533e5e15f141e48bf60cc0";
+          autoStart = true;
+          devices = [ "/dev/net/tun" ];
+          volumes = [
+            "/var/lib/technitium/tailscale:/var/lib/tailscale:Z"
+            "${serve}:/config/serve.json:ro"
+          ];
+          environment = {
+            TS_HOSTNAME = "dns";
+            TS_STATE_DIR = "/var/lib/tailscale";
+            TS_SERVE_CONFIG = "/config/serve.json";
+            TS_ACCEPT_DNS = "false";
+            TS_USERSPACE = "false";
+          };
+          environmentFile = [ "/run/secrets/technitium-ts.env" ];
+          extraConfig = {
+            Container = {
+              AddCapability = [
+                "NET_ADMIN"
+                "NET_BIND_SERVICE"
+              ];
+              DropCapability = "ALL";
+              NoNewPrivileges = true;
+            };
+            Service.Restart = "always";
+            Unit.Upholds = [ "podman-technitium.service" ];
+          };
+        };
+
+        containers.technitium = {
+          image = "docker.io/technitium/dns-server:15.4.0@sha256:df7d90ef0f7b6fff6916d291a7022cd902290cc31c3141d4158b6c375a641b41";
+          autoStart = true;
+          network = "container:technitium-ts";
+          volumes = [
+            "/var/lib/technitium/config:/etc/dns:Z"
+            "/var/lib/technitium/logs:/var/log/technitium/dns:Z"
+            "/run/secrets/technitium-admin:/run/secrets/admin:ro"
+          ];
+          environment = {
+            DNS_SERVER_DOMAIN = "dns";
+            DNS_SERVER_ADMIN_PASSWORD_FILE = "/run/secrets/admin";
+            DNS_SERVER_FORWARDERS = "dns.quad9.net,cloudflare-dns.com";
+            DNS_SERVER_FORWARDER_PROTOCOL = "Tls";
+            DNS_SERVER_RECURSION = "UseSpecifiedNetworkACL";
+            DNS_SERVER_RECURSION_NETWORK_ACL = "100.64.0.0/10,fd7a:115c:a1e0::/48";
+            DNS_SERVER_ENABLE_BLOCKING = "true";
+            DNS_SERVER_BLOCK_LIST_URLS = builtins.concatStringsSep "," [
+              "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/domains/pro.txt"
+              "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/fake.txt"
+              "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/popupads.txt"
+              "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt"
+            ];
+            DNS_SERVER_LOG_FOLDER_PATH = "/var/log/technitium/dns";
+            DNS_SERVER_WEB_SERVICE_LOCAL_ADDRESSES = "127.0.0.1";
+          };
+          extraConfig = {
+            Container = {
+              AddCapability = "NET_BIND_SERVICE";
+              DropCapability = "ALL";
+              NoNewPrivileges = true;
+            };
+            Service.Restart = "always";
+            Unit = netnsOwner;
+          };
+        };
+      };
+    };
+
+  sops.secrets = {
+    "technitium-ts.env" = {
+      sopsFile = ../../../../secrets/srv-n3.technitium-ts.env;
+      format = "binary";
+      owner = "technitium";
+      group = "technitium";
+      mode = "0400";
+    };
+    "technitium-admin" = {
+      sopsFile = ../../../../secrets/srv-n3.technitium-admin;
+      format = "binary";
+      owner = "technitium";
+      group = "technitium";
+      mode = "0400";
+    };
+  };
+}
