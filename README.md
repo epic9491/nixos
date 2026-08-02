@@ -43,7 +43,7 @@ Current outputs:
 | `console` | workstation | living-room KDE build with controller support |
 | `srv-n1` | server | primary server; runs most services as rootless Quadlets |
 | `srv-n2` | server | public-facing edge; Traefik, Anubis, CrowdSec, self-hosted ingress |
-| `srv-n3` | server | Forgejo and Pocket ID |
+| `srv-n3` | server | Forgejo, Pocket ID, and Technitium DNS server (tailnet only) |
 | `pangolin` | server | Pangolin tunnel/ingress node |
 | `jellyfin` | LXC | media server |
 | `runner` | LXC | Forgejo Actions runner and Harmonia binary cache |
