@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   sops.secrets."git.token" = {
-    sopsFile = ../../../secrets/git.pbs;
+    sopsFile = ../../../secrets/srv-n3.pbs;
     format = "binary";
     owner = "root";
     group = "root";
@@ -9,7 +9,7 @@
   };
 
   sops.secrets."git.key" = {
-    sopsFile = ../../../secrets/git.pbs.key;
+    sopsFile = ../../../secrets/srv-n3.pbs.key;
     format = "binary";
     owner = "root";
     group = "root";

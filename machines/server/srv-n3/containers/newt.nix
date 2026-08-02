@@ -26,7 +26,7 @@
     };
 
   sops.secrets."newt.env" = {
-    sopsFile = ../../../../secrets/git.newt.env;
+    sopsFile = ../../../../secrets/srv-n3.newt.env;
     format = "binary";
     path = "/run/secrets/newt.env";
     owner = "newt";

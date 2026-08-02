@@ -188,8 +188,8 @@
           deviceModule = ./machines/server/srv-n2/default.nix;
         };
 
-        git = mkServer {
-          deviceModule = ./machines/server/git/default.nix;
+        srv-n3 = mkServer {
+          deviceModule = ./machines/server/srv-n3/default.nix;
         };
 
         pangolin = mkServer {

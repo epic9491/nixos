@@ -46,7 +46,7 @@
 
   sops.secrets = {
     "pocket-id.env" = {
-      sopsFile = ../../../../secrets/git.pocket-id.env;
+      sopsFile = ../../../../secrets/srv-n3.pocket-id.env;
       format = "binary";
       path = "/run/secrets/pocket-id.env";
       owner = "pocket-id";
@@ -54,7 +54,7 @@
       mode = "0400";
     };
     "pocket-id.key" = {
-      sopsFile = ../../../../secrets/git.pocket-id.key;
+      sopsFile = ../../../../secrets/srv-n3.pocket-id.key;
       format = "binary";
       path = "/run/secrets/pocket-id.key";
       owner = "pocket-id";

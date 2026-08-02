@@ -1,6 +1,6 @@
 # NixOS configurations
 
-Flake-based NixOS configurations for a fleet of servers, LXC containers, and workstations, with CI-gated, signature-verified GitOps deployment. Servers track the stable channel (26.05); workstations track unstable. All hosts build as `.#hostname`.
+Flake-based NixOS configurations for a fleet of servers, LXC containers, and workstations, with CI-gated, signature-verified GitOps deployment. Servers track the stable channel (26.05); workstations track unstable. Hosts build as `.#hostname`, except `srv-n3`, whose hostname is still `git`.
 
 My primary private server is **srv-n1**. Its configuration and the security layers behind it are documented at https://codeberg.org/sensei/nixos/wiki/srv-n1
 
@@ -43,7 +43,7 @@ Current outputs:
 | `console` | workstation | living-room KDE build with controller support |
 | `srv-n1` | server | primary server; runs most services as rootless Quadlets |
 | `srv-n2` | server | public-facing edge; Traefik, Anubis, CrowdSec, self-hosted ingress |
-| `git` | server | Forgejo host |
+| `srv-n3` | server | Forgejo and Pocket ID |
 | `pangolin` | server | Pangolin tunnel/ingress node |
 | `jellyfin` | LXC | media server |
 | `runner` | LXC | Forgejo Actions runner and Harmonia binary cache |
