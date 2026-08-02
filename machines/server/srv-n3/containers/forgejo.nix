@@ -58,6 +58,8 @@
             FORGEJO__repository_0X2E_signing__SIGNING_NAME = "forgejo-instance";
             FORGEJO__repository_0X2E_signing__SIGNING_EMAIL = "noreply@gaialabs.space";
             FORGEJO__repository_0X2E_signing__MERGES = "always";
+            # signs renovate's platformCommit API writes
+            FORGEJO__repository_0X2E_signing__CRUD_ACTIONS = "pubkey";
 
             FORGEJO__log__LEVEL = "Info";
           };

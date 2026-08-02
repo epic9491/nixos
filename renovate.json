@@ -4,6 +4,7 @@
   "nix": { "enabled": true },
   "timezone": "America/Chicago",
   "dependencyDashboard": true,
+  "platformCommit": true,
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
   "baseBranchPatterns": ["main"],
