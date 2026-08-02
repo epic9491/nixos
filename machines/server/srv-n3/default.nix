@@ -29,6 +29,9 @@
 
   networking.hostName = "git";
 
+  # comin picks the flake output by hostname, which no longer matches
+  services.comin.hostname = "srv-n3";
+
   systemd.targets.network-online.wantedBy = [ "multi-user.target" ];
 
   server = {
