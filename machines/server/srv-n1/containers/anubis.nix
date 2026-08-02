@@ -4,14 +4,23 @@
     let
       image = "ghcr.io/techarohq/anubis:v1.26.2@sha256:f7af22049b33ce1cdefa903f0920f8306aaf61c10e85c03dda708f264e163d51";
 
-      # keep badges open 
+      # challenge the page only
       policy = pkgs.writeTextDir "botPolicies.yaml" ''
         bots:
           - import: (data)/meta/default-config.yaml
 
-          - name: status-badge
+          - name: status-page-assets
             action: ALLOW
-            expression: 'path.startsWith("/api/badge/")'
+            expression:
+              any:
+                - 'path == "/serviceWorker.js"'
+                - 'path == "/favicon.ico"'
+                - 'path == "/icon.svg"'
+                - 'path == "/manifest.json"'
+                - 'path.startsWith("/assets/")'
+                - 'path.startsWith("/upload/")'
+                - 'path.startsWith("/api/status-page/")'
+                - 'path.startsWith("/api/badge/")'
       '';
 
       hardening = {
