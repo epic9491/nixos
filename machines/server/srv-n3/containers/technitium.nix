@@ -65,7 +65,11 @@
           environment = {
             DNS_SERVER_DOMAIN = "dns";
             DNS_SERVER_ADMIN_PASSWORD_FILE = "/run/secrets/admin";
-            DNS_SERVER_FORWARDERS = "dns.quad9.net,cloudflare-dns.com";
+            DNS_SERVER_FORWARDERS = builtins.concatStringsSep "," [
+              "dns.quad9.net (9.9.9.9)"
+              "dns.quad9.net (149.112.112.112)"
+              "cloudflare-dns.com (1.1.1.1)"
+            ];
             DNS_SERVER_FORWARDER_PROTOCOL = "Tls";
             DNS_SERVER_RECURSION = "UseSpecifiedNetworkACL";
             DNS_SERVER_RECURSION_NETWORK_ACL = "100.64.0.0/10,fd7a:115c:a1e0::/48";
