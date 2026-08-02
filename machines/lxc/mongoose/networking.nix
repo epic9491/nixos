@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   networking.wg-quick.interfaces.wg0 = {
     autostart = true;
@@ -18,4 +18,11 @@
   };
 
   networking.firewall.interfaces.eth0.allowedTCPPorts = [ 8080 ];
+
+  server.killswitch = {
+    enable = true;
+    uid = config.users.users.gumbo.uid;
+    vpnInterface = "wg0";
+    lanInterface = "eth0";
+  };
 }

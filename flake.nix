@@ -151,6 +151,7 @@
             ./modules/cache.nix
             ./modules/reboot.nix
             ./modules/dns.nix
+            ./modules/killswitch.nix
             home-managerS.nixosModules.home-manager
           ]
           ++ modules;
