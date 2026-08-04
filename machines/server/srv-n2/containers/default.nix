@@ -8,5 +8,6 @@
     ./crowdsec.nix
     ./tuwunel.nix
     ./outage.nix
+    ./wiki.nix
   ];
 }

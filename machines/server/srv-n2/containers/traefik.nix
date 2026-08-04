@@ -66,6 +66,9 @@
       # privatebin's own policy, plus inline styles for anubis' interstitial, which sends none
       pastedCsp = "default-src 'none'; base-uri 'self'; form-action 'none'; manifest-src 'self'; connect-src * blob:; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; frame-ancestors 'self'; frame-src blob:; img-src 'self' data: blob:; media-src blob:; object-src blob:; sandbox allow-same-origin allow-scripts allow-forms allow-modals allow-downloads";
 
+      # 'wasm-unsafe-eval' and blob workers are anubis' proof of work
+      wikiCsp = "upgrade-insecure-requests; default-src 'none'; base-uri 'self'; form-action 'none'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; manifest-src 'self';";
+
       dynamic = pkgs.writeTextDir "routers.yml" ''
         http:
           middlewares:
@@ -90,6 +93,11 @@
               headers:
                 customFrameOptionsValue: SAMEORIGIN
                 contentSecurityPolicy: "${pastedCsp}"
+
+            wiki-headers:
+              headers:
+                frameDeny: true
+                contentSecurityPolicy: "${wikiCsp}"
 
             matrix-ratelimit:
               rateLimit:
@@ -168,6 +176,7 @@
             "${dynamic}/routers.yml:/etc/traefik/dynamic/routers.yml:ro"
             "/run/secrets/traefik-crowdsec.yml:/etc/traefik/dynamic/crowdsec.yml:ro"
             "/run/secrets/traefik-tuwunel.yml:/etc/traefik/dynamic/tuwunel.yml:ro"
+            "/run/secrets/traefik-wiki.yml:/etc/traefik/dynamic/wiki.yml:ro"
             "${bouncer}:/plugins-local/src/github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin:ro"
             "/var/lib/traefik/acme:/acme"
             "/var/log/traefik:/var/log/traefik"
@@ -227,6 +236,14 @@
 
   sops.secrets."traefik-tuwunel.yml" = {
     sopsFile = ../../../../secrets/srv-n2.traefik-tuwunel.yml;
+    format = "binary";
+    owner = "traefik";
+    group = "traefik";
+    mode = "0400";
+  };
+
+  sops.secrets."traefik-wiki.yml" = {
+    sopsFile = ../../../../secrets/srv-n2.traefik-wiki.yml;
     format = "binary";
     owner = "traefik";
     group = "traefik";

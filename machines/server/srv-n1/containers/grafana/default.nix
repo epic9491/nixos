@@ -38,6 +38,14 @@
                   host: srv-n2
                   site: pasted.space
 
+          - job_name: anubis-wiki
+            static_configs:
+              - targets:
+                  - 100.69.69.215:9089
+                labels:
+                  host: srv-n2
+                  site: wiki
+
           - job_name: harmonia
             static_configs:
               - targets:

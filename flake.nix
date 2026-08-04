@@ -45,6 +45,9 @@
 
     second-brain.url = "git+https://git.zorse-ruffe.ts.net/sensei/second-brain";
     second-brain.inputs.nixpkgs.follows = "nixpkgs-stable";
+
+    wiki.url = "git+https://git.zorse-ruffe.ts.net/sensei/wiki";
+    wiki.inputs.nixpkgs.follows = "nixpkgs-stable";
   };
 
   outputs =
