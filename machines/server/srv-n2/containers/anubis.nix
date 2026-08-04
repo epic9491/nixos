@@ -5,7 +5,7 @@
       image = "ghcr.io/techarohq/anubis:v1.26.2@sha256:f7af22049b33ce1cdefa903f0920f8306aaf61c10e85c03dda708f264e163d51";
 
       # the searx.space checker runs a plain firefox UA, so it only passes by address
-      policy = pkgs.writeTextDir "botPolicies.yaml" ''
+      libresearchPolicy = pkgs.writeTextDir "botPolicies.yaml" ''
         bots:
           - import: (data)/meta/default-config.yaml
 
@@ -22,6 +22,20 @@
           - name: search
             action: CHALLENGE
             path_regex: ^/search
+      '';
+
+      wikiPolicy = pkgs.writeTextDir "botPolicies.yaml" ''
+        bots:
+          - import: (data)/meta/default-config.yaml
+
+          # makes sure link-previews arent blocked
+          - name: link-previews
+            action: ALLOW
+            user_agent_regex: (LinkedInBot|Twitterbot|Slackbot|Discordbot|facebookexternalhit|Mastodon)
+
+          - name: feeds-and-meta
+            action: ALLOW
+            path_regex: ^/(index\.xml|sitemap\.xml|robots\.txt)$
       '';
 
       hardening = {
@@ -47,7 +61,7 @@
             "9084:9090"
           ];
           extraPodmanArgs = [ "--network=pasta:--map-host-loopback,169.254.1.2" ];
-          volumes = [ "${policy}:/data/cfg:ro" ];
+          volumes = [ "${libresearchPolicy}:/data/cfg:ro" ];
           environment = {
             BIND = ":8080";
             TARGET = "http://169.254.1.2:8082";
@@ -76,11 +90,31 @@
           };
           extraConfig = hardening;
         };
+
+        containers.anubis-wiki = {
+          inherit image;
+          autoStart = true;
+          ports = [
+            "127.0.0.1:8089:8080"
+            "9089:9090"
+          ];
+          extraPodmanArgs = [ "--network=pasta:--map-host-loopback,169.254.1.2" ];
+          volumes = [ "${wikiPolicy}:/data/cfg:ro" ];
+          environment = {
+            BIND = ":8080";
+            TARGET = "http://169.254.1.2:8088";
+            POLICY_FNAME = "/data/cfg/botPolicies.yaml";
+            DIFFICULTY = 2;
+            METRICS_BIND = ":9090";
+          };
+          extraConfig = hardening;
+        };
       };
     };
 
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
     9084
     9085
+    9089
   ];
 }

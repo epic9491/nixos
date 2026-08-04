@@ -8,6 +8,7 @@ let
     "crowdsec"
     "tuwunel"
     "outage"
+    "wiki"
   ];
 in
 {

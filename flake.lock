@@ -315,7 +315,8 @@
         "nixvim": "nixvim",
         "noctalia": "noctalia",
         "second-brain": "second-brain",
-        "sops-nix": "sops-nix"
+        "sops-nix": "sops-nix",
+        "wiki": "wiki"
       }
     },
     "rust-overlay": {
@@ -411,6 +412,26 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "type": "github"
+      }
+    },
+    "wiki": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-stable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1785804007,
+        "narHash": "sha256-us2odzVoTawwWQpmIIFNiOCLezZjnWyhzeFHJ6Sr2jc=",
+        "ref": "refs/heads/main",
+        "rev": "7086159aee826cce21c945ca08e401866a0b9a2a",
+        "revCount": 1919,
+        "type": "git",
+        "url": "https://git.zorse-ruffe.ts.net/sensei/wiki"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.zorse-ruffe.ts.net/sensei/wiki"
       }
     }
   },
