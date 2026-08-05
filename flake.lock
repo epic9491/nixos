@@ -208,11 +208,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1785734586,
-        "narHash": "sha256-ODZkEK9Gy50yg6h98u7KkitZ3oc/uuTFK00bh1CRdNA=",
+        "lastModified": 1785858998,
+        "narHash": "sha256-fKCq5jphd6l/Ms6gc3dptkw/TcKLYub9lQE5g6rbbkc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "531670d871c0e29724a02f3cbcac170adc65b58c",
+        "rev": "04607e1165ac22c5fde6dcc54c9e0b3c0487c555",
         "type": "github"
       },
       "original": {
@@ -421,11 +421,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785901388,
-        "narHash": "sha256-lcSLe0TOsGpe2LNusYJvI2CYTsgiUnG+hvfSgu/8wig=",
+        "lastModified": 1785901847,
+        "narHash": "sha256-Vxb9+obqbYzklDNyUaEcN7nXUzvp2+VKWgaWZHqna1Y=",
         "ref": "refs/heads/main",
-        "rev": "1f4ab4426f3f43dca2e23914a1876376c3a2d9bb",
-        "revCount": 1927,
+        "rev": "5bb916a868f08489238e4f04b71bb3301b543cd9",
+        "revCount": 1928,
         "type": "git",
         "url": "https://git.zorse-ruffe.ts.net/sensei/wiki"
       },
