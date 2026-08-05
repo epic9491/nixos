@@ -421,11 +421,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785873036,
-        "narHash": "sha256-/Oqj6BS6Tel5mXWz8Yr1zSh3ncU1kjCQOXhfaJH4OZo=",
+        "lastModified": 1785891965,
+        "narHash": "sha256-y2JcoYfCQ7Kq8CgcN21PpMBUcL58BsdLXTKSdEp32bM=",
         "ref": "refs/heads/main",
-        "rev": "383d4009b4320f82ac3be4985248626c0e187782",
-        "revCount": 1925,
+        "rev": "167237ecf163deed29e164ba9c635baf49d187d0",
+        "revCount": 1926,
         "type": "git",
         "url": "https://git.zorse-ruffe.ts.net/sensei/wiki"
       },
