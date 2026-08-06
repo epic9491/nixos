@@ -9,6 +9,5 @@
     ./tuwunel.nix
     ./outage.nix
     ./wiki.nix
-    ./webfinger.nix
   ];
 }

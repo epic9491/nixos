@@ -9,7 +9,6 @@ let
     "tuwunel"
     "outage"
     "wiki"
-    "webfinger"
   ];
 in
 {
