@@ -99,6 +99,14 @@
                 frameDeny: true
                 contentSecurityPolicy: "${wikiCsp}"
 
+            webfinger-headers:
+              headers:
+                stsSeconds: 31536000
+                contentTypeNosniff: true
+                referrerPolicy: no-referrer
+                customResponseHeaders:
+                  Server: ""
+
             matrix-ratelimit:
               rateLimit:
                 average: 50
@@ -127,6 +135,11 @@
               entryPoints: [ websecure ]
               middlewares: [ crowdsec, hardening, pasted-headers, outage-pasted ]
               service: pasted
+            webfinger:
+              rule: "Host(`gaialabs.space`)"
+              entryPoints: [ websecure ]
+              middlewares: [ crowdsec, webfinger-headers ]
+              service: webfinger
 
           services:
             libresearch:
@@ -141,6 +154,10 @@
               loadBalancer:
                 servers:
                   - url: "http://169.254.1.2:8087"
+            webfinger:
+              loadBalancer:
+                servers:
+                  - url: "http://169.254.1.2:8090"
 
         tls:
           options:
