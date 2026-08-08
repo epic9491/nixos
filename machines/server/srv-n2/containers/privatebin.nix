@@ -58,7 +58,7 @@
         enable = true;
 
         containers.privatebin = {
-          image = "docker.io/privatebin/nginx-fpm-alpine:2.0.5@sha256:91e3adf17da1c9e2715cb57ff22940a6644252a5488d9819a64eebbaf64cc58a";
+          image = "docker.io/privatebin/nginx-fpm-alpine:2.0.6@sha256:13290e2f04bfd98cf8fc7e8d216fb76b2b2d12373d4923b859cd41c2d984fde8";
           autoStart = true;
           userNS = "keep-id:uid=65534,gid=82";
           ports = [ "127.0.0.1:8083:8080" ];
