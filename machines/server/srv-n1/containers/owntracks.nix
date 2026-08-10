@@ -32,7 +32,7 @@
         networks.owntracks = { };
 
         containers.recorder = {
-          image = "docker.io/owntracks/recorder:1.0.2@sha256:2afce8ef85f26507a96212b408bb7cd3b143d26818fea007817fa745cc6940ff";
+          image = "docker.io/owntracks/recorder:1.0.3@sha256:8e6718c216d5edaf30708a7cca569b5f28eeef67511bf85d4880312db3077848";
           autoStart = true;
           network = "owntracks.network";
           networkAlias = [ "recorder" ];
