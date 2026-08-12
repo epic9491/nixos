@@ -114,7 +114,7 @@
         };
 
         containers.crowdsec-export = {
-          image = "docker.io/library/python:3.14-alpine@sha256:a1321512d6a287428c50dcdf2ab3857761127e03a23b1f648e9c1c0de59288f8";
+          image = "docker.io/library/python:3.14-alpine@sha256:05b2b8b732ecd268fee8727a369f936f022d1321b59befd13c30ede22769dcdc";
           autoStart = true;
           network = "crowdsec.network";
           ports = [ "6061:6061" ];
