@@ -7,7 +7,7 @@
         owner = "maxlerebourg";
         repo = "crowdsec-bouncer-traefik-plugin";
         tag = "v1.7.1";
-        hash = "sha256-hefOKDVsBxn+rCAylPHqbCNfPMbU/vtO4QpiftIPcUU=;
+        hash = "sha256-hefOKDVsBxn+rCAylPHqbCNfPMbU/vtO4QpiftIPcUU=";
       };
 
       static = pkgs.writeText "traefik.yml" ''
