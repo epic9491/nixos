@@ -6,8 +6,8 @@
       bouncer = pkgs.fetchFromGitHub {
         owner = "maxlerebourg";
         repo = "crowdsec-bouncer-traefik-plugin";
-        tag = "v1.6.0";
-        hash = "sha256-Wf2R2vgwBzUxuk96njtGFu8w7mdP5bm+5ZuO3D1+AbA=";
+        tag = "v1.7.1";
+        hash = "sha256-hefOKDVsBxn+rCAylPHqbCNfPMbU/vtO4QpiftIPcUU=;
       };
 
       static = pkgs.writeText "traefik.yml" ''
