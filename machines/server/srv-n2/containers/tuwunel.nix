@@ -27,7 +27,7 @@
         enable = true;
 
         containers.tuwunel = {
-          image = "ghcr.io/matrix-construct/tuwunel:v1.8.3@sha256:699fa9971c174e01c884abad8d1a3cfb2fe518e1a71f1fa16ea9dedf11873d74";
+          image = "ghcr.io/matrix-construct/tuwunel:v1.9.0@sha256:295a1ceedbfd7afce05c69a38efb246dd31fa810e5d352fc7a09b261853800ee";
           autoStart = true;
           ports = [ "127.0.0.1:8086:8008" ];
           volumes = [
