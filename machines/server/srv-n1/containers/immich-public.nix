@@ -53,7 +53,7 @@
       };
 
       containers.immich-public-redis = {
-        image = "docker.io/valkey/valkey:8@sha256:495e4fecdc98ee48a20b207726caa5ab6451e0fac3642a9be10d9e70b3068df6";
+        image = "docker.io/valkey/valkey:8@sha256:f0ba225266310efba5fb33383e21c64fbd07907304224786c780606e7ebd7327";
         autoStart = true;
         network = "immich-public.network";
         networkAlias = [ "redis" ];
