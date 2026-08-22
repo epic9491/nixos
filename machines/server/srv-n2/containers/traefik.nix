@@ -216,6 +216,10 @@
     ip6tables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8081
     ip6tables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8443
     ip6tables -t nat -A PREROUTING -p udp --dport 443 -j REDIRECT --to-port 8443
+
+    # PREROUTING misses local traffic, so the homeservers cant federate
+    iptables -t nat -A OUTPUT -d 51.79.74.69 -p tcp --dport 443 -j DNAT --to-destination 51.79.74.69:8443
+    ip6tables -t nat -A OUTPUT -d 2607:5300:205:200::6e98 -p tcp --dport 443 -j DNAT --to-destination [2607:5300:205:200::6e98]:8443
   '';
   networking.firewall.extraStopCommands = ''
     iptables -t nat -D PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8081 || true
@@ -224,6 +228,8 @@
     ip6tables -t nat -D PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8081 || true
     ip6tables -t nat -D PREROUTING -p tcp --dport 443 -j REDIRECT --to-port 8443 || true
     ip6tables -t nat -D PREROUTING -p udp --dport 443 -j REDIRECT --to-port 8443 || true
+    iptables -t nat -D OUTPUT -d 51.79.74.69 -p tcp --dport 443 -j DNAT --to-destination 51.79.74.69:8443 || true
+    ip6tables -t nat -D OUTPUT -d 2607:5300:205:200::6e98 -p tcp --dport 443 -j DNAT --to-destination [2607:5300:205:200::6e98]:8443 || true
   '';
 
   sops.secrets."traefik-crowdsec.yml" = {

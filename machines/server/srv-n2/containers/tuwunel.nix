@@ -19,6 +19,18 @@
 
         max_request_size = "100 MiB"
       '';
+
+      image = "ghcr.io/matrix-construct/tuwunel:v1.9.0@sha256:295a1ceedbfd7afce05c69a38efb246dd31fa810e5d352fc7a09b261853800ee";
+
+      hardening = {
+        Container = {
+          DropCapability = "ALL";
+          NoNewPrivileges = true;
+          ReadOnly = true;
+          Tmpfs = "/tmp";
+        };
+        Service.Restart = "always";
+      };
     in
     {
       home.stateVersion = "25.05";
@@ -27,33 +39,51 @@
         enable = true;
 
         containers.tuwunel = {
-          image = "ghcr.io/matrix-construct/tuwunel:v1.9.0@sha256:295a1ceedbfd7afce05c69a38efb246dd31fa810e5d352fc7a09b261853800ee";
+          inherit image;
           autoStart = true;
           ports = [ "127.0.0.1:8086:8008" ];
+          # pasta copies the host addrs in by default, shadowing the peer homeserver
+          extraPodmanArgs = [ "--network=pasta:-a,10.10.0.2,-a,fd00:10::2" ];
           volumes = [
             "/var/lib/tuwunel/db:/var/lib/tuwunel"
             "${config}:/etc/tuwunel/tuwunel.toml:ro"
           ];
           environment.TUWUNEL_CONFIG = "/etc/tuwunel/tuwunel.toml";
           environmentFile = [ "/run/secrets/tuwunel.env" ];
-          extraConfig = {
-            Container = {
-              DropCapability = "ALL";
-              NoNewPrivileges = true;
-              ReadOnly = true;
-              Tmpfs = "/tmp";
-            };
-            Service.Restart = "always";
-          };
+          extraConfig = hardening;
+        };
+
+        # server_name cant change on an existing db, so goc.dev is a second instance
+        containers.tuwunel-goc = {
+          inherit image;
+          autoStart = true;
+          ports = [ "127.0.0.1:8091:8008" ];
+          extraPodmanArgs = [ "--network=pasta:-a,10.10.0.3,-a,fd00:10::3" ];
+          volumes = [
+            "/var/lib/tuwunel/db-goc:/var/lib/tuwunel"
+            "${config}:/etc/tuwunel/tuwunel.toml:ro"
+          ];
+          environment.TUWUNEL_CONFIG = "/etc/tuwunel/tuwunel.toml";
+          environmentFile = [ "/run/secrets/tuwunel-goc.env" ];
+          extraConfig = hardening;
         };
       };
     };
 
-  sops.secrets."tuwunel.env" = {
-    sopsFile = ../../../../secrets/srv-n2.tuwunel.env;
-    format = "binary";
-    owner = "tuwunel";
-    group = "tuwunel";
-    mode = "0400";
+  sops.secrets = {
+    "tuwunel.env" = {
+      sopsFile = ../../../../secrets/srv-n2.tuwunel.env;
+      format = "binary";
+      owner = "tuwunel";
+      group = "tuwunel";
+      mode = "0400";
+    };
+    "tuwunel-goc.env" = {
+      sopsFile = ../../../../secrets/srv-n2.tuwunel-goc.env;
+      format = "binary";
+      owner = "tuwunel";
+      group = "tuwunel";
+      mode = "0400";
+    };
   };
 }
