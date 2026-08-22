@@ -42,6 +42,8 @@
           inherit image;
           autoStart = true;
           ports = [ "127.0.0.1:8086:8008" ];
+          # pasta copies the host addrs in by default, shadowing the peer homeserver
+          extraPodmanArgs = [ "--network=pasta:-a,10.10.0.2,-a,fd00:10::2" ];
           volumes = [
             "/var/lib/tuwunel/db:/var/lib/tuwunel"
             "${config}:/etc/tuwunel/tuwunel.toml:ro"
@@ -56,6 +58,7 @@
           inherit image;
           autoStart = true;
           ports = [ "127.0.0.1:8091:8008" ];
+          extraPodmanArgs = [ "--network=pasta:-a,10.10.0.3,-a,fd00:10::3" ];
           volumes = [
             "/var/lib/tuwunel/db-goc:/var/lib/tuwunel"
             "${config}:/etc/tuwunel/tuwunel.toml:ro"
