@@ -11,7 +11,7 @@
     services.podman = {
       enable = true;
       containers.qbittorrent = {
-        image = "lscr.io/linuxserver/qbittorrent:latest@sha256:212b86dff59e3962b4082b5ef20a577e76c8f8527d2ab505cfa887b4bcecb0b0";
+        image = "lscr.io/linuxserver/qbittorrent:latest@sha256:304b19cf94bf4fda534e0b086cab9c5f1a9e139a8180c05c0ad7d2ba1526fa99";
         autoStart = true;
         network = "host";
         userNS = "keep-id";
