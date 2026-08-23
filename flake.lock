@@ -1,5 +1,28 @@
 {
   "nodes": {
+    "aliased": {
+      "inputs": {
+        "disko": "disko",
+        "home-manager": "home-manager",
+        "nixpkgs": [
+          "nixpkgs-stable"
+        ],
+        "sops-nix": "sops-nix"
+      },
+      "locked": {
+        "lastModified": 1787525006,
+        "narHash": "sha256-YoBnlxQtuQ2mzx31bCzAL0mRhh8al/J+EzYi+m4UGjI=",
+        "ref": "refs/heads/main",
+        "rev": "f3ba36faa255a8f7903385eeeb72a5d2779b11a0",
+        "revCount": 3,
+        "type": "git",
+        "url": "https://git.zorse-ruffe.ts.net/sensei/aliased"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://git.zorse-ruffe.ts.net/sensei/aliased"
+      }
+    },
     "comin": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -38,6 +61,27 @@
       }
     },
     "disko": {
+      "inputs": {
+        "nixpkgs": [
+          "aliased",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1781152676,
+        "narHash": "sha256-RxWs5ND31KzTG7wvMM+PMfUjyNpmIEr999lqNARaM5o=",
+        "owner": "nix-community",
+        "repo": "disko",
+        "rev": "ff8702b4de27f72b4c78573dfb89ec74e36abdf1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "disko",
+        "type": "github"
+      }
+    },
+    "disko_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs-stable"
@@ -123,6 +167,28 @@
         "owner": "in-a-dil-emma",
         "ref": "latest",
         "repo": "declarative-flatpak",
+        "type": "github"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "aliased",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787377438,
+        "narHash": "sha256-Sxu1NLTD/Ern6hFGLlZmtKCSct3YQXZI/lls8RE1XeM=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "65258d5c65a250189fde2e35f490d15e064c4c62",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-26.05",
+        "repo": "home-manager",
         "type": "github"
       }
     },
@@ -284,8 +350,9 @@
     },
     "root": {
       "inputs": {
+        "aliased": "aliased",
         "comin": "comin",
-        "disko": "disko",
+        "disko": "disko_2",
         "flatpaks": "flatpaks",
         "home-managerS": "home-managerS",
         "home-managerU": "home-managerU",
@@ -294,7 +361,7 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
         "second-brain": "second-brain",
-        "sops-nix": "sops-nix",
+        "sops-nix": "sops-nix_2",
         "wiki": "wiki"
       }
     },
@@ -340,6 +407,27 @@
       }
     },
     "sops-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "aliased",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786629091,
+        "narHash": "sha256-gkig4nPi1CWc4Z50GBsjE4ygSE7hMpl/TwID2an2Cck=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "a8627b21b9107c5711c96b84f32a9a4b3d45295f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
+      }
+    },
+    "sops-nix_2": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs-stable"

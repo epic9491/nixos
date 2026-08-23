@@ -48,6 +48,9 @@
 
     wiki.url = "git+https://git.zorse-ruffe.ts.net/sensei/wiki";
     wiki.inputs.nixpkgs.follows = "nixpkgs-stable";
+
+    aliased.url = "git+https://git.zorse-ruffe.ts.net/sensei/aliased";
+    aliased.inputs.nixpkgs.follows = "nixpkgs-stable";
   };
 
   outputs =
@@ -198,6 +201,10 @@
 
         pangolin = mkServer {
           deviceModule = ./machines/server/pangolin/default.nix;
+        };
+
+        aliased = mkServer {
+          deviceModule = ./machines/server/aliased/default.nix;
         };
 
         # k3s-a1 = mkServer {
