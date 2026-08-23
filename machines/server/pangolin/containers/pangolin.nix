@@ -11,6 +11,51 @@
                 burst: 200
       '';
 
+      # named "default" so it also covers pangolin's http-provider routers, which
+      # carry their own tls block and so ignore the entrypoint tls options
+      tlsOptions = pkgs.writeText "tls.yml" ''
+        tls:
+          options:
+            default:
+              minVersion: VersionTLS12
+              maxVersion: VersionTLS13
+              # tls 1.2 only, 1.3 suites arent configurable
+              cipherSuites:
+                - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+                - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+                - TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305_SHA256
+                - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+                - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+                - TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256
+              # no curvePreferences, gos default keeps p-256 and the pq hybrid group
+              alpnProtocols:
+                - h2
+                - http/1.1
+                - acme-tls/1
+              # stops the self-signed default cert being served to ip/no-sni probes
+              sniStrict: true
+      '';
+
+      securityHeaders = pkgs.writeText "security-headers.yml" ''
+        http:
+          middlewares:
+            security-headers:
+              headers:
+                stsSeconds: 63072000
+                stsIncludeSubdomains: true
+                stsPreload: true
+                forceSTSHeader: true
+                contentTypeNosniff: true
+                referrerPolicy: strict-origin-when-cross-origin
+                hostsProxyHeaders:
+                  - X-Forwarded-Host
+                # no frame options or csp here, they would overwrite what the apps set
+                customResponseHeaders:
+                  Server: ""
+                  X-Powered-By: ""
+                  Permissions-Policy: "camera=(), microphone=(), geolocation=()"
+      '';
+
       traefikConfig = pkgs.writeText "traefik_config.yml" ''
         api:
           insecure: false
@@ -45,12 +90,18 @@
             acme:
               httpChallenge:
                 entryPoint: web
-              email: acme@gaialabs.space 
+              email: acme@gaialabs.space
               storage: /letsencrypt/acme.json
               caServer: https://acme-v02.api.letsencrypt.org/directory
         entryPoints:
           web:
             address: ':80'
+            http:
+              redirections:
+                entryPoint:
+                  to: websecure
+                  scheme: https
+                  permanent: true
           websecure:
             address: ':443'
             transport:
@@ -59,6 +110,7 @@
             http:
               middlewares:
                 - public-ratelimit@file
+                - security-headers@file
               tls:
                 certResolver: letsencrypt
               encodedCharacters:
@@ -151,6 +203,8 @@
             "/var/lib/pangolin/config/traefik:/etc/traefik:ro"
             "${traefikConfig}:/etc/traefik/traefik_config.yml:ro"
             "${ratelimit}:/rules/ratelimit.yml:ro"
+            "${tlsOptions}:/rules/tls.yml:ro"
+            "${securityHeaders}:/rules/security-headers.yml:ro"
             "/var/lib/pangolin/config/letsencrypt:/letsencrypt"
             "/var/lib/pangolin/config/traefik/logs:/var/log/traefik"
             "/var/lib/pangolin/config/traefik/rules:/rules"
