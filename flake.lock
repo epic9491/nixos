@@ -10,11 +10,11 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1787538950,
-        "narHash": "sha256-+ugrswMgESmdrNngeRZp4uZP0RZ9SnFheMGXhuzgHTU=",
+        "lastModified": 1787541001,
+        "narHash": "sha256-rSMqlRRNl/U9g2WVqEs2LiQQ4a69omjNMuFwyKbKVpw=",
         "ref": "refs/heads/main",
-        "rev": "4be5db61581572cbbd608722a3c840d7568161c9",
-        "revCount": 6,
+        "rev": "2ccb4feeded4012ff0bcd0f15284d6e4edc7be26",
+        "revCount": 7,
         "type": "git",
         "url": "https://git.zorse-ruffe.ts.net/sensei/aliased"
       },
