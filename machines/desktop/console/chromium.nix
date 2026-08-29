@@ -30,7 +30,7 @@
           "create_desktop_shortcut" = true;
         }
         {
-          "url" = "https://jellyfin-v2.zorse-ruffe.ts.net";
+          "url" = "https://jellyfin.zorse-ruffe.ts.net";
           "default_launch_container" = "window";
           "create_desktop_shortcut" = true;
         }
