@@ -2,7 +2,7 @@
   home-manager.users.filebrowser =
     { pkgs, ... }:
     let
-      # kept out of the data dir, filebrowser slurps every *-config.yaml beside it
+      # kept out of the data dir, filebrowser pulls every *-config.yaml beside it
       settings = pkgs.writeText "config.yaml" ''
         server:
           cacheDir: /home/filebrowser/data/tmp
@@ -16,7 +16,7 @@
         auth:
           methods:
             password:
-              enabled: true
+              enabled: false
             oidc:
               enabled: true
               issuerUrl: "https://id.senseii.dev"
