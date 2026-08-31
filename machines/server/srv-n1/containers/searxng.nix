@@ -32,7 +32,7 @@
       };
 
       containers.searxng-redis = {
-        image = "docker.io/valkey/valkey:8-alpine@sha256:e0eb7c480958d32bdc4357a74bdd70653ae15f2f9b4c93c4a5a9fad1dc471c84";
+        image = "docker.io/valkey/valkey:8-alpine@sha256:4934d214fd7e091d4ee77b398945b3fd62c6dd0ac71d8b79e2e3cbad8364f3b1";
         autoStart = true;
         network = "searxng.network";
         networkAlias = [ "redis" ];
