@@ -143,7 +143,7 @@
         settings.containers.containers.base_hosts_file = "none";
 
         containers.gerbil = {
-          image = "docker.io/fosrl/gerbil@sha256:a5e3d7d9008f7d216ac87e77e73090c29b42f5a6f578a7ec2baff28773ae27a7";
+          image = "docker.io/fosrl/gerbil@sha256:6cde03ff29bfc2d3d307b09431afe280ff7437960ad470b9e770ba4ad006b794";
           autoStart = true;
           exec = "--reachableAt=http://gerbil:3004 --generateAndSaveKeyTo=/var/config/key --remoteConfig=http://pangolin:3001/api/v1/";
           ports = [
