@@ -393,17 +393,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1784573038,
-        "narHash": "sha256-TTBH2oRfn/hQEHKy7Qea0oV3sbmjnM10McEiBoBNn48=",
-        "ref": "refs/heads/master",
-        "rev": "871ea3f69d54d8c8cdd0050d76fd8b0f2ca7cb82",
-        "revCount": 3,
-        "type": "git",
-        "url": "https://git.zorse-ruffe.ts.net/sensei/second-brain"
+        "lastModified": 1788221956,
+        "narHash": "sha256-skbXAi0lqsOXG2tjdqstOL22dTUxQ2Ucj2sITdOTIC8=",
+        "owner": "epic9491",
+        "repo": "second-brain",
+        "rev": "342dfa9bf72b73b309dc28d16d17edf94fff3fd6",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://git.zorse-ruffe.ts.net/sensei/second-brain"
+        "owner": "epic9491",
+        "repo": "second-brain",
+        "type": "github"
       }
     },
     "sops-nix": {

@@ -43,7 +43,7 @@
     comin.url = "github:nlewo/comin";
     comin.inputs.nixpkgs.follows = "nixpkgs-stable";
 
-    second-brain.url = "git+https://git.zorse-ruffe.ts.net/sensei/second-brain";
+    second-brain.url = "github:epic9491/second-brain";
     second-brain.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     wiki.url = "git+https://git.zorse-ruffe.ts.net/sensei/wiki";

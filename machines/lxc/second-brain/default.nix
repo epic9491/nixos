@@ -15,7 +15,7 @@
     host = "0.0.0.0";
     openFirewall = true;
     environment = {
-      QWEN_URL = "http://100.69.0.2:11434";
+      GEN_URL = "http://100.69.0.2:11434";
       GEN_MODEL = "qwen3:8b";
       GEN_TIMEOUT = "300";
       ASSIST_MIN_SIM = "0.4";
