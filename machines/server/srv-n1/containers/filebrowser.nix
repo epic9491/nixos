@@ -13,6 +13,13 @@
               name: "home"
               config:
                 defaultEnabled: true
+        userDefaults:
+          account:
+            permissions:
+              modify: true
+              create: true
+              delete: true
+              share: true
         auth:
           methods:
             password:
