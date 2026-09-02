@@ -5,7 +5,7 @@
     services.podman = {
       enable = true;
       containers.kavita = {
-        image = "docker.io/jvmilazz0/kavita:0.9.0.2@sha256:ca6af7a18d7124d014702983c2364e485294f808c1552e9555f2595b7cda7982";
+        image = "docker.io/jvmilazz0/kavita:0.9.1@sha256:31181a32f0dda73cae68721867028a7253d57881b58bea5754cd9e578e75421a";
         autoStart = true;
         ports = [ "127.0.0.1:5000:5000" ];
         volumes = [
