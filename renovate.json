@@ -15,13 +15,18 @@
   },
   "packageRules": [
     {
-      "description": "Automerge non-major container updates once CI passes",
+      "description": "kavita mixes 3- and 4-part tags, which docker versioning wont compare",
+      "matchPackageNames": ["docker.io/jvmilazz0/kavita"],
+      "versioning": "loose"
+    },
+    {
+      "description": "non-major container bumps ride on CI",
       "matchDatasources": ["docker"],
       "matchUpdateTypes": ["digest", "pin", "patch", "minor"],
       "automerge": true
     },
     {
-      "description": "Daily grouped flake input bump, automerged into main once CI passes",
+      "description": "one branch so the whole lock builds together",
       "matchManagers": ["nix"],
       "groupName": "flake inputs",
       "automerge": true
@@ -30,7 +35,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "description": "Container images pinned as tag@digest in nix files",
+      "description": "images pinned as tag@digest",
       "managerFilePatterns": ["/\\.nix$/"],
       "matchStrings": [
         "image = \"(?<depName>[a-z0-9./-]+):(?<currentValue>[A-Za-z0-9._-]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
@@ -39,7 +44,7 @@
     },
     {
       "customType": "regex",
-      "description": "Container images pinned by digest only, tracked against latest",
+      "description": "images pinned by digest only, so track latest",
       "managerFilePatterns": ["/\\.nix$/"],
       "matchStrings": [
         "image = \"(?<depName>[a-z0-9./-]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
