@@ -175,7 +175,7 @@
         };
 
         containers.pangolin = {
-          image = "docker.io/fosrl/pangolin:1.22@sha256:4e6f068bbb2b4d0a0a8b7808bcb5b762053208c09d3f074cc58969332d9e3e06";
+          image = "docker.io/fosrl/pangolin:1.22@sha256:f313d0738c4c470e79198f16c9b917eb83e960b7676941c2dc4fa04843340818";
           autoStart = true;
           network = "container:gerbil";
           volumes = [ "/var/lib/pangolin/config:/app/config" ];
