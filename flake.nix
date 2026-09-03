@@ -207,6 +207,10 @@
           deviceModule = ./machines/server/aliased/default.nix;
         };
 
+        wazuh = mkServer {
+          deviceModule = ./machines/server/wazuh/default.nix;
+        };
+
         # k3s-a1 = mkServer {
         #   deviceModule = ./machines/server/k3s/k3s-a1/default.nix;
         # };

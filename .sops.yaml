@@ -11,6 +11,7 @@ keys:
   - &runner age1aw5yu9dwdv97d0kpwlt949wq0u7t5q3mk3alrvg02rp60w5whu2sz80pgx
   - &mongoose age18sldhysg5dyzm6fr6c00ef5nsyh5np5rm5tf88lupd5z66zeeppqy8yutj
   - &aliased age1r8cgqhrlu8xkywddf3663yuuuml5rdfsgrhsa7hgkzsfk5ejvyjqxsykdd
+  - &wazuh age1rfpjxx3g876g8k0kvlntgnc5lttk52whvfga8sfxh6zcf7p8w9nqyxvtk0
 
 creation_rules:
   # sops matches top to bottom, secrets always start with "host."
@@ -42,6 +43,9 @@ creation_rules:
   - path_regex: secrets/aliased\.
     key_groups:
       - age: [*yubi-master1, *yubi-master2, *yubi-master3, *aliased]
+  - path_regex: secrets/wazuh\.
+    key_groups:
+      - age: [*yubi-master1, *yubi-master2, *yubi-master3, *wazuh]
 
   - path_regex: secrets/.*
     key_groups:
