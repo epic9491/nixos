@@ -64,7 +64,7 @@
         networks.crowdsec = { };
 
         containers.crowdsec = {
-          image = "docker.io/crowdsecurity/crowdsec:v1.8.0@sha256:99eb4df235527e978595ef5ebb30182831686dc875521de67ef39b7659a86897";
+          image = "docker.io/crowdsecurity/crowdsec:v1.8.1@sha256:0f2523fa61ef507f15d953045cface490cc880670c62f2755ced17524107f71a";
           autoStart = true;
           network = "crowdsec.network";
           networkAlias = [ "crowdsec" ];
