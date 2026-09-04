@@ -10,12 +10,12 @@
         path.logs: /var/log/wazuh-indexer
         discovery.type: single-node
         compatibility.override_main_response_version: true
-        plugins.security.ssl.http.pemcert_filepath: /certs/wazuh.indexer.pem
-        plugins.security.ssl.http.pemkey_filepath: /certs/wazuh.indexer-key.pem
-        plugins.security.ssl.http.pemtrustedcas_filepath: /certs/root-ca.pem
-        plugins.security.ssl.transport.pemcert_filepath: /certs/wazuh.indexer.pem
-        plugins.security.ssl.transport.pemkey_filepath: /certs/wazuh.indexer-key.pem
-        plugins.security.ssl.transport.pemtrustedcas_filepath: /certs/root-ca.pem
+        plugins.security.ssl.http.pemcert_filepath: /usr/share/wazuh-indexer/config/certs/wazuh.indexer.pem
+        plugins.security.ssl.http.pemkey_filepath: /usr/share/wazuh-indexer/config/certs/wazuh.indexer-key.pem
+        plugins.security.ssl.http.pemtrustedcas_filepath: /usr/share/wazuh-indexer/config/certs/root-ca.pem
+        plugins.security.ssl.transport.pemcert_filepath: /usr/share/wazuh-indexer/config/certs/wazuh.indexer.pem
+        plugins.security.ssl.transport.pemkey_filepath: /usr/share/wazuh-indexer/config/certs/wazuh.indexer-key.pem
+        plugins.security.ssl.transport.pemtrustedcas_filepath: /usr/share/wazuh-indexer/config/certs/root-ca.pem
         plugins.security.ssl.http.enabled: true
         plugins.security.ssl.transport.enforce_hostname_verification: false
         plugins.security.ssl.transport.resolve_hostname: false
@@ -53,7 +53,8 @@
           networkAlias = [ "wazuh.indexer" ];
           volumes = [
             "wazuh-indexer-data.volume:/var/lib/wazuh-indexer"
-            "/var/lib/wazuh/certs:/certs:ro"
+            # javas security manager only grants reads under path.conf
+            "/var/lib/wazuh/certs:/usr/share/wazuh-indexer/config/certs:ro"
             "${opensearch}:/usr/share/wazuh-indexer/config/opensearch.yml:ro"
             "/run/secrets/wazuh.internal-users.yml:/usr/share/wazuh-indexer/config/opensearch-security/internal_users.yml:ro"
           ];
