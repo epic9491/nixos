@@ -38,6 +38,9 @@
           "wazuh-filebeat-etc.volume:/etc/filebeat"
           "wazuh-filebeat-var.volume:/var/lib/filebeat"
           "/var/lib/wazuh/certs:/certs:ro"
+          # authd otherwise self-signs CN=$HOSTNAME
+          "/var/lib/wazuh/certs/wazuh.manager.pem:/var/ossec/etc/sslmanager.cert:ro"
+          "/var/lib/wazuh/certs/wazuh.manager-key.pem:/var/ossec/etc/sslmanager.key:ro"
           "${./ossec.conf}:/wazuh-config-mount/etc/ossec.conf:ro"
         ];
         # INDEXER_URL is left unset, the images filebeat.yml already points at wazuh.indexer

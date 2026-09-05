@@ -24,7 +24,11 @@ in
     networking.useNetworkd = true;
 
     # tailnet names are unresolvable without magicdns
-    networking.hosts."100.69.69.216" = [ "git.zorse-ruffe.ts.net" ];
+    networking.hosts = {
+      "100.69.69.216" = [ "git.zorse-ruffe.ts.net" ];
+      # where agents verify the manager cert
+      "100.69.69.220" = [ "wazuh.zorse-ruffe.ts.net" ];
+    };
 
     nix.gc = {
       automatic = true;

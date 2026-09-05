@@ -11,7 +11,9 @@
               ip: wazuh.indexer
           server:
             - name: wazuh.manager
-              ip: wazuh.manager
+              ip:
+                - wazuh.manager
+                - wazuh.zorse-ruffe.ts.net
           dashboard:
             - name: wazuh.dashboard
               ip: wazuh.dashboard

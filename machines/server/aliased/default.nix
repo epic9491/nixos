@@ -13,6 +13,7 @@
     ./hardware-configuration.nix
     ./disko.nix
     ./networking.nix
+    ./wazuh.nix
     inputs.aliased.nixosModules.aliased
   ];
 

@@ -51,6 +51,9 @@
 
     aliased.url = "git+https://git.zorse-ruffe.ts.net/sensei/aliased";
     aliased.inputs.nixpkgs.follows = "nixpkgs-stable";
+
+    wazuh-agent.url = "github:epic9491/wazuh-agent-nixos";
+    wazuh-agent.inputs.nixpkgs.follows = "nixpkgs-stable";
   };
 
   outputs =
