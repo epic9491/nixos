@@ -60,7 +60,6 @@ let
     libreoffice
     gimp
     feishin
-    picard
     jellyfin-desktop
     gnome-calculator
   ];
