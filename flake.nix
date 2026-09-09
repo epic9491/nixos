@@ -159,6 +159,7 @@
             ./modules/dns.nix
             ./modules/killswitch.nix
             ./modules/ban.nix
+            ./modules/ntp.nix
             home-managerS.nixosModules.home-manager
           ]
           ++ modules;

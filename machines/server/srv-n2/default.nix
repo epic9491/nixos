@@ -39,6 +39,7 @@
     baseline.enable = true;
     cd.enable = true;
     kernelReboot.enable = true;
+    ntp.enable = true;
   };
 
   ssh = {
