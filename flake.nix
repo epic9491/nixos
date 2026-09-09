@@ -158,6 +158,7 @@
             ./modules/reboot.nix
             ./modules/dns.nix
             ./modules/killswitch.nix
+            ./modules/ban.nix
             home-managerS.nixosModules.home-manager
           ]
           ++ modules;

@@ -13,6 +13,7 @@
     ./hardware-configuration.nix
     ./disko.nix
     ./networking.nix
+    ./ban.nix
     ./backup.nix
     ./containers
   ];
