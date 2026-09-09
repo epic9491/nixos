@@ -27,7 +27,7 @@ let
 in
 {
   options.server.ban = {
-    enable = lib.mkEnableOption "drop traffic from abusive addresses at the edge";
+    enable = lib.mkEnableOption "drop traffic from abusive addresses";
 
     addresses = lib.mkOption {
       type = lib.types.listOf lib.types.str;
@@ -42,11 +42,9 @@ in
 
   config = lib.mkIf cfg.enable {
     networking.firewall.extraCommands =
-      apply "iptables" v4
-      + lib.optionalString config.networking.enableIPv6 (apply "ip6tables" v6);
+      apply "iptables" v4 + lib.optionalString config.networking.enableIPv6 (apply "ip6tables" v6);
 
     networking.firewall.extraStopCommands =
-      teardown "iptables"
-      + lib.optionalString config.networking.enableIPv6 (teardown "ip6tables");
+      teardown "iptables" + lib.optionalString config.networking.enableIPv6 (teardown "ip6tables");
   };
 }
