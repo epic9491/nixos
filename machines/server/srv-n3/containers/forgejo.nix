@@ -10,7 +10,7 @@
         networks.forgejo = { };
 
         containers.forgejo = {
-          image = "codeberg.org/forgejo/forgejo:16-rootless@sha256:214f4ae63ee78be1e445e58573c88dc7215e72091210852e0df94eaac1a25685";
+          image = "codeberg.org/forgejo/forgejo:16-rootless@sha256:a263a1298e89e0bdf019005ce1927e9aadaa8f1bd2a94a3e66ad94e2a89e19ce";
           autoStart = true;
           network = "forgejo.network";
           userNS = "keep-id:uid=1000,gid=1000";
