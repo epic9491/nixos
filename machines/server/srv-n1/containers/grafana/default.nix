@@ -46,6 +46,30 @@
                   host: srv-n2
                   site: wiki
 
+          - job_name: chrony
+            static_configs:
+              - targets:
+                  - 100.69.69.215:9123
+                labels:
+                  host: srv-n2
+
+          # the client log walk is slow enough to blow a 10s timeout
+          - job_name: chrony-clients
+            scrape_interval: 5m
+            scrape_timeout: 2m
+            static_configs:
+              - targets:
+                  - 100.69.69.215:9124
+                labels:
+                  host: srv-n2
+
+          - job_name: node
+            static_configs:
+              - targets:
+                  - 100.69.69.215:9100
+                labels:
+                  host: srv-n2
+
           - job_name: harmonia
             static_configs:
               - targets:
@@ -151,6 +175,7 @@
             "${./crowdsec-dashboard.json}:/etc/grafana/dashboards/crowdsec.json:ro"
             "${./crowdsec-srv-n2-dashboard.json}:/etc/grafana/dashboards/crowdsec-srv-n2.json:ro"
             "${./harmonia-dashboard.json}:/etc/grafana/dashboards-infra/harmonia.json:ro"
+            "${./ntp-dashboard.json}:/etc/grafana/dashboards-infra/ntp.json:ro"
             "/var/lib/grafana/data:/var/lib/grafana:U"
             "${infinityPlugin}:/var/lib/grafana/plugins/yesoreyeram-infinity-datasource:ro"
           ];
