@@ -15,10 +15,10 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
-#    noctalia = {
-#      url = "github:noctalia-dev/noctalia-shell/";
-#      inputs.nixpkgs.follows = "nixpkgs-unstable";
-#    };
+    #    noctalia = {
+    #      url = "github:noctalia-dev/noctalia-shell/";
+    #      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    #    };
 
     sops-nix = {
       url = "github:Mic92/sops-nix";
@@ -43,7 +43,7 @@
     comin.url = "github:nlewo/comin";
     comin.inputs.nixpkgs.follows = "nixpkgs-stable";
 
-    second-brain.url = "github:epic9491/second-brain";
+    second-brain.url = "github:nuclear-gumbo/second-brain";
     second-brain.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     wiki.url = "git+https://git.zorse-ruffe.ts.net/sensei/wiki";

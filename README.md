@@ -38,17 +38,17 @@ This configuration is specific to one environment. Hostnames, usernames, disk la
 
 Current outputs:
 
-| Host | Type | Role |
-|---|---|---|
-| `console` | workstation | living-room KDE build with controller support |
-| `srv-n1` | server | primary server; runs most services as rootless Quadlets |
-| `srv-n2` | server | public-facing edge; Traefik, Anubis, CrowdSec, self-hosted ingress |
-| `srv-n3` | server | Forgejo, Pocket ID, and Technitium DNS server (tailnet only) |
-| `pangolin` | server | Pangolin tunnel/ingress node |
-| `jellyfin` | LXC | media server |
-| `runner` | LXC | Forgejo Actions runner and Harmonia binary cache |
-| `second-brain` | LXC | second-brain service, consumed as a flake input |
-| `mongoose` | LXC | qBittorrent behind WireGuard, ZFS dataset passed through from the host |
+| Host           | Type        | Role                                                                   |
+| -------------- | ----------- | ---------------------------------------------------------------------- |
+| `console`      | workstation | living-room KDE build with controller support                          |
+| `srv-n1`       | server      | primary server; runs most services as rootless Quadlets                |
+| `srv-n2`       | server      | public-facing edge; Traefik, Anubis, CrowdSec, self-hosted ingress     |
+| `srv-n3`       | server      | Forgejo, Pocket ID, and Technitium DNS server (tailnet only)           |
+| `pangolin`     | server      | Pangolin tunnel/ingress node                                           |
+| `jellyfin`     | LXC         | media server                                                           |
+| `runner`       | LXC         | Forgejo Actions runner and Harmonia binary cache                       |
+| `second-brain` | LXC         | second-brain service, consumed as a flake input                        |
+| `mongoose`     | LXC         | qBittorrent behind WireGuard, ZFS dataset passed through from the host |
 
 `erebos` (desktop) and `prometheus` (laptop) are defined but currently commented out, as is a five-node k3s cluster. Anything commented out is not being actively developed or maintained.
 
@@ -111,4 +111,4 @@ Consider sponsoring NixOS to support the people who make this possible: https://
 
 ## GitHub mirror
 
-https://github.com/epic9491/nixos
+https://github.com/nuclear-gumbo/nixos

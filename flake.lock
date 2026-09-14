@@ -395,13 +395,13 @@
       "locked": {
         "lastModified": 1788221956,
         "narHash": "sha256-skbXAi0lqsOXG2tjdqstOL22dTUxQ2Ucj2sITdOTIC8=",
-        "owner": "epic9491",
+        "owner": "nuclear-gumbo",
         "repo": "second-brain",
         "rev": "342dfa9bf72b73b309dc28d16d17edf94fff3fd6",
         "type": "github"
       },
       "original": {
-        "owner": "epic9491",
+        "owner": "nuclear-gumbo",
         "repo": "second-brain",
         "type": "github"
       }
