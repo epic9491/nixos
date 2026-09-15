@@ -46,7 +46,7 @@
         volumes.wazuh-indexer-data = { };
 
         containers.wazuh-indexer = {
-          image = "docker.io/wazuh/wazuh-indexer:4.14.7@sha256:3bd92b2ea39b1f0cd979e12af4078ecb34980db3c99e4bbe2763965d56d52363";
+          image = "docker.io/wazuh/wazuh-indexer:4.14.7@sha256:1b85f946cc7c6530ffc34b5a2f4471ef533a17e6262f97b75dc794c3f2b8c0a0";
           autoStart = true;
           network = "wazuh.network";
           # the generated certs carry CN=wazuh.indexer, so the alias has to match
